@@ -1,0 +1,145 @@
+const sets = [
+  "SOFU.jpg",
+  "HISU.jpg",
+  "SAST.jpg",
+  "INCH.jpg",
+  "DUSA.jpg",
+  "DUPO.jpg",
+  "DANE.jpg",
+  "RIRA.jpg",
+  "FIGA.jpg",
+  "CHIM.jpg",
+  "MYFI.jpg",
+  "IGAS.jpg",
+  "DUOV.jpg",
+  "SESL.jpg",
+  "ETCO.jpg",
+  "TOCH.jpg",
+  "ROTD.jpg",
+  "PHRA.jpg",
+  "GEIM.jpg",
+  "BLVO.jpg",
+  "ANGU.jpg",
+  "GFTP.jpg",
+  "LIOV.jpg",
+  "KICO.jpg",
+  "LOB.jpg",
+  "SOFU.jpg",
+  "HISU.jpg",
+  "SAST.jpg",
+  "INCH.jpg",
+  "DUSA.jpg",
+  "DUPO.jpg",
+  "DANE.jpg",
+  "RIRA.jpg",
+  "FIGA.jpg",
+  "CHIM.jpg",
+  "MYFI.jpg",
+  "IGAS.jpg",
+  "DUOV.jpg",
+  "SESL.jpg",
+  "ETCO.jpg",
+  "TOCH.jpg",
+  "ROTD.jpg",
+  "PHRA.jpg",
+  "GEIM.jpg",
+  "BLVO.jpg",
+  "ANGU.jpg",
+  "GFTP.jpg",
+  "LIOV.jpg",
+  "KICO.jpg",
+  "LOB.jpg",
+  "MRD.jpg",
+  "MRL.jpg",
+  "PSV.jpg",
+  "LON.jpg",
+  "LOD.jpg",
+  "PGD.jpg",
+  "MFC.jpg",
+  "DCR.jpg",
+  "IOC.jpg",
+  "AST.jpg",
+  "SOD.jpg",
+  "RDS.jpg",
+  "FET.jpg",
+  "TLM.jpg",
+  "CRV.jpg",
+  "EEN.jpg",
+  "SOI.jpg",
+  "EOJ.jpg",
+  "POTD.jpg",
+  "CDIP.jpg",
+  "STON.jpg",
+  "FOTB.jpg",
+  "TAEV.jpg",
+  "GLAS.jpg",
+  "PTDN.jpg",
+  "LODT.jpg",
+  "TDGS.jpg",
+  "CSOC.jpg",
+  "CRMS.jpg",
+  "RGBT.jpg",
+  "ANPR.jpg",
+  "SOVR.jpg",
+  "ABPF.jpg",
+  "MRD.jpg",
+  "TSHD.jpg",
+  "MRL.jpg",
+  "PSV.jpg",
+  "LON.jpg",
+  "LOD.jpg",
+  "PGD.jpg",
+  "MFC.jpg",
+  "DCR.jpg",
+  "IOC.jpg",
+  "AST.jpg",
+  "SOD.jpg",
+  "RDS.jpg",
+  "FET.jpg",
+  "TLM.jpg",
+  "CRV.jpg",
+  "EEN.jpg",
+  "SOI.jpg",
+  "EOJ.jpg",
+  "POTD.jpg",
+  "CDIP.jpg",
+  "STON.jpg",
+  "FOTB.jpg",
+  "TAEV.jpg",
+  "GLAS.jpg",
+  "PTDN.jpg",
+  "LODT.jpg",
+  "TDGS.jpg",
+  "CSOC.jpg",
+  "CRMS.jpg",
+  "RGBT.jpg",
+  "ANPR.jpg",
+  "SOVR.jpg",
+  "ABPF.jpg",
+];
+
+const fetch = require("node-fetch");
+const fs = require("fs");
+
+const baseUrl = "https://ygoprodeck.com/pics_sets/";
+
+const downloadImages = async () => {
+  for (const imageName of sets) {
+    const url = `${baseUrl}${imageName}`;
+    const res = await fetch(url);
+    await new Promise((resolve, reject) => {
+      const fileStream = fs.createWriteStream(`./images/${imageName}`);
+      res.body.pipe(fileStream);
+      res.body.on("error", (err) => {
+        reject(err);
+      });
+      fileStream.on("finish", function () {
+        resolve();
+      });
+    });
+  }
+};
+
+(async function () {
+  await downloadImages();
+})();

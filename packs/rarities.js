@@ -1,0 +1,18 @@
+module.exports = {
+  COMMON: "Common",
+  RARE: "Rare",
+  SUPER_RARE: "Super Rare",
+  ULTRA_RARE: "Ultra Rare",
+  SECRET_RARE: "Secret Rare",
+  SHORT_PRINT: "Short Print",
+  PRISMATIC_SECRET_RARE: "Prismatic Secret Rare",
+  PREMIUM_GOLD_RARE: "Premium Gold Rare",
+  MOSAIC_RARE: "Mosaic Rare",
+  GOLD_RARE: "Gold Rare",
+  GOLD_SECRET_RARE: "Gold Secret Rare",
+  PARALLEL_RARE: "Duel Terminal Normal Parallel Rare",
+  STARFOIL_RARE: "Starfoil Rare",
+  COLLECTORS_RARE: "Collector's Rare",
+  ULTIMATE_RARE: "Ultimate Rare",
+  SHATTERFOIL_RARE: "Shatterfoil Rare",
+};
