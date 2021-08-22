@@ -12,7 +12,6 @@ module.exports = {
   },
   async getCardSetsByType(type) {
     try {
-      console.log(type);
       const query1 = `SELECT * FROM card_sets WHERE set_type = $1 ORDER BY tcg_date`;
       const { rows } = await query(query1, [type]);
       return rows;

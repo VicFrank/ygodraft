@@ -4,8 +4,9 @@ const cardSets = require("../db/cardSets");
 const packOpener = require("../packs/packOpener");
 const router = express.Router();
 
-router.get("/openPacks", async (req, res) => {
+router.get("/open", async (req, res) => {
   try {
+    // TODO: make this a body object with a list of sets and count per set
     let { cardset, numPacks } = req.query;
     numPacks = Number(numPacks);
 
