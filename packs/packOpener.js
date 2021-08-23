@@ -13,8 +13,7 @@ function getRarityMap(setCards) {
 }
 
 function getRandomCardOfRarity(rarityMap, rarity) {
-  if (!rarityMap[rarity])
-    throw new Error(`Card with rarity ${rarity} not found in set`);
+  if (!rarityMap[rarity]) throw new Error(`Card with rarity ${rarity} not found in set`);
   const cards = rarityMap[rarity];
   return cards[Math.floor(Math.random() * cards.length)];
 }
@@ -36,14 +35,12 @@ module.exports = {
   openPack(setCards, setName) {
     const packData = boosterPacks[setName];
 
-    if (!packData)
-      throw new Error(`Pack data for set with name ${setName} not found`);
+    if (!packData) throw new Error(`Pack data for set with name ${setName} not found`);
 
     const { distribution } = packData;
     const rarityMap = getRarityMap(setCards);
 
-    const { guaranteed, wildCards, defaultWildCard, wildCardRates } =
-      distribution;
+    const { guaranteed, wildCards, defaultWildCard, wildCardRates } = distribution;
 
     // sort the wild card rates
     const sortedRates = wildCardRates.sort((a, b) => a.freq - b.freq);
@@ -56,6 +53,10 @@ module.exports = {
       for (let i = 0; i < amount; i++) {
         const pulledCard = getRandomCardOfRarity(rarityMap, rarity);
         pulledCards.push(pulledCard);
+        // remove the pulled card from the pool
+        rarityMap[rarity] = rarityMap[rarity].filter(
+          (card) => card.card_name !== pulledCard.card_name
+        );
       }
     }
 
