@@ -1,0 +1,14 @@
+<h1>Card Sets</h1>
+<div>
+  <app-drafting-options (onOpenPacks)="openPacks($event)">
+  </app-drafting-options>
+</div>
+<div class="wrapping-list">
+  <app-setlist-pack
+    *ngFor="let cardset of cardsets"
+    [code]="cardset.set_code"
+    [name]="cardset.set_name"
+    [(selectedSets)]="selectedSets"
+    class="wrapping-item"
+  ></app-setlist-pack>
+</div>

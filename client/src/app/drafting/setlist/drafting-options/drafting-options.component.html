@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-start draft-options">
+  <div>
+    <h6>Packs</h6>
+    <p-dropdown
+      [options]="numPacksOptions"
+      [(ngModel)]="draftOptions.numPacks"
+    ></p-dropdown>
+  </div>
+  <div>
+    <h6>Opening Method</h6>
+    <p-dropdown
+      [options]="openingOptions"
+      [(ngModel)]="draftOptions.openingMethod"
+    ></p-dropdown>
+  </div>
+  <div class="ms-auto">
+    <p-button label="Open!" (onClick)="openPacks()"></p-button>
+  </div>
+</div>

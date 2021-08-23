@@ -1,0 +1,24 @@
+<h2 class="set-name text-center">{{ cardset }}</h2>
+<div class="wrapping-list">
+  <app-pack-card *ngFor="let card of currentPack" [card]="card"></app-pack-card>
+</div>
+<div class="d-flex justify-content-center mt-3">
+  <button
+    pButton
+    type="button"
+    label="Flip All"
+    icon="pi pi-refresh"
+    iconPos="left"
+    class="p-button-secondary mx-1"
+    (click)="flipAll()"
+  ></button>
+  <button
+    pButton
+    type="button"
+    label="Next Pack"
+    icon="pi pi-angle-right"
+    iconPos="left"
+    class="p-button mx-1"
+    (click)="nextPack()"
+  ></button>
+</div>

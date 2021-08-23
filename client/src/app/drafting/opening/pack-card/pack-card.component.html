@@ -1,0 +1,53 @@
+<div class="pack-card">
+  <div class="flip-card">
+    <div
+      class="flip-card-inner"
+      [class.flipped]="card.flipped"
+      [class.rare-aura-hover]="card.set_rarity === 'Rare'"
+      [class.super-rare-aura-hover]="card.set_rarity === 'Super Rare'"
+      [class.ultra-rare-aura-hover]="card.set_rarity === 'Ultra Rare'"
+      [class.secret-rare-aura-hover]="card.set_rarity === 'Secret Rare'"
+    >
+      <div class="flip-card-front" (click)="flipCard()">
+        <img src="assets/images/cards/cardback.jpg" alt="Yugioh Card" />
+      </div>
+      <div
+        class="flip-card-back"
+        [class.rare-aura]="card.set_rarity === 'Rare'"
+        [class.super-rare-aura]="card.set_rarity === 'Super Rare'"
+        [class.ultra-rare-aura]="card.set_rarity === 'Ultra Rare'"
+        [class.secret-rare-aura]="card.set_rarity === 'Secret Rare'"
+        (click)="openModal()"
+      >
+        <img
+          src="assets/images/cards/{{ card.card_id }}.jpg"
+          [alt]="card.card_name"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="rarity">
+    <span
+      *ngIf="card.flipped"
+      [class.rare-color]="card.set_rarity === 'Rare'"
+      [class.super-rare-color]="card.set_rarity === 'Super Rare'"
+      [class.ultra-rare-color]="card.set_rarity === 'Ultra Rare'"
+      [class.secret-rare-color]="card.set_rarity === 'Secret Rare'"
+      >{{ card.set_rarity }}</span
+    >
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="displayModal"
+  [modal]="true"
+  [dismissableMask]="true"
+  [showHeader]="false"
+  [draggable]="false"
+  [closable]="true"
+>
+  <img
+    src="assets/images/cards/{{ card.card_id }}.jpg"
+    [alt]="card.card_name"
+  />
+</p-dialog>

@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: var(--surface-b);
+  font-family: var(--font-family);
+  color: var(--text-color);
+}
+
+a {
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --rare-color: #0099ff;
+  --ultra-rare-color: #6f00ff;
+  --super-rare-color: #f0f;
+  --secret-rare-color: #e5ff00;
+}
+
+.rare-color {
+  color: var(--rare-color);
+}
+
+.ultra-rare-color {
+  color: #aa66ff;
+}
+
+.super-rare-color {
+  color: var(--super-rare-color);
+}
+
+.secret-rare-color {
+  color: var(--secret-rare-color);
+}
+
+.wrapping-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.wrapping-list .wrapping-item {
+  flex: 1;
+}
