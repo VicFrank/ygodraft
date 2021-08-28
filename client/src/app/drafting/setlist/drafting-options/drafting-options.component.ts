@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 
 interface DraftEvent {
@@ -12,14 +12,15 @@ interface DraftEvent {
   styleUrls: ['./drafting-options.component.css'],
 })
 export class DraftingOptionsComponent {
+  @Input() canOpen!: boolean;
+  @Output() onOpenPacks = new EventEmitter<DraftEvent>();
+
   draftOptions: DraftEvent = {
     numPacks: 24,
     openingMethod: 'Traditional',
   };
   numPacksOptions: SelectItem[];
   openingOptions: SelectItem[];
-
-  @Output() onOpenPacks = new EventEmitter<DraftEvent>();
 
   constructor() {
     this.numPacksOptions = [

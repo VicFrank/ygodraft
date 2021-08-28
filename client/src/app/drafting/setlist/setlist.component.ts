@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Cardset } from 'src/app/models/Cardset.model';
 import { DraftOptions } from 'src/app/models/drafting/DraftOptions.model';
 import { CardsetService } from 'src/app/_shared/cardset.service';
+import { DraftingService } from '../drafting.service';
 
 @Component({
   selector: 'app-setlist',
@@ -13,7 +14,11 @@ export class SetlistComponent implements OnInit {
   cardsets: Cardset[] = [];
   selectedSets: string[] = [];
 
-  constructor(private cardsetService: CardsetService, private router: Router) {}
+  constructor(
+    private cardsetService: CardsetService,
+    private router: Router,
+    private draftingService: DraftingService
+  ) {}
 
   ngOnInit(): void {
     this.showBoosterSets();
@@ -31,11 +36,13 @@ export class SetlistComponent implements OnInit {
       .subscribe((cardsets) => (this.cardsets = cardsets));
   }
 
-  openPacks(event: any) {
-    const draftOptions: DraftOptions = {
-      ...event,
-      sets: this.selectedSets,
-    };
+  openPacks(event: DraftOptions) {
+    this.draftingService.packsToOpen;
+    for (const set of this.selectedSets) {
+      for (let i = 0; i < event.numPacks; i++) {
+        this.draftingService.packsToOpen.push(set);
+      }
+    }
     this.router.navigate(['drafting/opening']);
   }
 }

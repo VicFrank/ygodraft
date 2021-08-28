@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Cardset } from 'src/app/models/Cardset.model';
 
 @Component({
   selector: 'app-setlist-pack',
@@ -7,20 +8,19 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class SetlistPackComponent implements OnInit {
   @Input()
-  code!: string;
-  @Input()
-  name!: string;
+  set!: Cardset;
   @Input() selectedSets!: string[];
   @Output() selectedSetsChange = new EventEmitter<string[]>();
 
-  src: string;
+  src: string = '';
+  name: string = '';
 
-  constructor() {
-    this.src = `assets/images/cardsets/${this.code}.jpg`;
-  }
+  constructor() {}
 
   ngOnInit(): void {
+    this.name = this.set.set_name;
     if (this.name === 'Legend of Blue Eyes White Dragon')
       this.name = 'Legend of Blue Eyes';
+    this.src = `assets/images/cardsets/${this.set.set_code}.jpg`;
   }
 }

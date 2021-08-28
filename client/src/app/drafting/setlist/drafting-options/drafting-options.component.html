@@ -14,6 +14,10 @@
     ></p-dropdown>
   </div>
   <div class="ms-auto">
-    <p-button label="Open!" (onClick)="openPacks()"></p-button>
+    <p-button
+      label="Open!"
+      (onClick)="openPacks()"
+      [disabled]="!canOpen"
+    ></p-button>
   </div>
 </div>

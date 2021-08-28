@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PackCard } from 'src/app/models/drafting/PackCard.model';
 
 @Component({
@@ -8,6 +8,7 @@ import { PackCard } from 'src/app/models/drafting/PackCard.model';
 })
 export class PackCardComponent implements OnInit {
   @Input() card!: PackCard;
+  @Output() onCardFlipped = new EventEmitter();
 
   displayModal: boolean = false;
 
@@ -17,6 +18,7 @@ export class PackCardComponent implements OnInit {
 
   flipCard() {
     this.card.flipped = true;
+    this.onCardFlipped.emit();
   }
 
   openModal() {

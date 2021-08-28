@@ -1,10 +1,13 @@
 <div class="pack">
-  <img src="assets/images/cardsets/{{ code }}.jpg" [alt]="name" />
+  <img
+    src="assets/images/cardsets/{{ set.set_code }}.jpg"
+    [alt]="set.set_name"
+  />
   <div class="set-name">{{ name }}</div>
   <p-checkbox
     [(ngModel)]="selectedSets"
     (onChange)="selectedSetsChange.emit(selectedSets)"
     name="selectedSets"
-    [value]="code"
+    [value]="set.set_name"
   ></p-checkbox>
 </div>
