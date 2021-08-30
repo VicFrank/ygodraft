@@ -1,5 +1,7 @@
 <div class="pack">
   <img
+    (click)="toggleSelected()"
+    style="cursor: pointer"
     src="assets/images/cardsets/{{ set.set_code }}.jpg"
     [alt]="set.set_name"
   />

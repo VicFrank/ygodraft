@@ -23,4 +23,15 @@ export class SetlistPackComponent implements OnInit {
       this.name = 'Legend of Blue Eyes';
     this.src = `assets/images/cardsets/${this.set.set_code}.jpg`;
   }
+
+  toggleSelected() {
+    const setName = this.set.set_name;
+    const isSelected = this.selectedSets.some((set) => set === setName);
+    if (isSelected) {
+      this.selectedSets = this.selectedSets.filter((set) => set !== setName);
+    } else {
+      this.selectedSets.push(setName);
+    }
+    this.selectedSetsChange.emit([...this.selectedSets]);
+  }
 }

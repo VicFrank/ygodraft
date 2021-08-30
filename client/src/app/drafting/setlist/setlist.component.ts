@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cardset } from 'src/app/models/Cardset.model';
 import { DraftOptions } from 'src/app/models/drafting/DraftOptions.model';
