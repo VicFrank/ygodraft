@@ -1,14 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
-import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 
 import { DraftingRoutingModule } from './drafting-routing.module';
-import { DraftingComponent } from './drafting.component';
 import { SetlistPackComponent } from './setlist/setlist-pack/setlist-pack.component';
 import { SetlistComponent } from './setlist/setlist.component';
 import { DraftingOptionsComponent } from './setlist/drafting-options/drafting-options.component';
@@ -16,10 +12,10 @@ import { PackOpeningComponent } from './opening/pack-opening/pack-opening.compon
 import { PackCardComponent } from './opening/pack-card/pack-card.component';
 import { BulkOpenComponent } from './opening/bulk-open/bulk-open.component';
 import { BulkCardComponent } from './opening/bulk-open/bulk-card/bulk-card.component';
+import { SharedModule } from '../_shared/shared.module';
 
 @NgModule({
   declarations: [
-    DraftingComponent,
     SetlistComponent,
     SetlistPackComponent,
     DraftingOptionsComponent,
@@ -29,12 +25,10 @@ import { BulkCardComponent } from './opening/bulk-open/bulk-card/bulk-card.compo
     BulkCardComponent,
   ],
   imports: [
-    CommonModule,
-    FormsModule,
+    SharedModule,
     DraftingRoutingModule,
     CheckboxModule,
     DropdownModule,
-    ButtonModule,
     DialogModule,
   ],
 })
