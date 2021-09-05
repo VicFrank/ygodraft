@@ -15,8 +15,8 @@ a {
 
 :root {
   --rare-color: #0099ff;
-  --ultra-rare-color: #6f00ff;
   --super-rare-color: #f0f;
+  --ultra-rare-color: #73ff3c;
   --secret-rare-color: #e5ff00;
 }
 
@@ -34,6 +34,55 @@ a {
 
 .secret-rare-color {
   color: var(--secret-rare-color);
+}
+
+/* Card rarity classes */
+.rare-aura-hover:hover {
+  box-shadow: var(--rare-color) 0px 0px 15px 7px;
+}
+
+.ultra-rare-aura-hover:hover {
+  box-shadow: var(--ultra-rare-color) 0px 0px 15px 7px;
+}
+
+.super-rare-aura-hover:hover {
+  box-shadow: var(--super-rare-color) 0px 0px 15px 7px;
+}
+
+.secret-rare-aura-hover:hover {
+  box-shadow: var(--secret-rare-color) 0px 0px 15px 7px;
+}
+
+.rare-aura {
+  box-shadow: var(--rare-color) 0px 0px 15px 7px;
+}
+
+.ultra-rare-aura {
+  box-shadow: var(--ultra-rare-color) 0px 0px 15px 7px;
+}
+
+.super-rare-aura {
+  box-shadow: var(--super-rare-color) 0px 0px 15px 7px;
+}
+
+.secret-rare-aura {
+  box-shadow: var(--secret-rare-color) 0px 0px 15px 7px;
+}
+
+.rare-aura-small {
+  box-shadow: var(--rare-color) 0px 0px 8px 4px;
+}
+
+.ultra-rare-aura-small {
+  box-shadow: var(--ultra-rare-color) 0px 0px 8px 4px;
+}
+
+.super-rare-aura-small {
+  box-shadow: var(--super-rare-color) 0px 0px 8px 4px;
+}
+
+.secret-rare-aura-small {
+  box-shadow: var(--secret-rare-color) 0px 0px 8px 4px;
 }
 
 .wrapping-list {

@@ -14,6 +14,8 @@ import { SetlistComponent } from './setlist/setlist.component';
 import { DraftingOptionsComponent } from './setlist/drafting-options/drafting-options.component';
 import { PackOpeningComponent } from './opening/pack-opening/pack-opening.component';
 import { PackCardComponent } from './opening/pack-card/pack-card.component';
+import { BulkOpenComponent } from './opening/bulk-open/bulk-open.component';
+import { BulkCardComponent } from './opening/bulk-open/bulk-card/bulk-card.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { PackCardComponent } from './opening/pack-card/pack-card.component';
     DraftingOptionsComponent,
     PackOpeningComponent,
     PackCardComponent,
+    BulkOpenComponent,
+    BulkCardComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,39 @@
+<img
+  class="img-fluid bulk-card"
+  (click)="displayModal = true"
+  [class.rare-aura-small]="card.set_rarity === 'Rare'"
+  [class.super-rare-aura-small]="card.set_rarity === 'Super Rare'"
+  [class.ultra-rare-aura-small]="card.set_rarity === 'Ultra Rare'"
+  [class.secret-rare-aura-small]="card.set_rarity === 'Secret Rare'"
+  src="assets/images/cards/{{ card.card_id }}.jpg"
+  [alt]="card.card_name"
+  loading="lazy"
+/>
+
+<p-dialog
+  [(visible)]="displayModal"
+  [modal]="true"
+  [dismissableMask]="true"
+  [showHeader]="false"
+  [draggable]="false"
+  [closable]="true"
+>
+  <img
+    [class.rare-aura]="card.set_rarity === 'Rare'"
+    [class.super-rare-aura]="card.set_rarity === 'Super Rare'"
+    [class.ultra-rare-aura]="card.set_rarity === 'Ultra Rare'"
+    [class.secret-rare-aura]="card.set_rarity === 'Secret Rare'"
+    src="assets/images/cards/{{ card.card_id }}.jpg"
+    [alt]="card.card_name"
+    loading="lazy"
+  />
+  <h4
+    class="text-center mt-3"
+    [class.rare-color]="card.set_rarity === 'Rare'"
+    [class.super-rare-color]="card.set_rarity === 'Super Rare'"
+    [class.ultra-rare-color]="card.set_rarity === 'Ultra Rare'"
+    [class.secret-rare-color]="card.set_rarity === 'Secret Rare'"
+  >
+    {{ card.set_rarity }}
+  </h4>
+</p-dialog>

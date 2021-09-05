@@ -1,14 +1,16 @@
 .pack {
-  padding: 0.5rem;
   text-align: center;
+  padding: 0.25rem 0;
 }
 
 .pack img {
-  width: 160px;
-  height: 300px;
+  width: 120px;
+  height: 225px;
+  margin: 0 0.5rem;
 }
 
 .set-name {
-  padding-top: 0.5rem;
+  padding-top: 0.25rem;
   text-align: center;
+  font-size: 14px;
 }

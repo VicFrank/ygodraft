@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cardset } from 'src/app/models/Cardset.model';
 import { DraftOptions } from 'src/app/models/drafting/DraftOptions.model';
@@ -37,12 +37,19 @@ export class SetlistComponent implements OnInit {
   }
 
   openPacks(event: DraftOptions) {
-    this.draftingService.packsToOpen;
-    for (const set of this.selectedSets) {
-      for (let i = 0; i < event.numPacks; i++) {
-        this.draftingService.packsToOpen.push(set);
+    this.draftingService.resetDraft();
+
+    if (event.openingMethod === 'Traditional') {
+      for (const set of this.selectedSets) {
+        for (let i = 0; i < event.numPacks; i++) {
+          this.draftingService.packsToOpen.push(set);
+        }
       }
+      this.router.navigate(['drafting/opening']);
+    } else if (event.openingMethod === 'Bulk') {
+      this.draftingService.packsPerSet = event.numPacks;
+      this.draftingService.setsToOpen = this.selectedSets;
+      this.router.navigate(['drafting/bulk-opening']);
     }
-    this.router.navigate(['drafting/opening']);
   }
 }

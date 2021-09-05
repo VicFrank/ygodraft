@@ -1,0 +1,16 @@
+<div *ngFor="let pack of packs" class="d-flex flex-row">
+  <div *ngFor="let card of pack" class="p-2">
+    <app-bulk-card [card]="card"></app-bulk-card>
+  </div>
+</div>
+<div class="d-flex justify-content-center mt-3">
+  <button
+    pButton
+    type="button"
+    label="Next Set"
+    icon="pi pi-angle-right"
+    iconPos="left"
+    class="p-button mx-1"
+    (click)="nextSet()"
+  ></button>
+</div>

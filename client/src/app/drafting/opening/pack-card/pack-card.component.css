@@ -61,35 +61,3 @@
   transform: rotateY(180deg);
   cursor: pointer;
 }
-
-.rare-aura-hover:hover {
-  box-shadow: var(--rare-color) 0px 0px 15px 7px;
-}
-
-.ultra-rare-aura-hover:hover {
-  box-shadow: var(--ultra-rare-color) 0px 0px 15px 7px;
-}
-
-.super-rare-aura-hover:hover {
-  box-shadow: var(--super-rare-color) 0px 0px 15px 7px;
-}
-
-.secret-rare-aura-hover:hover {
-  box-shadow: var(--secret-rare-color) 0px 0px 15px 7px;
-}
-
-.rare-aura {
-  box-shadow: var(--rare-color) 0px 0px 15px 7px;
-}
-
-.ultra-rare-aura {
-  box-shadow: var(--ultra-rare-color) 0px 0px 15px 7px;
-}
-
-.super-rare-aura {
-  box-shadow: var(--super-rare-color) 0px 0px 15px 7px;
-}
-
-.secret-rare-aura {
-  box-shadow: var(--secret-rare-color) 0px 0px 15px 7px;
-}
