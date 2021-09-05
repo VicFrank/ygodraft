@@ -1,0 +1,8 @@
+.collection {
+  background-color: var(--surface-e);
+  cursor: pointer;
+}
+
+.collection:hover {
+  background-color: var(--surface-d);
+}

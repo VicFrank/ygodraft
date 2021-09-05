@@ -1,0 +1,7 @@
+<app-collection-filters [(filters)]="filters"></app-collection-filters>
+<div>
+  <app-collection-card
+    *ngFor="let card of filteredCards"
+    [card]="card"
+  ></app-collection-card>
+</div>

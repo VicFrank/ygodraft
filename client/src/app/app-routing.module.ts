@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from './_shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./drafting/drafting.module').then((m) => m.DraftingModule),
   },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
