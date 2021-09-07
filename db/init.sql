@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS card_set_cards (
   card_id TEXT REFERENCES cards (card_id) ON UPDATE CASCADE,
   set_name TEXT REFERENCES card_sets (set_name) ON UPDATE CASCADE,
   set_code TEXT,
-  set_rarity TEXT,
+  set_rarity TEXT, 
   set_rarity_code TEXT,
   set_price NUMERIC(8,2)
 );
@@ -58,10 +58,12 @@ CREATE TABLE IF NOT EXISTS users (
   username TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS user_collections (
+CREATE TABLE IF NOT EXISTS collections (
+  user_id INTEGER REFERENCES users (user_id) ON UPDATE CASCADE,
   collection_id SERIAL PRIMARY KEY,
-  -- user_id TEXT REFERENCES users (user_id) ON UPDATE CASCADE,
-  code TEXT,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW(),
+  num_cards INTEGER,
   collection_data BYTEA
 );
 

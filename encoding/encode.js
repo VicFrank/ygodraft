@@ -49,25 +49,15 @@ function encodeCollection(cardSet) {
 }
 
 // decodes a unit8array into a set of cards
-function decodeCollection(collectionCode) {
+function decodeCollection(collectionData) {
   let cards = [];
-  for (let i = 0; i < collectionCode.length; i += 2) {
+  for (let i = 0; i < collectionData.length; i += 2) {
     // the bytes are in the wrong order, swap them
-    const cardCode = combineBytes(collectionCode[i + 1], collectionCode[i]);
+    const cardCode = combineBytes(collectionData[i + 1], collectionData[i]);
     const card = decodeCard(cardCode);
     cards.push(card);
   }
   return cards;
-}
-
-async function addUserCollectionCode(userId, code) {
-  try {
-    await query(`INSERT INTO user_collections (code) VALUES ($1)`, [
-      collectionCode,
-    ]);
-  } catch (error) {
-    console.error(error);
-  }
 }
 
 // Combines two octet (in decimal form) into a 4 bye string
@@ -79,22 +69,7 @@ function combineBytes(octet1, octet2) {
   return parsedCode;
 }
 
-async function getCode() {
-  try {
-    const { rows } = await query(`SELECT code FROM user_collections`);
-
-    const collectionCode = rows[0].code; //uint8array?
-    const collection = decodeCollection(collectionCode);
-    console.log(collection);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-(async function () {
-  const collection = generateSampleCardSet(9);
-  const collectionCode = encodeCollection(collection);
-
-  // async code here
-  await getCode();
-})();
+module.exports = {
+  encodeCollection,
+  decodeCollection,
+};
