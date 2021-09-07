@@ -11,4 +11,14 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/archetypes", async (req, res) => {
+  try {
+    const archetypes = await cards.getAllArchetypes();
+    res.json(archetypes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Server Error" });
+  }
+});
+
 module.exports = router;

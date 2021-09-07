@@ -1,0 +1,14 @@
+.filter-options > div {
+  padding: 0.5rem 1rem;
+}
+
+.option-value {
+  padding: 0.25rem 0.5rem;
+  display: inline-flex;
+}
+
+.option-value .icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 0.5rem;
+}

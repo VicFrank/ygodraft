@@ -58,4 +58,18 @@ module.exports = {
       throw error;
     }
   },
+  async getAllArchetypes() {
+    try {
+      const query1 = `
+      SELECT DISTINCT(archetype)
+      FROM cards
+      WHERE archetype IS NOT NULL
+      ORDER BY archetype
+      `;
+      const { rows } = await query(query1);
+      return rows.map((row) => row.archetype);
+    } catch (error) {
+      throw error;
+    }
+  },
 };

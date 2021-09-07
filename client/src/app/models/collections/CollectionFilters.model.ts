@@ -1,10 +1,10 @@
 export interface CollectionFilters {
   searchText: string;
-  level: number[];
+  levels: number[];
   atk: number;
   def: number;
-  race: string;
-  attribute: string;
-  type: string;
-  archetype: string;
+  races: string[];
+  attributes: string[];
+  types: string[];
+  archetypes: string[];
 }

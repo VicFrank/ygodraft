@@ -1,1 +1,74 @@
-<p>collection-filters works!</p>
+<div class="d-flex justify-content-start filter-options">
+  <div>
+    <h6>Search</h6>
+    <input type="text" pInputText [(ngModel)]="filters.searchText" />
+  </div>
+  <div>
+    <h6>Sort By</h6>
+    <p-dropdown
+      [options]="sortOptions"
+      [(ngModel)]="sort"
+      [autoDisplayFirst]="false"
+    ></p-dropdown>
+  </div>
+  <div>
+    <h6>Archetype</h6>
+    <p-autoComplete
+      [(ngModel)]="filters.archetypes"
+      [suggestions]="filteredArchetypes"
+      [dropdown]="true"
+      (completeMethod)="filterArchetypes($event)"
+    ></p-autoComplete>
+  </div>
+  <div>
+    <h6>Level</h6>
+    <p-multiSelect
+      [options]="levelOptions"
+      [(ngModel)]="filters.levels"
+      [showHeader]="false"
+    ></p-multiSelect>
+  </div>
+  <div>
+    <h6>Card Type</h6>
+    <p-multiSelect
+      [options]="cardTypeOptions"
+      [(ngModel)]="filters.types"
+      [showHeader]="false"
+    ></p-multiSelect>
+  </div>
+  <div>
+    <h6>Type</h6>
+    <p-multiSelect
+      [options]="raceTypeOptions"
+      [(ngModel)]="filters.races"
+      [showToggleAll]="false"
+    >
+      <!-- <ng-template let-value pTemplate="selectedItems">
+        <div class="option-value" *ngFor="let option of filters.races">
+          <img [src]="'assets/images/icons/' + option.icon" class="icon" />
+        </div>
+      </ng-template> -->
+      <ng-template let-option pTemplate="item">
+        <div class="option-value">
+          <img [src]="'assets/images/icons/' + option.icon" class="icon" />
+          <div>{{ option.label }}</div>
+        </div>
+      </ng-template>
+    </p-multiSelect>
+  </div>
+  <div>
+    <h6>Attribute</h6>
+    <p-multiSelect
+      [options]="attributeOptions"
+      [(ngModel)]="filters.attributes"
+      [showHeader]="false"
+    >
+      <ng-template let-option pTemplate="item">
+        <div class="option-value">
+          <img [src]="'assets/images/icons/' + option.icon" class="icon" />
+          <div>{{ option.label }}</div>
+        </div>
+      </ng-template>
+    </p-multiSelect>
+  </div>
+</div>
