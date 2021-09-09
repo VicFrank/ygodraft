@@ -29,8 +29,8 @@ function decodeCard(cardCode) {
 function generateSampleCardSet(numCards) {
   let cardSet = [];
   for (let i = 0; i < numCards; i++) {
-    const freq = getRandomInt(3) + 1;
-    cardSet.push({ id: i, freq });
+    const copies = getRandomInt(3) + 1;
+    cardSet.push({ id: i, copies });
   }
 
   return cardSet;
@@ -39,8 +39,8 @@ function generateSampleCardSet(numCards) {
 function encodeCollection(cardSet) {
   let codes = [];
   for (const card of cardSet) {
-    const { freq, id } = card;
-    const compressedCard = encodeCard(freq, id);
+    const { copies, id } = card;
+    const compressedCard = encodeCard(copies, id);
     codes.push(compressedCard);
   }
   const uint16 = new Uint16Array(codes);

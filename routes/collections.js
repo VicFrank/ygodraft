@@ -1,5 +1,6 @@
 const express = require("express");
 const collections = require("../db/collections");
+const cards = require("../db/cards");
 const { encodeCollection, decodeCollection } = require("../encoding/encode");
 const router = express.Router();
 
@@ -21,8 +22,24 @@ router.get("/:collection_id", async (req, res) => {
     if (!collection) {
       return res.status(404).send({ message: "Collection not found" });
     }
+    // Decode the bytea into a list of ids and freqs
     const decodedCollection = decodeCollection(collection.collection_data);
-    res.json(decodedCollection);
+    // Transform the list of ids and freqs to cards
+    const cardIds = decodedCollection.map((card) => card.id);
+    const cardsList = cards.bulkGetCards(cardIds);
+    let collection_cards = cardsList.map((card, index) => ({
+      card: card,
+      copies: cardIds[index].freq,
+    }));
+
+    res.json({
+      user_id: collection.user_id,
+      collection_id: collection.collection_id,
+      created_at: collection.created_at,
+      updated_at: collection.updated_at,
+      num_cards: collection.num_cards,
+      collection_cards,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Server Error" });
@@ -45,7 +62,8 @@ router.put("/:collection_id", async (req, res) => {
     const { collection_id } = req.params;
     const { data } = req.body;
     const encodedData = encodeCollection(data);
-    await collections.updateCollection(collection_id, encodedData);
+    const updateSuccess = await collections.updateCollection(collection_id, encodedData);
+    if (!updateSuccess) res.status(404).send({ message: "Collection not found" });
     res.status(200).send({ message: "Updated" });
   } catch (error) {
     res.status(500).send({ message: "Server Error" });

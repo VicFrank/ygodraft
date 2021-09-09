@@ -64,13 +64,16 @@ module.exports = {
     try {
       // TODO: Calculate number of collection cards
       const numCards = 0;
-      await query(
+      const { rows } = await query(
         `
         UPDATE collections SET (collection_data, num_cards, updated_at) = ($2, $3, NOW())
         WHERE collection_id = $1
+        RETURNING collection_id
         `,
         [collectionID, collectionData, numCards]
       );
+      if (rows.length === 0) return false;
+      return true;
     } catch (error) {
       throw error;
     }

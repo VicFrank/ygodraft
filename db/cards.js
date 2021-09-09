@@ -15,7 +15,7 @@ module.exports = {
   async getCard(id) {
     try {
       const query1 = `
-      SELECT cards.* FROM cards
+      SELECT * FROM cards
       WHERE card_id = $1
       `;
       let { rows } = await query(query1, [id]);
@@ -26,6 +26,23 @@ module.exports = {
       }
       card.card_sets = await this.getCardSets(id);
       return card;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async bulkGetCards(cardIds) {
+    const parsedCardIds = cardIds.join(",");
+    try {
+      const query1 = `
+      SELECT * FROM cards
+      WHERE card_id = ANY ('{$1}')
+      `;
+      // test this for speed
+      // `SELECT m.*
+      // FROM   unnest('{17579, 17580, 17582}'::int[]) id
+      // JOIN   member_copy m USING (id);`
+      let { rows } = await query(query1, [parsedCardIds]);
+      return rows;
     } catch (error) {
       throw error;
     }

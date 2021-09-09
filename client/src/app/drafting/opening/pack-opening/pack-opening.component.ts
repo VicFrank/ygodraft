@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CollectionCard } from 'src/app/models/CollectionCard.model';
 import { PackCard } from 'src/app/models/drafting/PackCard.model';
 import { DraftingService } from '../../drafting.service';
 
@@ -16,7 +15,6 @@ export class PackOpeningComponent implements OnInit {
   allFlipped: boolean = false;
 
   currentPack: PackCard[] = [];
-  openedCards: CollectionCard[] = [];
 
   constructor(
     private router: Router,
