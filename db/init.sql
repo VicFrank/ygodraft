@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS card_linkmarkers CASCADE;
 DROP TABLE IF EXISTS linkmarkers CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS user_collections CASCADE;
+DROP TABLE IF EXISTS collection_cards CASCADE;
 
 CREATE TABLE IF NOT EXISTS linkmarkers (
   marker TEXT PRIMARY KEY
@@ -58,6 +59,7 @@ CREATE TABLE IF NOT EXISTS users (
   username TEXT NOT NULL
 );
 
+-- compressed collection
 CREATE TABLE IF NOT EXISTS collections (
   user_id INTEGER REFERENCES users (user_id) ON UPDATE CASCADE,
   collection_id SERIAL PRIMARY KEY,
@@ -65,5 +67,14 @@ CREATE TABLE IF NOT EXISTS collections (
   updated_at TIMESTAMP DEFAULT NOW(),
   num_cards INTEGER,
   collection_data BYTEA
+);
+
+-- not compressed collection
+CREATE TABLE IF NOT EXISTS collection_cards (
+  collection_id INTEGER REFERENCES collections (collection_id) ON UPDATE CASCADE,
+  card_id TEXT REFERENCES cards (card_id) ON UPDATE CASCADE,
+  copies SMALLINT NOT NULL,
+  CONSTRAINT copies_greaterthan_zero CHECK (copies > 0),
+  PRIMARY KEY (collection_id, card_id)
 );
 

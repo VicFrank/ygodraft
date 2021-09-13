@@ -1,12 +1,13 @@
 <h1>Card Sets</h1>
-<div>
+<div class="box">
   <app-drafting-options
     (onOpenPacks)="openPacks($event)"
     [canOpen]="selectedSets.length > 0"
   >
   </app-drafting-options>
 </div>
-<div class="wrapping-list">
+<div style="height: 1rem"></div>
+<div class="wrapping-list box">
   <app-setlist-pack
     *ngFor="let cardset of cardsets"
     [set]="cardset"

@@ -8,6 +8,7 @@ import { CollectionCard } from 'src/app/models/collections/CollectionCard.model'
 })
 export class CollectionCardComponent implements OnInit {
   @Input() card!: CollectionCard;
+  displayModal: boolean = false;
 
   constructor() {}
 

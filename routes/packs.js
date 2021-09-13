@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.get("/open", async (req, res) => {
   try {
-    // TODO: make this a body object with a list of sets and count per set
     let { cardset, numPacks } = req.query;
     numPacks = Number(numPacks);
 
@@ -22,6 +21,26 @@ router.get("/open", async (req, res) => {
       const pack = packOpener.openPack(setCards, cardset);
       return res.json(pack);
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Server Error" });
+  }
+});
+
+router.post("/openSets", async (req, res) => {
+  let { cardsets, numPacks } = req.body;
+  try {
+    numPacks = Number(numPacks);
+
+    let packs = [];
+    for (const set of cardsets) {
+      const setCards = await cardSets.getCardSetCards(set);
+      for (let i = 0; i < numPacks; i++) {
+        packs.push(packOpener.openPack(setCards, set));
+      }
+    }
+
+    return res.json(packs);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Server Error" });

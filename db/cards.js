@@ -31,17 +31,16 @@ module.exports = {
     }
   },
   async bulkGetCards(cardIds) {
-    const parsedCardIds = cardIds.join(",");
     try {
       const query1 = `
       SELECT * FROM cards
-      WHERE card_id = ANY ('{$1}')
+      WHERE card_id = ANY($1::text[])
       `;
       // test this for speed
       // `SELECT m.*
       // FROM   unnest('{17579, 17580, 17582}'::int[]) id
       // JOIN   member_copy m USING (id);`
-      let { rows } = await query(query1, [parsedCardIds]);
+      let { rows } = await query(query1, [cardIds]);
       return rows;
     } catch (error) {
       throw error;

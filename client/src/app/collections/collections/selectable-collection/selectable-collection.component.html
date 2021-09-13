@@ -1,7 +1,9 @@
-<div class="collection d-flex p-2" [routerLink]="['/collections/123']">
+<div class="collection d-flex p-2" (click)="openCollection()">
   <div>
     <div>Collection Name</div>
-    <div class="text-muted"><span>674&nbsp;</span>Cards</div>
+    <div class="text-muted">
+      <span>{{ collection.num_cards }}&nbsp;</span>Cards
+    </div>
   </div>
 
   <button
@@ -10,5 +12,7 @@
     type="button"
     icon="pi pi-times"
     class="p-button-rounded p-button-danger ms-auto align-self-center"
+    style="z-index: 9"
+    (click)="confirmDelete($event)"
   ></button>
 </div>

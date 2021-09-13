@@ -1,8 +1,20 @@
-<h1>Collection</h1>
-<app-collection-filters [(filters)]="filters"></app-collection-filters>
-<div>
+<div class="pt-3">
+  <app-collection-filters [(filters)]="filters"></app-collection-filters>
+</div>
+<div class="box cards-container my-2">
   <app-collection-card
     *ngFor="let card of filteredCards"
     [card]="card"
   ></app-collection-card>
+</div>
+<div class="d-flex">
+  <button
+    pButton
+    pRipple
+    label="Save Collection"
+    type="button"
+    icon="pi pi-save"
+    class="p-button-rounded ms-auto"
+    (click)="saveCollection()"
+  ></button>
 </div>

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { Card } from '../models/Card.model';
+import { CollectionCard } from '../models/collections/CollectionCard.model';
 import { PackCard } from '../models/drafting/PackCard.model';
+import { CardsService } from '../_shared/cards.service';
+import { CollectionsService } from '../_shared/collections.service';
 import { PackOpeningService } from './opening/pack-opening.service';
 
 @Injectable({
@@ -9,10 +12,14 @@ import { PackOpeningService } from './opening/pack-opening.service';
 export class DraftingService {
   packsToOpen: string[] = [];
   setsToOpen: string[] = [];
-  openedPacks: PackCard[][] = [];
+  openedCards: PackCard[] = [];
   packsPerSet: number = 1;
 
-  constructor(private packOpener: PackOpeningService) {}
+  constructor(
+    private packOpener: PackOpeningService,
+    private cardService: CardsService,
+    private collectionsService: CollectionsService
+  ) {}
 
   shuffleArray(array: any[]) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -24,13 +31,41 @@ export class DraftingService {
   resetDraft() {
     this.packsToOpen = [];
     this.setsToOpen = [];
-    this.openedPacks = [];
+    this.openedCards = [];
+  }
+
+  async createCollection() {
+    // Convert opened cards to frequencies
+    let cardMap: any = {};
+    for (const card of this.openedCards) {
+      const { card_name, card_id } = card;
+      if (cardMap[card_name]) {
+        cardMap[card_name].copies += 1;
+      } else {
+        cardMap[card_name] = { card_id, copies: 1 };
+      }
+    }
+    const cardIDs = Object.values(cardMap).map((card: any) => card.card_id);
+    // Get the card data for each card id from the backend
+    let cards: Card[];
+    try {
+      cards = await this.cardService.bulkGetCards(cardIDs).toPromise();
+    } catch (error) {
+      throw error;
+    }
+    const collection_cards = cards.map((card) => ({
+      ...card,
+      copies: cardMap[card.card_name].copies,
+      copies_in_use: 0,
+    }));
+    const num_cards = this.openedCards.length;
+    this.collectionsService.createNewCollectionWeb(collection_cards, num_cards);
   }
 
   async openSinglePack(set: string) {
     const packs = await this.packOpener.generatePacks(set, 1).toPromise();
     let pack = packs[0];
-    this.openedPacks.push(pack);
+    this.openedCards = this.openedCards.concat(pack);
     pack = pack.map((card) => ({ ...card, flipped: false }));
     this.shuffleArray(pack);
 
@@ -41,15 +76,18 @@ export class DraftingService {
     const packs = await this.packOpener
       .generatePacks(set, this.packsPerSet)
       .toPromise();
-    this.openedPacks = this.openedPacks.concat(packs);
+    const newcards = packs.reduce((flat, next) => flat.concat(next), []);
+    this.openedCards = this.openedCards.concat(newcards);
     return packs;
   }
 
-  async bulkOpenSets(sets: string[]) {
+  async openAllSets() {
     const packs = await this.packOpener
-      .openSets(sets, this.packsPerSet)
+      .openSets(this.setsToOpen, this.packsPerSet)
       .toPromise();
-    this.openedPacks = this.openedPacks.concat(packs);
+    const newcards = packs.reduce((flat, next) => flat.concat(next), []);
+    this.openedCards = this.openedCards.concat(newcards);
+    this.setsToOpen = [];
     return packs;
   }
 }

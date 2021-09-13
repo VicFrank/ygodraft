@@ -1,16 +1,22 @@
-<div *ngFor="let pack of packs" class="d-flex flex-row">
-  <div *ngFor="let card of pack" class="p-2">
-    <app-bulk-card [card]="card"></app-bulk-card>
+<h1>Bulk Open</h1>
+<div class="box py-2">
+  <div class="pack-container">
+    <div *ngFor="let pack of packs" class="d-flex flex-row">
+      <div *ngFor="let card of pack" class="card-holder py-2">
+        <app-bulk-card [card]="card"></app-bulk-card>
+      </div>
+    </div>
   </div>
 </div>
 <div class="d-flex justify-content-center mt-3">
   <button
     pButton
     type="button"
-    label="Next Set"
+    label="View as Collection"
     icon="pi pi-angle-right"
     iconPos="left"
     class="p-button mx-1"
-    (click)="nextSet()"
+    [loading]="isLoading"
+    (click)="createCollection()"
   ></button>
 </div>

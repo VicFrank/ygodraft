@@ -12,8 +12,8 @@ function getRarityMap(setCards) {
   return rarityMap;
 }
 
-function getRandomCardOfRarity(rarityMap, rarity) {
-  if (!rarityMap[rarity]) throw new Error(`Card with rarity ${rarity} not found in set`);
+function getRandomCardOfRarity(rarityMap, rarity, setName) {
+  if (!rarityMap[rarity]) throw new Error(`Card with rarity ${rarity} not found in set ${setName}`);
   const cards = rarityMap[rarity];
   return cards[Math.floor(Math.random() * cards.length)];
 }
@@ -51,7 +51,7 @@ module.exports = {
     for (const pullData of guaranteed) {
       const { rarity, amount } = pullData;
       for (let i = 0; i < amount; i++) {
-        const pulledCard = getRandomCardOfRarity(rarityMap, rarity);
+        const pulledCard = getRandomCardOfRarity(rarityMap, rarity, setName);
         pulledCards.push(pulledCard);
         // remove the pulled card from the pool
         rarityMap[rarity] = rarityMap[rarity].filter(

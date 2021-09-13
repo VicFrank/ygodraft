@@ -1,0 +1,12 @@
+.pack-container {
+  height: calc(100vh - 200px);
+  min-height: 400px;
+  display: block;
+  position: relative;
+  overflow: auto;
+  contain: strict;
+}
+
+.card-holder {
+  flex: 1 1 auto;
+}

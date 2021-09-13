@@ -60,7 +60,7 @@ function decodeCollection(collectionData) {
   return cards;
 }
 
-// Combines two octet (in decimal form) into a 4 bye string
+// Combines two octet (in decimal form) into a 4 byte string
 function combineBytes(octet1, octet2) {
   const hexCode1 = octet1.toString(16).padStart(2, "0");
   const hexCode2 = octet2.toString(16).padStart(2, "0");

@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PackCard } from 'src/app/models/drafting/PackCard.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PackOpeningService {
-  apiUrl = 'api/packs';
+  private baseUrl = `${environment.apiUrl}/packs`;
 
   constructor(private http: HttpClient) {}
 
   generatePacks(cardset: string, numPacks: number) {
     return this.http.get<PackCard[][]>(
-      `${this.apiUrl}/open?cardset=${cardset}&numPacks=${numPacks}`
+      `${this.baseUrl}/open?cardset=${cardset}&numPacks=${numPacks}`
     );
   }
 
@@ -22,7 +23,7 @@ export class PackOpeningService {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     };
     return this.http.post<PackCard[][]>(
-      `${this.apiUrl}/openSets`,
+      `${this.baseUrl}/openSets`,
       data,
       config
     );

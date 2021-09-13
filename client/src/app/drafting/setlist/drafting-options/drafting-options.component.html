@@ -4,6 +4,7 @@
     <p-dropdown
       [options]="numPacksOptions"
       [(ngModel)]="draftOptions.numPacks"
+      (onChange)="optionsChanged()"
     ></p-dropdown>
   </div>
   <div>
@@ -11,13 +12,13 @@
     <p-dropdown
       [options]="openingOptions"
       [(ngModel)]="draftOptions.openingMethod"
+      (onChange)="optionsChanged()"
     ></p-dropdown>
   </div>
-  <div class="ms-auto">
-    <p-button
-      label="Open!"
-      (onClick)="openPacks()"
-      [disabled]="!canOpen"
-    ></p-button>
-  </div>
+  <p-button
+    label="Open!"
+    (onClick)="openPacks()"
+    [disabled]="!canOpen"
+    class="ms-auto my-auto"
+  ></p-button>
 </div>

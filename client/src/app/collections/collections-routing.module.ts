@@ -9,7 +9,11 @@ const routes: Routes = [
     component: CollectionsComponent,
   },
   {
-    path: ':id',
+    path: 'new',
+    component: CollectionComponent,
+  },
+  {
+    path: 'collection/:id',
     component: CollectionComponent,
   },
 ];

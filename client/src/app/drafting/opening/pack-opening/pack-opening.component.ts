@@ -23,7 +23,6 @@ export class PackOpeningComponent implements OnInit {
 
   ngOnInit(): void {
     this.packsToOpen = this.draftingService.packsToOpen.length;
-    this.draftingService.openedPacks = [];
 
     if (this.packsToOpen === 0) {
       // We don't have any packs to open, redirect back to drafting

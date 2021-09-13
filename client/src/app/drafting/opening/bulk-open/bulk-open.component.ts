@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { PackCard } from 'src/app/models/drafting/PackCard.model';
 import { DraftingService } from '../../drafting.service';
 
@@ -13,26 +14,48 @@ export class BulkOpenComponent implements OnInit {
   setsToOpen: number = 0;
   currentSet: string = '';
 
+  isLoading: boolean = false;
+
   constructor(
     private router: Router,
-    private draftingService: DraftingService
+    private draftingService: DraftingService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     this.setsToOpen = this.draftingService.setsToOpen.length;
-    this.draftingService.openedPacks = [];
 
     if (this.setsToOpen === 0) {
       this.router.navigate(['drafting']);
     }
-    this.nextSet();
+    this.openAllSets();
   }
 
+  // For opening one set at a time (not currently used)
   async nextSet() {
     if (this.draftingService.setsToOpen.length === 0) return;
-
     this.currentSet = this.draftingService.setsToOpen.shift()!;
-
     this.packs = await this.draftingService.bulkOpenPacks(this.currentSet);
+  }
+
+  async openAllSets() {
+    this.packs = await this.draftingService.openAllSets();
+  }
+
+  async createCollection() {
+    // this.isLoading = true;
+    try {
+      await this.draftingService.createCollection();
+    } catch (error) {
+      console.error(error);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Error creating collection',
+      });
+      return;
+    }
+    this.isLoading = false;
+    this.router.navigate(['collections/new']);
   }
 }

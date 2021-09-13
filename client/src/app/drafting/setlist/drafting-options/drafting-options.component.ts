@@ -11,7 +11,7 @@ interface DraftEvent {
   templateUrl: './drafting-options.component.html',
   styleUrls: ['./drafting-options.component.css'],
 })
-export class DraftingOptionsComponent {
+export class DraftingOptionsComponent implements OnInit {
   @Input() canOpen!: boolean;
   @Output() onOpenPacks = new EventEmitter<DraftEvent>();
 
@@ -35,7 +35,23 @@ export class DraftingOptionsComponent {
     ];
   }
 
+  ngOnInit(): void {
+    const options = sessionStorage.getItem('drafting-options');
+    if (options) {
+      const parsedOptions = JSON.parse(options);
+      if (parsedOptions.numPacks > 24) return;
+      this.draftOptions = parsedOptions;
+    }
+  }
+
   openPacks() {
     this.onOpenPacks.emit(this.draftOptions);
+  }
+
+  optionsChanged() {
+    sessionStorage.setItem(
+      'drafting-options',
+      JSON.stringify(this.draftOptions)
+    );
   }
 }
