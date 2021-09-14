@@ -144,9 +144,7 @@ module.exports = {
     distribution: dist2,
   },
   "Elemental Energy": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist2,
+    packType: "side_set",
   },
   "Shadow of Infinity": {
     packType: "booster",
@@ -386,9 +384,7 @@ module.exports = {
     distribution: dist4,
   },
   "Destiny Soldiers": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Raging Tempest": {
     packType: "booster",
@@ -396,9 +392,7 @@ module.exports = {
     distribution: dist4,
   },
   "Fusion Enforcers": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Maximum Crisis": {
     packType: "booster",
@@ -436,9 +430,7 @@ module.exports = {
     distribution: dist4,
   },
   "Dark Saviors": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Cybernetic Horizon": {
     packType: "booster",
@@ -456,9 +448,7 @@ module.exports = {
     distribution: dist4,
   },
   "Hidden Summoners": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Savage Strike": {
     packType: "booster",
@@ -471,14 +461,10 @@ module.exports = {
     distribution: dist4,
   },
   "Duel Power": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Duelist Saga": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Dark Neostorm": {
     packType: "booster",
@@ -491,9 +477,7 @@ module.exports = {
     distribution: dist4,
   },
   "Fists of the Gadgets": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Chaos Impact": {
     packType: "booster",
@@ -501,9 +485,7 @@ module.exports = {
     distribution: dist4,
   },
   "Mystic Fighters": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Ignition Assault": {
     packType: "booster",
@@ -511,14 +493,10 @@ module.exports = {
     distribution: dist4,
   },
   "Duel Overload": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Secret Slayers": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Eternity Code": {
     packType: "booster",
@@ -541,9 +519,7 @@ module.exports = {
     distribution: dist4,
   },
   "Genesis Impact": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Blazing Vortex": {
     packType: "booster",

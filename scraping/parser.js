@@ -4,6 +4,7 @@ const fs = require("fs");
 
 const cardsJson = fs.readFileSync("./cards.json");
 const cardsetsJson = fs.readFileSync("./cardsets.json");
+const boosterPacks = require("../packs/booster_packs");
 
 const cards = JSON.parse(cardsJson).data;
 const cardsets = JSON.parse(cardsetsJson);
@@ -28,10 +29,7 @@ const createLinkmarkers = async () => {
 
   for (const marker of linkmarkers) {
     try {
-      await query(
-        "INSERT INTO linkmarkers (marker) VALUES ($1) ON CONFLICT DO NOTHING",
-        [marker]
-      );
+      await query("INSERT INTO linkmarkers (marker) VALUES ($1) ON CONFLICT DO NOTHING", [marker]);
     } catch (error) {
       throw error;
     }
@@ -60,20 +58,7 @@ const parseCards = async (cards) => {
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
       ON CONFLICT DO NOTHING
       `,
-        [
-          id,
-          name,
-          type,
-          desc,
-          atk,
-          def,
-          level,
-          race,
-          attribute,
-          scale,
-          linkval,
-          archetype,
-        ]
+        [id, name, type, desc, atk, def, level, race, attribute, scale, linkval, archetype]
       );
 
       // Link Markers
@@ -94,8 +79,7 @@ const parseCards = async (cards) => {
       // Card sets
       if (card_sets) {
         for (const set of card_sets) {
-          let { set_name, set_code, set_rarity, set_rarity_code, set_price } =
-            set;
+          let { set_name, set_code, set_rarity, set_rarity_code, set_price } = set;
           set_price = parseFloat(set_price);
 
           // Insert the set, if doesn't already exist
@@ -131,8 +115,22 @@ const parseCards = async (cards) => {
   }
 };
 
+const updateCardSets = async () => {
+  for ([setName, setValues] of Object.entries(boosterPacks)) {
+    const { packType } = setValues;
+    let promises = [];
+    if (packType !== "booster") {
+      promises.push(
+        query("UPDATE card_sets SET set_type = $2 WHERE set_name = $1", [setName, packType])
+      );
+    }
+    await Promise.all(promises);
+  }
+};
+
 (async function () {
-  await createCardSets(cardsets);
-  await createLinkmarkers();
-  await parseCards(cards);
+  // await createCardSets(cardsets);
+  // await createLinkmarkers();
+  // await parseCards(cards);
+  await updateCardSets();
 })();

@@ -71,8 +71,8 @@ CREATE TABLE IF NOT EXISTS collections (
 
 -- not compressed collection
 CREATE TABLE IF NOT EXISTS collection_cards (
-  collection_id INTEGER REFERENCES collections (collection_id) ON UPDATE CASCADE,
-  card_id TEXT REFERENCES cards (card_id) ON UPDATE CASCADE,
+  collection_id INTEGER REFERENCES collections (collection_id) ON DELETE CASCADE,
+  card_id TEXT REFERENCES cards (card_id) ON DELETE CASCADE,
   copies SMALLINT NOT NULL,
   CONSTRAINT copies_greaterthan_zero CHECK (copies > 0),
   PRIMARY KEY (collection_id, card_id)

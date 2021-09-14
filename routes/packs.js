@@ -29,11 +29,13 @@ router.get("/open", async (req, res) => {
 
 router.post("/openSets", async (req, res) => {
   let { cardsets, numPacks } = req.body;
+  console.log(cardsets);
   try {
     numPacks = Number(numPacks);
 
     let packs = [];
     for (const set of cardsets) {
+      console.log(set);
       const setCards = await cardSets.getCardSetCards(set);
       for (let i = 0; i < numPacks; i++) {
         packs.push(packOpener.openPack(setCards, set));
