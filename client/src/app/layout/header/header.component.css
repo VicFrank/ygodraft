@@ -1,14 +1,5 @@
-.toolbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 62px;
-  display: flex;
-  align-items: center;
+.navbar {
   background-color: var(--surface-a);
-  padding: 0 31px;
-  z-index: 2;
 }
 
 .spacer {

@@ -56,7 +56,7 @@ export class SelectableCollectionComponent {
 
   openCollection() {
     this.router.navigate([
-      "['/collections/collection/' + collection.collection_id]",
+      `/collections/collection/${this.collection.collection_id}`,
     ]);
   }
 }

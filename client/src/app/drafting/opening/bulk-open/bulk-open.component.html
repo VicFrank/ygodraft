@@ -2,7 +2,7 @@
 <div class="box py-2">
   <div class="pack-container">
     <div *ngFor="let pack of packs" class="d-flex flex-row">
-      <div *ngFor="let card of pack" class="card-holder py-2">
+      <div *ngFor="let card of pack" class="card-holder">
         <app-bulk-card [card]="card"></app-bulk-card>
       </div>
     </div>

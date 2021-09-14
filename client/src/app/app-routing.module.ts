@@ -4,6 +4,11 @@ import { PageNotFoundComponent } from './_shared/page-not-found/page-not-found.c
 
 const routes: Routes = [
   {
+    path: '',
+    loadChildren: () =>
+      import('./drafting/drafting.module').then((m) => m.DraftingModule),
+  },
+  {
     path: 'collections',
     loadChildren: () =>
       import('./collections/collections.module').then(

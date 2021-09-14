@@ -22,6 +22,7 @@ export class CollectionComponent implements OnInit {
   filters: any = {};
 
   isNew: boolean = false;
+  loading: boolean = true;
 
   constructor(
     private collectionsService: CollectionsService,
@@ -34,6 +35,7 @@ export class CollectionComponent implements OnInit {
     this.route.url.subscribe((value) => {
       if (value[0].path === 'new') {
         this.isNew = true;
+        this.loading = false;
         if (this.collectionsService.newCollection) {
           this.collection = this.collectionsService.newCollection;
           this.filteredCards = this.collection.collection_cards;
@@ -48,6 +50,7 @@ export class CollectionComponent implements OnInit {
           .subscribe((collection) => {
             this.collection = collection;
             this.filteredCards = this.collection.collection_cards;
+            this.loading = false;
           });
       }
     });

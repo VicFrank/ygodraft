@@ -2,6 +2,7 @@
   <app-collection-filters [(filters)]="filters"></app-collection-filters>
 </div>
 <div class="box cards-container my-2">
+  <p-progressSpinner *ngIf="loading" class="text-center"></p-progressSpinner>
   <app-collection-card
     *ngFor="let card of filteredCards"
     [card]="card"
