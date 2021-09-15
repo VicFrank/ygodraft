@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Collection } from 'src/app/models/collections/Collection.model';
 import { CollectionCard } from 'src/app/models/collections/CollectionCard.model';
+import { CollectionFilters } from 'src/app/models/collections/CollectionFilters.model';
 import { CollectionsService } from 'src/app/_shared/collections.service';
+import { CardFilterService } from './card-filter.service';
 
 @Component({
   selector: 'app-collection',
@@ -19,13 +21,17 @@ export class CollectionComponent implements OnInit {
     collection_cards: [],
   };
   filteredCards: CollectionCard[] = [];
-  filters: any = {};
+  filters: CollectionFilters = {
+    levels: [],
+  };
+  currentSort: string = 'Type';
 
   isNew: boolean = false;
   loading: boolean = true;
 
   constructor(
     private collectionsService: CollectionsService,
+    private cardFilterer: CardFilterService,
     private route: ActivatedRoute,
     private router: Router,
     private messageService: MessageService
@@ -39,6 +45,8 @@ export class CollectionComponent implements OnInit {
         if (this.collectionsService.newCollection) {
           this.collection = this.collectionsService.newCollection;
           this.filteredCards = this.collection.collection_cards;
+          this.sortCollection();
+          // order cards by type and name by default
         } else {
           // We don't have a new collection to go to
           this.router.navigate(['collections']);
@@ -54,6 +62,18 @@ export class CollectionComponent implements OnInit {
           });
       }
     });
+  }
+
+  filterCollection() {
+    this.filteredCards = this.cardFilterer.filterCollection(
+      this.collection.collection_cards,
+      this.filters
+    );
+    this.sortCollection();
+  }
+
+  sortCollection() {
+    this.cardFilterer.sortCollection(this.filteredCards, this.currentSort);
   }
 
   saveCollection() {

@@ -1,9 +1,13 @@
-<div class="pt-3">
-  <app-collection-filters [(filters)]="filters"></app-collection-filters>
-</div>
-<div class="box cards-container my-2">
+<app-collection-filters
+  [(filters)]="filters"
+  [(sort)]="currentSort"
+  (filtersChange)="filterCollection()"
+  (sortChange)="sortCollection()"
+></app-collection-filters>
+<div class="box cards-container wrapping-list mb-3">
   <p-progressSpinner *ngIf="loading" class="text-center"></p-progressSpinner>
   <app-collection-card
+    class="m-1"
     *ngFor="let card of filteredCards"
     [card]="card"
   ></app-collection-card>

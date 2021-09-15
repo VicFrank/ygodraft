@@ -1,16 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SelectItem } from 'primeng/api';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CollectionFilters } from 'src/app/models/collections/CollectionFilters.model';
 import { CardsService } from 'src/app/_shared/cards.service';
-
 @Component({
   selector: 'app-collection-filters',
   templateUrl: './collection-filters.component.html',
   styleUrls: ['./collection-filters.component.css'],
 })
-export class CollectionFiltersComponent implements OnInit {
+export class CollectionFiltersComponent {
   @Input() filters!: CollectionFilters;
+  @Output() filtersChange = new EventEmitter<CollectionFilters>();
   @Input() sort!: string;
+  @Output() sortChange = new EventEmitter<string>();
 
   archetypes: string[] = [];
   filteredArchetypes: string[] = [];
@@ -20,6 +23,8 @@ export class CollectionFiltersComponent implements OnInit {
   cardTypeOptions: SelectItem[];
   raceTypeOptions: SelectItem[];
   attributeOptions: SelectItem[];
+
+  searchStringChanged: Subject<string> = new Subject<string>();
 
   constructor(private cardsService: CardsService) {
     this.levelOptions = [
@@ -37,15 +42,16 @@ export class CollectionFiltersComponent implements OnInit {
       { label: '12', value: 12 },
     ];
     this.sortOptions = [
-      { label: 'Alphabetical', value: 'alphabetical' },
+      { label: 'Card Type', value: 'type' },
+      { label: 'Name', value: 'name' },
       { label: 'Attack', value: 'attack' },
       { label: 'Defense', value: 'defense' },
-      { label: 'Card Type', value: 'type' },
       { label: 'Level', value: 'level' },
       { label: 'Forbidden', value: 'forbidden' },
       { label: 'Monster Attribute', value: 'attribute' },
       { label: 'Monster Type', value: 'type' },
-      { label: 'New', value: 'new' },
+      { label: 'New!', value: 'new' },
+      { label: 'Copies', value: 'copies' },
     ];
     this.cardTypeOptions = [
       { label: 'Spell', value: 'Spell' },
@@ -108,9 +114,22 @@ export class CollectionFiltersComponent implements OnInit {
     this.cardsService
       .getAllArchetypes()
       .subscribe((archetypes) => (this.archetypes = archetypes));
+
+    this.searchStringChanged
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((searchString: string | undefined) => {
+        this.filters.searchText = searchString;
+        this.filtersChanged();
+      });
   }
 
-  ngOnInit(): void {}
+  search(text: string) {
+    this.searchStringChanged.next(text);
+  }
+
+  filtersChanged() {
+    this.filtersChange.emit(this.filters);
+  }
 
   filterArchetypes(event: any) {
     let query = event.query;

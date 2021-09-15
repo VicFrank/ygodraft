@@ -3,14 +3,14 @@ export interface CollectionCard {
   card_name: string;
   card_type: string;
   card_desc: string;
-  atk: number;
-  def: number;
-  card_level: number;
-  race: string;
-  attribute: string;
-  scale: number;
-  linkval: number;
-  archetype: string;
+  atk: number | null;
+  def: number | null;
+  card_level: number | null;
+  race: string | null;
+  attribute: string | null;
+  scale: number | null;
+  linkval: number | null;
+  archetype: string | null;
   copies: number;
   copies_in_use: number;
 }

@@ -1,7 +1,12 @@
 <div class="d-flex justify-content-start filter-options box">
   <div>
     <h6>Search</h6>
-    <input type="text" pInputText [(ngModel)]="filters.searchText" />
+    <input
+      type="text"
+      pInputText
+      [(ngModel)]="filters.searchText"
+      (ngModelChange)="search($event)"
+    />
   </div>
   <div>
     <h6>Sort By</h6>
@@ -9,15 +14,19 @@
       [options]="sortOptions"
       [(ngModel)]="sort"
       [autoDisplayFirst]="false"
+      scrollHeight="300px"
+      (onChange)="sortChange.emit(sort)"
     ></p-dropdown>
   </div>
   <div>
     <h6>Archetype</h6>
     <p-autoComplete
-      [(ngModel)]="filters.archetypes"
+      [(ngModel)]="filters.archetype"
       [suggestions]="filteredArchetypes"
+      (onChange)="filtersChanged()"
       [dropdown]="true"
       (completeMethod)="filterArchetypes($event)"
+      scrollHeight="300px"
     ></p-autoComplete>
   </div>
   <div>
@@ -25,23 +34,29 @@
     <p-multiSelect
       [options]="levelOptions"
       [(ngModel)]="filters.levels"
+      (onChange)="filtersChanged()"
       [showHeader]="false"
+      scrollHeight="300px"
     ></p-multiSelect>
   </div>
   <div>
     <h6>Card Type</h6>
-    <p-multiSelect
+    <p-dropdown
       [options]="cardTypeOptions"
-      [(ngModel)]="filters.types"
-      [showHeader]="false"
-    ></p-multiSelect>
+      [(ngModel)]="filters.type"
+      (onChange)="filtersChanged()"
+      [autoDisplayFirst]="false"
+      scrollHeight="300px"
+    ></p-dropdown>
   </div>
   <div>
     <h6>Type</h6>
-    <p-multiSelect
+    <p-dropdown
       [options]="raceTypeOptions"
-      [(ngModel)]="filters.races"
-      [showToggleAll]="false"
+      [(ngModel)]="filters.race"
+      (onChange)="filtersChanged()"
+      [autoDisplayFirst]="false"
+      scrollHeight="300px"
     >
       <!-- <ng-template let-value pTemplate="selectedItems">
         <div class="option-value" *ngFor="let option of filters.races">
@@ -54,14 +69,16 @@
           <div>{{ option.label }}</div>
         </div>
       </ng-template>
-    </p-multiSelect>
+    </p-dropdown>
   </div>
   <div>
     <h6>Attribute</h6>
-    <p-multiSelect
+    <p-dropdown
       [options]="attributeOptions"
-      [(ngModel)]="filters.attributes"
-      [showHeader]="false"
+      [(ngModel)]="filters.attribute"
+      (onChange)="filtersChanged()"
+      [autoDisplayFirst]="false"
+      scrollHeight="300px"
     >
       <ng-template let-option pTemplate="item">
         <div class="option-value">
@@ -69,6 +86,6 @@
           <div>{{ option.label }}</div>
         </div>
       </ng-template>
-    </p-multiSelect>
+    </p-dropdown>
   </div>
 </div>
