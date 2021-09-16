@@ -27,7 +27,19 @@
     icon="pi pi-angle-right"
     iconPos="left"
     class="p-button mx-1"
-    [disabled]="!allFlipped || packsOpened >= packsToOpen"
+    *ngIf="packsOpened < packsToOpen"
+    [disabled]="!allFlipped"
     (click)="nextPack()"
+  ></button>
+  <button
+    pButton
+    type="button"
+    label="Go to Collection"
+    icon="pi pi-angle-right"
+    iconPos="left"
+    class="p-button mx-1"
+    *ngIf="packsOpened >= packsToOpen"
+    [disabled]="!allFlipped"
+    (click)="goToCollection()"
   ></button>
 </div>

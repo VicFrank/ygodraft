@@ -24,6 +24,19 @@ const dist2 = {
   wildCardRates: [
     { rarity: Rarities.SUPER_RARE, freq: 1 / 6 },
     { rarity: Rarities.ULTRA_RARE, freq: 1 / 24 },
+  ],
+};
+
+const dist2_secret = {
+  guaranteed: [
+    { rarity: Rarities.COMMON, amount: 7 },
+    { rarity: Rarities.RARE, amount: 1 },
+  ],
+  wildCards: 1,
+  defaultWildCard: Rarities.COMMON,
+  wildCardRates: [
+    { rarity: Rarities.SUPER_RARE, freq: 1 / 6 },
+    { rarity: Rarities.ULTRA_RARE, freq: 1 / 24 },
     { rarity: Rarities.SECRET_RARE, freq: 1 / 31 },
   ],
 };
@@ -117,7 +130,7 @@ module.exports = {
     cardsPerPack: 9,
     distribution: dist1,
   },
-  // Booster dist 2
+  // Booster dist 2 (no secrets)
   "Soul of the Duelist": {
     packType: "booster",
     cardsPerPack: 9,
@@ -166,15 +179,16 @@ module.exports = {
     cardsPerPack: 9,
     distribution: dist2,
   },
+  // secrets are back baby
   "Strike of Neos": {
     packType: "booster",
     cardsPerPack: 9,
-    distribution: dist2,
+    distribution: dist2_secret,
   },
   "Force of the Breaker": {
     packType: "booster",
     cardsPerPack: 9,
-    distribution: dist2,
+    distribution: dist2_secret,
   },
   // Booster dist 3
   "Tactical Evolution": {
@@ -504,19 +518,13 @@ module.exports = {
     distribution: dist4,
   },
   "Toon Chaos": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Rise of the Duelist": {
-    packType: "booster?",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Phantom Rage": {
-    packType: "booster?",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Genesis Impact": {
     packType: "side_set",
@@ -527,14 +535,10 @@ module.exports = {
     distribution: dist4,
   },
   "Ancient Guardians": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Ghosts From the Past": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
   "Lightning Overdrive": {
     packType: "booster",
@@ -542,8 +546,6 @@ module.exports = {
     distribution: dist4,
   },
   "King's Court": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "side_set",
   },
 };

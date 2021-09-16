@@ -20,7 +20,7 @@
   position: relative;
 }
 
-.topbar-menu > li > a {
+.topbar-link > a {
   text-decoration: none;
   color: var(--text-color);
   min-width: 120px;
@@ -36,7 +36,7 @@
   cursor: pointer;
 }
 
-.topbar-menu > li > a:focus,
-.topbar-menu > li > a:hover {
+.topbar-link > a:focus,
+.topbar-link > a:hover {
   border-bottom-color: var(--primary-color);
 }

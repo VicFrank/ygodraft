@@ -25,10 +25,10 @@ function getWildCard(rarityMap, wildCardRates, defaultRarity) {
     const { freq, rarity } = rate;
     cumSum += freq;
     if (cumSum >= random) {
-      return getRandomCardOfRarity(rarityMap, rarity);
+      return getRandomCardOfRarity(rarityMap, rarity, setName);
     }
   }
-  return getRandomCardOfRarity(rarityMap, defaultRarity);
+  return getRandomCardOfRarity(rarityMap, defaultRarity, setName);
 }
 
 module.exports = {

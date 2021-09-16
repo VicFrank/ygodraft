@@ -6,7 +6,7 @@ export interface CollectionCard {
   atk: number | null;
   def: number | null;
   card_level: number | null;
-  race: string | null;
+  race: string;
   attribute: string | null;
   scale: number | null;
   linkval: number | null;

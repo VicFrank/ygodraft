@@ -14,8 +14,6 @@ export class BulkOpenComponent implements OnInit {
   setsToOpen: number = 0;
   currentSet: string = '';
 
-  isLoading: boolean = false;
-
   constructor(
     private router: Router,
     private draftingService: DraftingService,
@@ -43,11 +41,9 @@ export class BulkOpenComponent implements OnInit {
   }
 
   async createCollection() {
-    // this.isLoading = true;
     try {
       await this.draftingService.createCollection();
     } catch (error) {
-      console.error(error);
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -55,7 +51,6 @@ export class BulkOpenComponent implements OnInit {
       });
       return;
     }
-    this.isLoading = false;
     this.router.navigate(['collections/new']);
   }
 }

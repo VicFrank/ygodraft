@@ -1,0 +1,6 @@
+.set-list {
+  height: calc(100vh - 310px);
+  min-height: 400px;
+  overflow: auto;
+  contain: strict;
+}

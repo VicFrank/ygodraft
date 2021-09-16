@@ -90,10 +90,28 @@ export class CardFilterService {
           if (card1.card_level === card2.card_level)
             return this.defaultCompare(card1, card2);
           if (card1.card_level != null && card2.card_level == null) return -1;
-          if (card1.card_level != null && card2.card_level != null) return 1;
+          if (card1.card_level == null && card2.card_level != null) return 1;
           if (card1.card_level && card2.card_level)
             return card2.card_level - card1.card_level;
           else return 0;
+        });
+        break;
+      case 'attribute':
+        cards.sort((card1, card2) => {
+          if (card1.attribute === card2.attribute)
+            return this.defaultCompare(card1, card2);
+          if (card1.attribute != null && card2.attribute == null) return -1;
+          if (card1.attribute == null && card2.attribute != null) return 1;
+          if (card1.attribute && card2.attribute)
+            return card1.attribute.localeCompare(card2.attribute);
+          else return 0;
+        });
+        break;
+      case 'monster type':
+        cards.sort((card1, card2) => {
+          if (card1.race === card2.race)
+            return this.defaultCompare(card1, card2);
+          return card1.race.localeCompare(card2.race);
         });
         break;
       case 'copies':

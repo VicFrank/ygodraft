@@ -119,11 +119,9 @@ const updateCardSets = async () => {
   for ([setName, setValues] of Object.entries(boosterPacks)) {
     const { packType } = setValues;
     let promises = [];
-    if (packType !== "booster") {
-      promises.push(
-        query("UPDATE card_sets SET set_type = $2 WHERE set_name = $1", [setName, packType])
-      );
-    }
+    promises.push(
+      query("UPDATE card_sets SET set_type = $2 WHERE set_name = $1", [setName, packType])
+    );
     await Promise.all(promises);
   }
 };

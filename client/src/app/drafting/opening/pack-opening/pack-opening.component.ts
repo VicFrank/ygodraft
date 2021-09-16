@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { PackCard } from 'src/app/models/drafting/PackCard.model';
 import { DraftingService } from '../../drafting.service';
 
@@ -18,7 +19,8 @@ export class PackOpeningComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private draftingService: DraftingService
+    private draftingService: DraftingService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -50,5 +52,19 @@ export class PackOpeningComponent implements OnInit {
       card.flipped = true;
     }
     this.allFlipped = true;
+  }
+
+  async goToCollection() {
+    try {
+      await this.draftingService.createCollection();
+    } catch (error) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Error creating collection',
+      });
+      return;
+    }
+    this.router.navigate(['collections/new']);
   }
 }

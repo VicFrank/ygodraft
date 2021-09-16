@@ -32,7 +32,7 @@ export class SetlistComponent implements OnInit {
 
   showBoosterSets() {
     this.cardsetService
-      .getAllCardsetsByType('Booster')
+      .getAllCardsetsByType('booster')
       .subscribe((cardsets) => (this.cardsets = cardsets));
   }
 

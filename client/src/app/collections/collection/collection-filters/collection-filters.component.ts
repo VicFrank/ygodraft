@@ -47,10 +47,10 @@ export class CollectionFiltersComponent {
       { label: 'Attack', value: 'attack' },
       { label: 'Defense', value: 'defense' },
       { label: 'Level', value: 'level' },
-      { label: 'Forbidden', value: 'forbidden' },
-      { label: 'Monster Attribute', value: 'attribute' },
-      { label: 'Monster Type', value: 'type' },
-      { label: 'New!', value: 'new' },
+      { label: 'Type', value: 'monster type' },
+      { label: 'Attribute', value: 'attribute' },
+      // { label: 'Forbidden', value: 'forbidden' },
+      // { label: 'New!', value: 'new' },
       { label: 'Copies', value: 'copies' },
     ];
     this.cardTypeOptions = [
