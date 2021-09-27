@@ -14,7 +14,6 @@ export class CardFilterService {
     filters: CollectionFilters
   ): CollectionCard[] {
     const searchText = filters.searchText?.toLowerCase();
-    console.log(searchText);
     return cards.filter((card) => {
       if (searchText) {
         const { card_name, card_desc } = card;
@@ -40,7 +39,7 @@ export class CardFilterService {
         if (card.attribute !== filters.attribute) return false;
       }
       if (filters.type) {
-        if (card.card_type !== filters.type) return false;
+        if (!card.card_type.includes(filters.type)) return false;
       }
       if (filters.archetype) {
         if (card.archetype !== filters.archetype) return false;

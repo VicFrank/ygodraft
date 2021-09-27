@@ -1,11 +1,11 @@
 <img
-  class="img-fluid bulk-card"
+  class="bulk-card"
   (click)="displayModal = true"
   [class.rare-aura-small]="card.set_rarity === 'Rare'"
   [class.super-rare-aura-small]="card.set_rarity === 'Super Rare'"
   [class.ultra-rare-aura-small]="card.set_rarity === 'Ultra Rare'"
   [class.secret-rare-aura-small]="card.set_rarity === 'Secret Rare'"
-  src="assets/images/cards/{{ card.card_id }}.jpg"
+  src="assets/images/cards/105_153/{{ card.card_id }}.jpg"
   [alt]="card.card_name"
   loading="lazy"
 />

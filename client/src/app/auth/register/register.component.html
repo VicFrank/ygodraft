@@ -1,0 +1,46 @@
+<form class="box signin-box px-5" [formGroup]="newUserForm">
+  <h1 class="mb-4 text-center">Create Account</h1>
+  <span class="p-float-label mb-4">
+    <input
+      formControlName="username"
+      id="username"
+      class="p-inputtext"
+      [ngClass]="{ 'p-filled': username?.value }"
+      type="username"
+      pInputText
+    />
+    <label for="username">Username</label>
+  </span>
+  <span class="p-float-label mb-4">
+    <input
+      formControlName="password"
+      id="password"
+      class="p-inputtext"
+      [ngClass]="{ 'p-filled': password?.value }"
+      type="password"
+      pInputText
+    />
+    <label for="password">Password</label>
+  </span>
+  <span class="p-float-label mb-4">
+    <input
+      formControlName="confirmPassword"
+      id="confirmPassword"
+      class="p-inputtext"
+      [ngClass]="{ 'p-filled': confirmPassword?.value }"
+      type="password"
+      pInputText
+    />
+    <label for="confirmPassword">Confirm</label>
+  </span>
+  <button
+    class="mb-3"
+    pButton
+    type="button"
+    label="Create Account"
+    (click)="createAccount()"
+  ></button>
+  <div class="text-center">
+    <a routerLink="/login" class="text-faded">Sign in instead</a>
+  </div>
+</form>

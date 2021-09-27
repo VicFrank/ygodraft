@@ -9,6 +9,11 @@ const routes: Routes = [
       import('./drafting/drafting.module').then((m) => m.DraftingModule),
   },
   {
+    path: 'login',
+    loadChildren: () =>
+      import('./auth/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
     path: 'collections',
     loadChildren: () =>
       import('./collections/collections.module').then(

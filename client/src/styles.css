@@ -7,6 +7,11 @@ body {
 
 a {
   text-decoration: none;
+  color: var(--text-color);
+}
+a:focus,
+a:hover {
+  color: var(--primary-color);
 }
 
 * {

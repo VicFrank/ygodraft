@@ -18,7 +18,7 @@ function getRandomCardOfRarity(rarityMap, rarity, setName) {
   return cards[Math.floor(Math.random() * cards.length)];
 }
 
-function getWildCard(rarityMap, wildCardRates, defaultRarity) {
+function getWildCard(rarityMap, wildCardRates, defaultRarity, setName) {
   const random = Math.random();
   let cumSum = 0;
   for (const rate of wildCardRates) {
@@ -62,7 +62,7 @@ module.exports = {
 
     // pull the "wild" cards
     for (let i = 0; i < wildCards; i++) {
-      const pulledCard = getWildCard(rarityMap, sortedRates, defaultWildCard);
+      const pulledCard = getWildCard(rarityMap, sortedRates, defaultWildCard, setName);
       pulledCards.push(pulledCard);
     }
 

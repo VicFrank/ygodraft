@@ -1,0 +1,21 @@
+.signin-box {
+  width: 400px;
+  margin: auto;
+}
+
+.p-inputtext {
+  width: 100%;
+}
+
+button {
+  width: 100%;
+}
+
+a {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+a:focus,
+a:hover {
+  color: var(--primary-color);
+}

@@ -23,4 +23,14 @@ router.get("/:user_id/collections", async (req, res) => {
   }
 });
 
+router.post("/user/exists", async (req, res) => {
+  try {
+    const { username } = req.params;
+    const usernameTaken = await users.usernameTaken(username);
+    res.send(usernameTaken);
+  } catch (error) {
+    res.status(500).send({ message: "Server Error" });
+  }
+});
+
 module.exports = router;

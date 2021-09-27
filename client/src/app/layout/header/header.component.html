@@ -8,7 +8,7 @@
       />
     </a>
     <div class="topbar-link">
-      <a routerLink="/">Yugioh Draft</a>
+      <a routerLink="/">YGO Draft</a>
     </div>
     <div class="spacer"></div>
 
@@ -23,5 +23,20 @@
         <a routerLink="/deckbuilder">Deck Builder</a>
       </li>
     </ul>
+    <button
+      *ngIf="!isLoggedIn"
+      routerLink="/login"
+      pButton
+      type="button"
+      label="Sign In"
+    ></button>
+    <button
+      *ngIf="isLoggedIn"
+      pButton
+      (click)="logout()"
+      class="p-button-text"
+      type="button"
+      label="Log Out"
+    ></button>
   </div>
 </header>

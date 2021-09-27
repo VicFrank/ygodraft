@@ -46,6 +46,7 @@
       [(ngModel)]="filters.type"
       (onChange)="filtersChanged()"
       [autoDisplayFirst]="false"
+      [showClear]="true"
       scrollHeight="300px"
     ></p-dropdown>
   </div>
@@ -56,13 +57,9 @@
       [(ngModel)]="filters.race"
       (onChange)="filtersChanged()"
       [autoDisplayFirst]="false"
+      [showClear]="true"
       scrollHeight="300px"
     >
-      <!-- <ng-template let-value pTemplate="selectedItems">
-        <div class="option-value" *ngFor="let option of filters.races">
-          <img [src]="'assets/images/icons/' + option.icon" class="icon" />
-        </div>
-      </ng-template> -->
       <ng-template let-option pTemplate="item">
         <div class="option-value">
           <img [src]="'assets/images/icons/' + option.icon" class="icon" />
@@ -78,6 +75,7 @@
       [(ngModel)]="filters.attribute"
       (onChange)="filtersChanged()"
       [autoDisplayFirst]="false"
+      [showClear]="true"
       scrollHeight="300px"
     >
       <ng-template let-option pTemplate="item">

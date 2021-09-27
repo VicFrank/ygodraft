@@ -1,7 +1,4 @@
 .bulk-card {
-  max-width: 128px;
-  max-height: 187px;
-  min-height: 100px;
   cursor: pointer;
   background-color: black;
 }
