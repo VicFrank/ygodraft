@@ -13,6 +13,11 @@ import { DraftingService } from '../drafting.service';
 export class SetlistComponent implements OnInit {
   cardsets: Cardset[] = [];
   selectedSets: string[] = [];
+  draftOptions: DraftOptions = {
+    numPacks: 24,
+    draftMode: 'Traditional',
+    openingMethod: 'Individual',
+  };
 
   constructor(
     private cardsetService: CardsetService,
@@ -24,30 +29,35 @@ export class SetlistComponent implements OnInit {
     this.showBoosterSets();
   }
 
-  showCardsets() {
-    this.cardsetService
-      .getAllCardsets()
-      .subscribe((cardsets) => (this.cardsets = cardsets));
-  }
-
-  showBoosterSets() {
+  showBoosterSets(): void {
     this.cardsetService
       .getAllCardsetsByType('booster')
-      .subscribe((cardsets) => (this.cardsets = cardsets));
+      .subscribe((cardsets) => {
+        this.cardsets = cardsets;
+        if (this.draftOptions.draftMode === 'Chaos Draft') this.selectAllSets();
+      });
   }
 
-  openPacks(event: DraftOptions) {
-    this.draftingService.resetDraft();
+  selectAllSets(): void {
+    this.selectedSets = this.cardsets.map((set) => set.set_name);
+  }
 
-    if (event.openingMethod === 'Traditional') {
+  clearSelectedSets(): void {
+    this.selectedSets = [];
+  }
+
+  openPacks(): void {
+    this.draftingService.resetDraft(this.draftOptions);
+
+    if (this.draftOptions.openingMethod === 'Individual') {
       for (const set of this.selectedSets) {
-        for (let i = 0; i < event.numPacks; i++) {
+        for (let i = 0; i < this.draftOptions.numPacks; i++) {
           this.draftingService.packsToOpen.push(set);
         }
       }
       this.router.navigate(['drafting/opening']);
-    } else if (event.openingMethod === 'Bulk') {
-      this.draftingService.packsPerSet = event.numPacks;
+    } else if (this.draftOptions.openingMethod === 'Bulk') {
+      this.draftingService.packsPerSet = this.draftOptions.numPacks;
       this.draftingService.setsToOpen = this.selectedSets;
       this.router.navigate(['drafting/bulk-opening']);
     }

@@ -20,6 +20,7 @@
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
   width: 210px;
   height: 307px;
+  transition: transform 0.25s;
 }
 
 /* This container is needed to position the front and back side */
@@ -47,6 +48,15 @@
   backface-visibility: hidden;
 }
 
+.flip-card-back img {
+  transition: transform 0.25s ease 0s, box-shadow 0.25s ease 0s;
+  transform-origin: 50% 50%;
+}
+
+.flip-card-back:hover img {
+  transform: scale(1.1);
+}
+
 /* Style the front side (fallback if image is missing) */
 .flip-card-front {
   background-color: #bbb;
@@ -60,4 +70,10 @@
   color: white;
   transform: rotateY(180deg);
   cursor: pointer;
+}
+
+.selected img {
+  box-shadow: rgb(255 255 255) 0px 0px 6px 4px;
+  filter: brightness(110%);
+  transform: scale(1.1);
 }

@@ -1,12 +1,16 @@
 <div class="text-center pt-3 mb-3">
   <h2>{{ cardset }}</h2>
-  <h4>{{ packsOpened }} / {{ packsToOpen }}</h4>
+  <h4 *ngIf="isDrafting">Select 1 card per pack</h4>
+  <h4 class="ms-2 text-muted">{{ packsOpened }} / {{ packsToOpen }}</h4>
 </div>
-<div class="wrapping-list">
+<div class="cards-container">
   <app-pack-card
-    *ngFor="let card of currentPack"
+    *ngFor="let card of currentPack; index as i"
     [card]="card"
+    [index]="i"
+    [selectable]="isDrafting"
     (onCardFlipped)="onCardFlipped()"
+    (onCardSelected)="onCardSelected($event)"
   ></app-pack-card>
 </div>
 <div class="d-flex justify-content-center mt-3">
@@ -28,7 +32,7 @@
     iconPos="left"
     class="p-button mx-1"
     *ngIf="packsOpened < packsToOpen"
-    [disabled]="!allFlipped"
+    [disabled]="!canProgress"
     (click)="nextPack()"
   ></button>
   <button
@@ -39,7 +43,7 @@
     iconPos="left"
     class="p-button mx-1"
     *ngIf="packsOpened >= packsToOpen"
-    [disabled]="!allFlipped"
+    [disabled]="!canProgress"
     (click)="goToCollection()"
   ></button>
 </div>

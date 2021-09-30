@@ -3,4 +3,5 @@ export interface PackCard {
   card_name: string;
   set_rarity: string;
   flipped?: boolean;
+  selected?: boolean;
 }

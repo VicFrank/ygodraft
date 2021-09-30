@@ -8,7 +8,10 @@ import { PackCard } from 'src/app/models/drafting/PackCard.model';
 })
 export class PackCardComponent implements OnInit {
   @Input() card!: PackCard;
+  @Input() index!: number;
+  @Input() selectable: boolean = false;
   @Output() onCardFlipped = new EventEmitter();
+  @Output() onCardSelected = new EventEmitter<number>();
 
   displayModal: boolean = false;
 
@@ -21,7 +24,12 @@ export class PackCardComponent implements OnInit {
     this.onCardFlipped.emit();
   }
 
-  openModal() {
-    this.displayModal = true;
+  onCardClicked() {
+    if (!this.card.flipped) return this.flipCard();
+    // this.displayModal = true;
+    if (this.selectable) {
+      this.card.selected = true;
+      this.onCardSelected.emit(this.index);
+    }
   }
 }

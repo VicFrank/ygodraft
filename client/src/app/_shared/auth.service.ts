@@ -11,7 +11,7 @@ import { User } from '../models/User.model.ts';
 export class AuthService {
   private baseUrl = `${environment.apiUrl}`;
   isLoggedIn: boolean = false;
-  private user?: User;
+  private _user?: User;
 
   isLoggedInChanged: Subject<boolean> = new Subject<boolean>();
 
@@ -21,15 +21,8 @@ export class AuthService {
     });
   }
 
-  public get username(): User | undefined {
-    return this.user;
-  }
-
-  getUser() {
-    return {
-      user_id: 1,
-      username: 'VicFrank',
-    };
+  public get user(): User | undefined {
+    return this._user;
   }
 
   isUsernameTaken(username: string) {
@@ -43,16 +36,16 @@ export class AuthService {
       (res: any) => {
         const { success, user } = res;
         if (success) {
-          this.user = user;
+          this._user = user;
           this.isLoggedInChanged.next(true);
         } else {
-          this.user = undefined;
+          this._user = undefined;
           this.isLoggedInChanged.next(false);
         }
       },
       (error) => {
         console.error(error);
-        this.user = undefined;
+        this._user = undefined;
         this.isLoggedInChanged.next(false);
       }
     );
@@ -63,7 +56,7 @@ export class AuthService {
       .get<boolean>(`${this.baseUrl}/auth/logout`)
       .subscribe((res: any) => {
         this.isLoggedInChanged.next(false);
-        this.user = undefined;
+        this._user = undefined;
         window.location.href = '/';
       });
   }

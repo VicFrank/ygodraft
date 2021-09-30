@@ -1,10 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'primeng/api';
-
-interface DraftEvent {
-  numPacks: number;
-  openingMethod: string;
-}
+import { DraftOptions } from 'src/app/models/drafting/DraftOptions.model';
 
 @Component({
   selector: 'app-drafting-options',
@@ -13,14 +9,15 @@ interface DraftEvent {
 })
 export class DraftingOptionsComponent implements OnInit {
   @Input() canOpen!: boolean;
-  @Output() onOpenPacks = new EventEmitter<DraftEvent>();
+  @Output() onOpenPacks = new EventEmitter<DraftOptions>();
+  @Output() onSelectAll = new EventEmitter();
+  @Output() onDeselectAll = new EventEmitter();
+  @Input() draftOptions!: DraftOptions;
+  @Output() draftOptionsChange = new EventEmitter<DraftOptions>();
 
-  draftOptions: DraftEvent = {
-    numPacks: 24,
-    openingMethod: 'Traditional',
-  };
   numPacksOptions: SelectItem[];
   openingOptions: SelectItem[];
+  draftModeOptions: SelectItem[];
 
   constructor() {
     this.numPacksOptions = [
@@ -29,8 +26,13 @@ export class DraftingOptionsComponent implements OnInit {
       { label: '12', value: 12 },
       { label: '24', value: 24 },
     ];
-    this.openingOptions = [
+    this.draftModeOptions = [
       { label: 'Traditional', value: 'Traditional' },
+      { label: 'Chaos Draft', value: 'Chaos Draft' },
+      { label: 'Sealed', value: 'Sealed' },
+    ];
+    this.openingOptions = [
+      { label: 'Individual', value: 'Individual' },
       { label: 'Bulk', value: 'Bulk' },
     ];
   }
@@ -41,6 +43,7 @@ export class DraftingOptionsComponent implements OnInit {
       const parsedOptions = JSON.parse(options);
       if (parsedOptions.numPacks > 24) return;
       this.draftOptions = parsedOptions;
+      this.draftModeChanged();
     }
   }
 
@@ -48,10 +51,22 @@ export class DraftingOptionsComponent implements OnInit {
     this.onOpenPacks.emit(this.draftOptions);
   }
 
+  draftModeChanged() {
+    if (this.draftOptions.draftMode === 'Chaos Draft') {
+      this.onSelectAll.emit();
+      this.draftOptions.numPacks = 1;
+      this.draftOptions.openingMethod = 'Individual';
+    } else {
+      this.onDeselectAll.emit();
+    }
+    this.optionsChanged();
+  }
+
   optionsChanged() {
     sessionStorage.setItem(
       'drafting-options',
       JSON.stringify(this.draftOptions)
     );
+    this.draftOptionsChange.emit(this.draftOptions);
   }
 }

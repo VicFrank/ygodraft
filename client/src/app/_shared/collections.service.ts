@@ -14,7 +14,7 @@ export class CollectionsService {
 
   newCollection?: Collection;
 
-  constructor(private http: HttpClient, private auth: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   clearNewCollection() {
     this.newCollection = undefined;
@@ -43,7 +43,7 @@ export class CollectionsService {
   }
 
   createCollection(cards: CollectionCard[]) {
-    const userID = this.auth.getUser().user_id;
+    const userID = this.authService.user?.user_id;
     const body = {
       cards: cards.map((collectionCard) => ({
         card_id: collectionCard.card_id,

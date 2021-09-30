@@ -1,5 +1,5 @@
 <div class="pack-card">
-  <div class="flip-card">
+  <div class="flip-card" [class.selected]="card.selected">
     <div
       class="flip-card-inner"
       [class.flipped]="card.flipped"
@@ -7,20 +7,18 @@
       [class.super-rare-aura-hover]="card.set_rarity === 'Super Rare'"
       [class.ultra-rare-aura-hover]="card.set_rarity === 'Ultra Rare'"
       [class.secret-rare-aura-hover]="card.set_rarity === 'Secret Rare'"
+      (click)="onCardClicked()"
     >
-      <div class="flip-card-front" (click)="flipCard()">
+      <div class="flip-card-front">
         <img src="assets/images/cards/cardback.jpg" alt="Yugioh Card" />
       </div>
-      <div
-        class="flip-card-back"
-        [class.rare-aura]="card.set_rarity === 'Rare'"
-        [class.super-rare-aura]="card.set_rarity === 'Super Rare'"
-        [class.ultra-rare-aura]="card.set_rarity === 'Ultra Rare'"
-        [class.secret-rare-aura]="card.set_rarity === 'Secret Rare'"
-        (click)="openModal()"
-      >
+      <div class="flip-card-back">
         <img
           src="assets/images/cards/{{ card.card_id }}.jpg"
+          [class.rare-aura]="card.set_rarity === 'Rare'"
+          [class.super-rare-aura]="card.set_rarity === 'Super Rare'"
+          [class.ultra-rare-aura]="card.set_rarity === 'Ultra Rare'"
+          [class.secret-rare-aura]="card.set_rarity === 'Secret Rare'"
           [alt]="card.card_name"
         />
       </div>
@@ -33,8 +31,8 @@
       [class.super-rare-color]="card.set_rarity === 'Super Rare'"
       [class.ultra-rare-color]="card.set_rarity === 'Ultra Rare'"
       [class.secret-rare-color]="card.set_rarity === 'Secret Rare'"
-      >{{ card.set_rarity }}</span
-    >
+      >{{ card.set_rarity }}
+    </span>
   </div>
 </div>
 

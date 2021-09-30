@@ -1,10 +1,19 @@
 <div class="d-flex justify-content-start draft-options">
   <div>
+    <h6>Draft Mode</h6>
+    <p-dropdown
+      [options]="draftModeOptions"
+      [(ngModel)]="draftOptions.draftMode"
+      (onChange)="draftModeChanged()"
+    ></p-dropdown>
+  </div>
+  <div>
     <h6>Packs</h6>
     <p-dropdown
       [options]="numPacksOptions"
       [(ngModel)]="draftOptions.numPacks"
       (onChange)="optionsChanged()"
+      [disabled]="draftOptions.draftMode === 'Chaos Draft'"
     ></p-dropdown>
   </div>
   <div>
@@ -13,6 +22,7 @@
       [options]="openingOptions"
       [(ngModel)]="draftOptions.openingMethod"
       (onChange)="optionsChanged()"
+      [disabled]="draftOptions.draftMode === 'Chaos Draft'"
     ></p-dropdown>
   </div>
   <p-button

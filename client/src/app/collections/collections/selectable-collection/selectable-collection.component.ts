@@ -40,7 +40,6 @@ export class SelectableCollectionComponent {
 
   confirmDelete(event: Event) {
     if (event.target) {
-      console.log(event.target);
       this.confirmationService.confirm({
         target: event.target,
         message: `Are you sure you want to delete this collection?`,

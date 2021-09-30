@@ -18,13 +18,17 @@ export class CollectionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const userID = this.authService.getUser().user_id;
-    this.collectionsService
-      .getUserCollections(userID)
-      .subscribe((collections) => {
-        this.collections = collections;
-        this.loading = false;
-      });
+    const userID = this.authService.user?.user_id;
+    if (userID) {
+      this.collectionsService
+        .getUserCollections(userID)
+        .subscribe((collections) => {
+          this.collections = collections;
+          this.loading = false;
+        });
+    } else {
+      // not logged in, should have some auth guard
+    }
   }
 
   onCollectionDeleted(collection: UserCollection) {

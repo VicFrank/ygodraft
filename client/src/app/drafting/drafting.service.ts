@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Card } from '../models/Card.model';
 import { CollectionCard } from '../models/collections/CollectionCard.model';
+import { DraftOptions } from '../models/drafting/DraftOptions.model';
 import { PackCard } from '../models/drafting/PackCard.model';
 import { CardsService } from '../_shared/cards.service';
 import { CollectionsService } from '../_shared/collections.service';
@@ -13,7 +14,9 @@ export class DraftingService {
   packsToOpen: string[] = [];
   setsToOpen: string[] = [];
   openedCards: PackCard[] = [];
+  draftedCards: PackCard[] = [];
   packsPerSet: number = 1;
+  draftOptions?: DraftOptions;
 
   constructor(
     private packOpener: PackOpeningService,
@@ -28,16 +31,23 @@ export class DraftingService {
     }
   }
 
-  resetDraft() {
+  resetDraft(draftOptions: DraftOptions) {
     this.packsToOpen = [];
     this.setsToOpen = [];
     this.openedCards = [];
+    this.draftedCards = [];
+    this.draftOptions = draftOptions;
   }
 
   async createCollection() {
+    // Decide whether to add all cards, or just drafted cards
+    let cardsToAdd = this.openedCards;
+    if (this.draftOptions?.draftMode === 'Chaos Draft') {
+      cardsToAdd = this.draftedCards;
+    }
     // Convert opened cards to frequencies
     let cardMap: any = {};
-    for (const card of this.openedCards) {
+    for (const card of cardsToAdd) {
       const { card_name, card_id } = card;
       if (cardMap[card_name]) {
         cardMap[card_name].copies += 1;
@@ -58,7 +68,7 @@ export class DraftingService {
       copies: cardMap[card.card_name].copies,
       copies_in_use: 0,
     }));
-    const num_cards = this.openedCards.length;
+    const num_cards = cardsToAdd.length;
     this.collectionsService.createNewCollectionWeb(collection_cards, num_cards);
   }
 
@@ -66,7 +76,7 @@ export class DraftingService {
     const packs = await this.packOpener.generatePacks(set, 1).toPromise();
     let pack = packs[0];
     this.openedCards = this.openedCards.concat(pack);
-    pack = pack.map((card) => ({ ...card, flipped: false }));
+    pack = pack.map((card) => ({ ...card, flipped: false, selected: false }));
     this.shuffleArray(pack);
 
     return pack;
@@ -89,5 +99,9 @@ export class DraftingService {
     this.openedCards = this.openedCards.concat(newcards);
     this.setsToOpen = [];
     return packs;
+  }
+
+  addCardsToDraft(cards: PackCard[]) {
+    this.draftedCards = this.draftedCards.concat(cards);
   }
 }
