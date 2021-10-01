@@ -23,7 +23,8 @@
     <p-autoComplete
       [(ngModel)]="filters.archetype"
       [suggestions]="filteredArchetypes"
-      (onChange)="filtersChanged()"
+      (onSelect)="filtersChanged()"
+      (onClear)="filtersChanged()"
       [dropdown]="true"
       (completeMethod)="filterArchetypes($event)"
       scrollHeight="300px"

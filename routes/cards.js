@@ -25,7 +25,7 @@ router.post("/bulk-get", async (req, res) => {
   }
 });
 
-router.get("/archetypes", cache("3 months"), async (req, res) => {
+router.get("/archetypes", cache("1 month"), async (req, res) => {
   try {
     const archetypes = await cards.getAllArchetypes();
     res.json(archetypes);

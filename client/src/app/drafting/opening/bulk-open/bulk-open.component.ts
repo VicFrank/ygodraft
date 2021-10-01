@@ -13,6 +13,7 @@ export class BulkOpenComponent implements OnInit {
   packs: PackCard[][] = [];
   setsToOpen: number = 0;
   currentSet: string = '';
+  errorMessage?: string;
 
   constructor(
     private router: Router,
@@ -29,15 +30,12 @@ export class BulkOpenComponent implements OnInit {
     this.openAllSets();
   }
 
-  // For opening one set at a time (not currently used)
-  async nextSet() {
-    if (this.draftingService.setsToOpen.length === 0) return;
-    this.currentSet = this.draftingService.setsToOpen.shift()!;
-    this.packs = await this.draftingService.bulkOpenPacks(this.currentSet);
-  }
-
   async openAllSets() {
-    this.packs = await this.draftingService.openAllSets();
+    try {
+      this.packs = await this.draftingService.openAllSets();
+    } catch (error) {
+      this.errorMessage = 'There was an error generating the packs.';
+    }
   }
 
   async createCollection() {

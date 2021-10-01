@@ -1,8 +1,11 @@
 const express = require("express");
 const cardsets = require("../db/cardsets");
 const router = express.Router();
+const apicache = require("apicache");
 
-router.get("/", async (req, res) => {
+let cache = apicache.middleware;
+
+router.get("/", cache("1 day"), async (req, res) => {
   const { type } = req.query;
   try {
     if (type) {
@@ -18,7 +21,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:name", async (req, res) => {
+router.get("/:name", cache("1 month"), async (req, res) => {
   const { name } = req.params;
   try {
     const set = await cardsets.getCardSet(name);
@@ -29,7 +32,7 @@ router.get("/:name", async (req, res) => {
   }
 });
 
-router.get("/:name/cards", async (req, res) => {
+router.get("/:name/cards", cache("1 month"), async (req, res) => {
   const { name } = req.params;
   try {
     const set = await cardsets.getCardSetCards(name);

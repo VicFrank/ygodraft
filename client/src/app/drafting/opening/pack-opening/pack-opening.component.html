@@ -3,6 +3,9 @@
   <h4 *ngIf="isDrafting">Select 1 card per pack</h4>
   <h4 class="ms-2 text-muted">{{ packsOpened }} / {{ packsToOpen }}</h4>
 </div>
+<div *ngIf="errorMessage" class="text-center text-danger">
+  {{ errorMessage }}
+</div>
 <div class="cards-container">
   <app-pack-card
     *ngFor="let card of currentPack; index as i"

@@ -68,6 +68,16 @@ const dist4 = {
   ],
 };
 
+const dist5 = {
+  guaranteed: [{ rarity: Rarities.COMMON, amount: 8 }],
+  wildCards: 1,
+  defaultWildCard: Rarities.SUPER_RARE,
+  wildCardRates: [
+    { rarity: Rarities.ULTRA_RARE, freq: 1 / 6 },
+    { rarity: Rarities.SECRET_RARE, freq: 1 / 12 },
+  ],
+};
+
 module.exports = {
   "Legend of Blue Eyes White Dragon": {
     packType: "booster",
@@ -515,7 +525,7 @@ module.exports = {
   "Eternity Code": {
     packType: "booster",
     cardsPerPack: 9,
-    distribution: dist4,
+    distribution: dist5,
   },
   "Toon Chaos": {
     packType: "side_set",
@@ -532,7 +542,7 @@ module.exports = {
   "Blazing Vortex": {
     packType: "booster",
     cardsPerPack: 9,
-    distribution: dist4,
+    distribution: dist5,
   },
   "Ancient Guardians": {
     packType: "side_set",
@@ -543,7 +553,7 @@ module.exports = {
   "Lightning Overdrive": {
     packType: "booster",
     cardsPerPack: 9,
-    distribution: dist4,
+    distribution: dist5,
   },
   "King's Court": {
     packType: "side_set",

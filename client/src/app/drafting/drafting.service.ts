@@ -73,13 +73,17 @@ export class DraftingService {
   }
 
   async openSinglePack(set: string) {
-    const packs = await this.packOpener.generatePacks(set, 1).toPromise();
-    let pack = packs[0];
-    this.openedCards = this.openedCards.concat(pack);
-    pack = pack.map((card) => ({ ...card, flipped: false, selected: false }));
-    this.shuffleArray(pack);
+    try {
+      const packs = await this.packOpener.generatePacks(set, 1).toPromise();
+      let pack = packs[0];
+      this.openedCards = this.openedCards.concat(pack);
+      pack = pack.map((card) => ({ ...card, flipped: false, selected: false }));
+      this.shuffleArray(pack);
 
-    return pack;
+      return pack;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async bulkOpenPacks(set: string) {

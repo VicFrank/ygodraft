@@ -26,10 +26,11 @@ export class PackCardComponent implements OnInit {
 
   onCardClicked() {
     if (!this.card.flipped) return this.flipCard();
-    // this.displayModal = true;
     if (this.selectable) {
       this.card.selected = true;
       this.onCardSelected.emit(this.index);
+    } else {
+      this.displayModal = true;
     }
   }
 }

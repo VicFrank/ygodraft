@@ -31,7 +31,7 @@ a:hover {
 }
 
 .ultra-rare-color {
-  color: #aa66ff;
+  color: var(--ultra-rare-color);
 }
 
 .super-rare-color {

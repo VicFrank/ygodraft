@@ -18,6 +18,8 @@ export class PackOpeningComponent implements OnInit {
   isDrafting: boolean = false;
   canProgress: boolean = false;
 
+  errorMessage?: string;
+
   currentPack: PackCard[] = [];
 
   constructor(
@@ -51,7 +53,13 @@ export class PackOpeningComponent implements OnInit {
       this.draftingService.addCardsToDraft(this.getSelectedCards());
     }
 
-    this.currentPack = await this.draftingService.openSinglePack(this.cardset);
+    try {
+      this.currentPack = await this.draftingService.openSinglePack(
+        this.cardset
+      );
+    } catch (error) {
+      this.errorMessage = 'Error opening pack';
+    }
     this.allFlipped = false;
   }
 
@@ -91,6 +99,7 @@ export class PackOpeningComponent implements OnInit {
       delay += increment;
     }
     this.allFlipped = true;
+    this.updateCanProgress();
   }
 
   async goToCollection() {
