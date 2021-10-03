@@ -27,12 +27,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// TODO: Add log in middleware?
+app.use(express.static(path.join(__dirname, "client/dist/client")));
 
 app.use(morgan("short"));
 app.use(express.json());
-
-// app.use(express.static(path.join(__dirname, "client/dist")));
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
@@ -40,6 +38,10 @@ app.use("/api/cards", cardsRouter);
 app.use("/api/cardsets", cardsetsRouter);
 app.use("/api/packs", packsRouter);
 app.use("/api/collections", collectionsRouter);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/dist/client/index.html"));
+});
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
