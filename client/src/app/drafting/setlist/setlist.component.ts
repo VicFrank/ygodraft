@@ -17,6 +17,7 @@ export class SetlistComponent implements OnInit {
     numPacks: 24,
     draftMode: 'Traditional',
     openingMethod: 'Individual',
+    drafting: false,
   };
 
   constructor(

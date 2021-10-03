@@ -32,7 +32,9 @@ module.exports = {
     try {
       const query1 = `
       SELECT card_id, card_name, set_rarity
-      FROM card_set_cards JOIN cards USING(card_id)
+      FROM card_set_cards
+      JOIN cards
+      USING(card_id)
       WHERE set_name = $1
       GROUP BY card_id, card_name, set_rarity
       `;

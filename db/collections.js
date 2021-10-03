@@ -47,9 +47,10 @@ module.exports = {
   async getCollectionsForUser(userID) {
     try {
       const query1 = `
-      SELECT collection_id, num_cards, created_at, updated_at
+      SELECT collection_id, num_cards, collection_name, created_at, updated_at
       FROM collections
       WHERE user_id = $1
+      ORDER BY updated_at
       `;
       const { rows } = await query(query1, [userID]);
       return rows;
@@ -109,13 +110,14 @@ module.exports = {
       throw error;
     }
   },
-  async createCollection(userID, cards) {
+  async createCollection(userID, name, cards) {
+    if (!name) name = "Collection";
     try {
       const { rows } = await query(
         `
-        INSERT INTO collections (user_id) VALUES ($1) RETURNING *
+        INSERT INTO collections (user_id, name) VALUES ($1, $2) RETURNING *
         `,
-        [userID]
+        [userID, name]
       );
       const collectionID = rows[0].collection_id;
       let promises = [];
@@ -139,7 +141,7 @@ module.exports = {
       }
       await Promise.all(promises);
 
-      const numNewCards = cards.reduce((acc, curr) => acc == curr.copies, 0);
+      const numNewCards = cards.reduce((acc, curr) => (acc += curr.copies), 0);
       const numCards = num_cards + numNewCards;
 
       await query(
@@ -155,11 +157,10 @@ module.exports = {
       throw error;
     }
   },
-  async setCollectionCards(collection, cards) {
-    const { collection_id, num_cards } = collection;
+  async updateCollection(collection_id, name, cards) {
     try {
       // Reset the collection cards
-      await query("DELETE FROM collection_cards WHERE collection_id = $1", collection_id);
+      await query("DELETE FROM collection_cards WHERE collection_id = $1", [collection_id]);
       // Add in all the cards
       let promises = [];
       for (const card of cards) {
@@ -167,18 +168,28 @@ module.exports = {
       }
       await Promise.all(promises);
 
-      const numNewCards = cards.reduce((acc, curr) => acc == curr.copies, 0);
-      const numCards = num_cards + numNewCards;
+      const numCards = cards.reduce((acc, curr) => (acc += curr.copies), 0);
 
       await query(
         `
-        UPDATE collections SET (num_cards, updated_at) = ($2, NOW())
+        UPDATE collections SET (collection_name, num_cards, updated_at) = ($2, $3, NOW())
         WHERE collection_id = $1
-        RETURNING collection_id
         `,
-        [collection_id, numCards]
+        [collection_id, name, numCards]
       );
-      await this.updateNumCardsInCollection();
+    } catch (error) {
+      throw error;
+    }
+  },
+  async updateCollectionName(collection_id, name) {
+    try {
+      await query(
+        `
+        UPDATE collections SET (collection_name, updated_at) = ($2, NOW())
+        WHERE collection_id = $1
+        `,
+        [collection_id, name]
+      );
     } catch (error) {
       throw error;
     }

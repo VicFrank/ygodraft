@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Collection } from 'src/app/models/collections/Collection.model';
 import { CollectionCard } from 'src/app/models/collections/CollectionCard.model';
 import { CollectionFilters } from 'src/app/models/collections/CollectionFilters.model';
@@ -19,6 +19,7 @@ export class CollectionComponent implements OnInit {
     collection_id: -1,
     num_cards: 0,
     collection_cards: [],
+    collection_name: '',
   };
   filteredCards: CollectionCard[] = [];
   filters: CollectionFilters = {
@@ -34,7 +35,8 @@ export class CollectionComponent implements OnInit {
     private cardFilterer: CardFilterService,
     private route: ActivatedRoute,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -76,26 +78,93 @@ export class CollectionComponent implements OnInit {
     this.cardFilterer.sortCollection(this.filteredCards, this.currentSort);
   }
 
-  saveCollection() {
+  createCollection() {
+    this.collectionsService.createCollection(this.collection).subscribe(
+      (collection: any) => {
+        const { collectionID } = collection;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Collection Created',
+        });
+        this.router.navigate([`collections/collection/${collectionID}`]);
+      },
+      (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error Creating Collection',
+        });
+      }
+    );
+  }
+
+  updateCollection() {
+    this.collectionsService.updateCollection(this.collection).subscribe(
+      () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Collection Changes Saved',
+        });
+      },
+      (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error Updating Collection',
+        });
+      }
+    );
+  }
+
+  updateCollectionName() {
+    const { collection_id, collection_name } = this.collection;
     this.collectionsService
-      .createCollection(this.collection.collection_cards)
+      .updateCollectionName(collection_id, collection_name)
       .subscribe(
-        (collection: any) => {
-          const { collectionID } = collection;
+        () => {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: 'Collection Created',
+            detail: 'Updated Name',
           });
-          this.router.navigate([`collections/collection/${collectionID}`]);
         },
         (error) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Error Creating Collection',
+            detail: 'Error Updating Collection',
           });
         }
       );
+  }
+
+  deleteCollection() {
+    this.collectionsService
+      .deleteCollection(this.collection.collection_id)
+      .subscribe(
+        () => {
+          this.router.navigate([`collections`]);
+        },
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error deleting collection',
+          });
+        }
+      );
+  }
+
+  confirmDelete() {
+    console.log('confirm delete');
+    this.confirmationService.confirm({
+      message: `Are you sure you want to delete this collection?`,
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.deleteCollection();
+      },
+    });
   }
 }

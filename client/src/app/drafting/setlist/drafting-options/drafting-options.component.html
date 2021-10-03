@@ -22,7 +22,7 @@
       [options]="openingOptions"
       [(ngModel)]="draftOptions.openingMethod"
       (onChange)="optionsChanged()"
-      [disabled]="draftOptions.draftMode === 'Chaos Draft'"
+      [disabled]="draftOptions.drafting"
     ></p-dropdown>
   </div>
   <p-button

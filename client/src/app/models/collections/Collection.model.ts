@@ -6,4 +6,5 @@ export interface Collection {
   updated_at: Date;
   num_cards: number;
   collection_cards: CollectionCard[];
+  collection_name: string;
 }

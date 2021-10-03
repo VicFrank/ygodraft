@@ -30,16 +30,18 @@ export class PackOpeningComponent implements OnInit {
 
   ngOnInit(): void {
     this.packsToOpen = this.draftingService.packsToOpen.length;
-    this.draftMode = this.draftingService.draftOptions?.draftMode;
+
+    const draftOptions = this.draftingService.draftOptions;
+    if (draftOptions) {
+      this.draftMode = draftOptions.draftMode;
+      this.isDrafting = draftOptions.drafting;
+    }
 
     if (this.packsToOpen === 0) {
       // We don't have any packs to open, redirect back to drafting
       this.router.navigate(['drafting']);
     }
 
-    if (this.draftMode === 'Chaos Draft') {
-      this.isDrafting = true;
-    }
     this.nextPack();
   }
 
@@ -74,7 +76,7 @@ export class PackOpeningComponent implements OnInit {
       ...card,
       selected: false,
     }));
-    this.currentPack[index].selected = true;
+    if (index >= 0) this.currentPack[index].selected = true;
     this.updateCanProgress();
   }
 

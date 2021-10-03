@@ -11,6 +11,7 @@ import { SharedModule } from './_shared/shared.module';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AuthRedirectComponent } from './auth/auth-redirect/auth-redirect.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AuthRedirectComponent } from './auth/auth-redirect/auth-redirect.compon
     LoginComponent,
     RegisterComponent,
     AuthRedirectComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

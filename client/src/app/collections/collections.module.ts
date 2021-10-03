@@ -7,6 +7,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { InplaceModule } from 'primeng/inplace';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 import { CollectionsComponent } from './collections/collections.component';
 import { CollectionsRoutingModule } from './collections-routing.module';
@@ -14,7 +17,6 @@ import { SelectableCollectionComponent } from './collections/selectable-collecti
 import { CollectionComponent } from './collection/collection.component';
 import { CollectionCardComponent } from './collection/collection-card/collection-card.component';
 import { CollectionFiltersComponent } from './collection/collection-filters/collection-filters.component';
-import { ConfirmationService, MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     DropdownModule,
     DialogModule,
     ConfirmPopupModule,
+    ConfirmDialogModule,
+    InplaceModule,
   ],
   providers: [ConfirmationService],
 })

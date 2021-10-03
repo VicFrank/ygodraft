@@ -32,8 +32,8 @@ router.get("/:collection_id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { cards, userID } = req.body;
-    const collectionID = await collections.createCollection(userID, cards);
+    const { cards, userID, name } = req.body;
+    const collectionID = await collections.createCollection(userID, name, cards);
     res.status(201).send({ collectionID });
   } catch (error) {
     console.error(error);
@@ -44,10 +44,24 @@ router.post("/", async (req, res) => {
 router.put("/:collection_id", async (req, res) => {
   try {
     const { collection_id } = req.params;
-    const { cards } = req.body;
+    const { cards, name } = req.body;
     const collectionExists = await collections.collectionExists(collection_id);
     if (!collectionExists) res.status(404).send({ message: "Collection not found" });
-    await collections.setCollectionCards(collection_id, cards);
+    await collections.updateCollection(collection_id, name, cards);
+    res.status(200).send({ message: "Updated" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Server Error" });
+  }
+});
+
+router.put("/:collection_id/name", async (req, res) => {
+  try {
+    const { collection_id } = req.params;
+    const { name } = req.body;
+    const collectionExists = await collections.collectionExists(collection_id);
+    if (!collectionExists) res.status(404).send({ message: "Collection not found" });
+    await collections.updateCollectionName(collection_id, name);
     res.status(200).send({ message: "Updated" });
   } catch (error) {
     console.error(error);

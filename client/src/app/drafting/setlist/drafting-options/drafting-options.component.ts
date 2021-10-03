@@ -28,8 +28,9 @@ export class DraftingOptionsComponent implements OnInit {
     ];
     this.draftModeOptions = [
       { label: 'Traditional', value: 'Traditional' },
+      { label: 'Draft', value: 'Draft' },
       { label: 'Chaos Draft', value: 'Chaos Draft' },
-      { label: 'Sealed', value: 'Sealed' },
+      { label: 'Sealed', value: 'Sealed', disabled: true },
     ];
     this.openingOptions = [
       { label: 'Individual', value: 'Individual' },
@@ -55,10 +56,15 @@ export class DraftingOptionsComponent implements OnInit {
     if (this.draftOptions.draftMode === 'Chaos Draft') {
       this.onSelectAll.emit();
       this.draftOptions.numPacks = 1;
-      this.draftOptions.openingMethod = 'Individual';
     } else {
       this.onDeselectAll.emit();
     }
+    this.draftOptions.drafting = this.draftOptions.draftMode.includes('Draft');
+
+    if (this.draftOptions.drafting) {
+      this.draftOptions.openingMethod = 'Individual';
+    }
+
     this.optionsChanged();
   }
 

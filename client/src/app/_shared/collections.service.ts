@@ -27,6 +27,7 @@ export class CollectionsService {
       collection_id: -1,
       num_cards: numCards,
       collection_cards: collection,
+      collection_name: '',
     };
   }
 
@@ -42,26 +43,33 @@ export class CollectionsService {
     return this.http.get<Collection>(`${this.baseUrl}/${id}`);
   }
 
-  createCollection(cards: CollectionCard[]) {
+  createCollection(collection: Collection) {
     const userID = this.authService.user?.user_id;
     const body = {
-      cards: cards.map((collectionCard) => ({
+      cards: collection.collection_cards.map((collectionCard) => ({
         card_id: collectionCard.card_id,
         copies: collectionCard.copies,
       })),
+      name: collection.collection_name,
       userID,
     };
     return this.http.post(`${this.baseUrl}`, body);
   }
 
-  updateCollection(id: string | number, cards: CollectionCard[]) {
+  updateCollection(collection: Collection) {
+    const id = collection.collection_id;
     const body = {
-      cards: cards.map((collectionCard) => ({
+      cards: collection.collection_cards.map((collectionCard) => ({
         card_id: collectionCard.card_id,
         copies: collectionCard.copies,
       })),
+      name: collection.collection_name,
     };
     return this.http.put(`${this.baseUrl}/${id}`, body);
+  }
+
+  updateCollectionName(id: string | number, name: string) {
+    return this.http.put(`${this.baseUrl}/${id}/name`, { name });
   }
 
   deleteCollection(id: string | number) {

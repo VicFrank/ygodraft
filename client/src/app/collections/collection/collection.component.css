@@ -1,5 +1,5 @@
 .cards-container {
   min-height: 500px;
-  height: calc(100vh - 290px);
+  height: calc(100vh - 355px);
   overflow-y: auto;
 }

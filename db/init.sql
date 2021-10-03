@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS collections (
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW(),
   num_cards INTEGER,
+  collection_name TEXT,
   collection_data BYTEA
 );
 

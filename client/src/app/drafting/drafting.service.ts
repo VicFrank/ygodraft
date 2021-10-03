@@ -42,7 +42,7 @@ export class DraftingService {
   async createCollection() {
     // Decide whether to add all cards, or just drafted cards
     let cardsToAdd = this.openedCards;
-    if (this.draftOptions?.draftMode === 'Chaos Draft') {
+    if (this.draftOptions?.drafting) {
       cardsToAdd = this.draftedCards;
     }
     // Convert opened cards to frequencies

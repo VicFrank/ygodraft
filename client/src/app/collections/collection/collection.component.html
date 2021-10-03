@@ -1,3 +1,21 @@
+<div class="mb-2">
+  <p-inplace [style]="{ 'min-height': '33px' }">
+    <ng-template pTemplate="display">
+      <span *ngIf="!collection.collection_name && !loading"
+        >Enter a collection name...</span
+      >
+      {{ collection.collection_name }}
+    </ng-template>
+    <ng-template pTemplate="content">
+      <input
+        type="text"
+        pInputText
+        [(ngModel)]="collection.collection_name"
+        (blur)="updateCollectionName()"
+      />
+    </ng-template>
+  </p-inplace>
+</div>
 <app-collection-filters
   [(filters)]="filters"
   [(sort)]="currentSort"
@@ -16,10 +34,37 @@
   <button
     pButton
     pRipple
-    label="Save Collection"
+    label="Create Collection"
     type="button"
     icon="pi pi-save"
-    class="p-button-rounded ms-auto"
-    (click)="saveCollection()"
+    class="ms-auto"
+    (click)="createCollection()"
+    *ngIf="isNew"
   ></button>
+
+  <button
+    pButton
+    pRipple
+    label="Delete"
+    type="button"
+    icon="pi pi-times"
+    class="p-button-danger ms-auto"
+    (click)="confirmDelete()"
+    *ngIf="!isNew"
+  ></button>
+  <!-- <button
+    pButton
+    pRipple
+    label="Save Changes"
+    type="button"
+    icon="pi pi-save"
+    class="ms-2"
+    (click)="updateCollection()"
+    *ngIf="!isNew"
+  ></button> -->
 </div>
+
+<p-confirmDialog
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-outlined"
+></p-confirmDialog>

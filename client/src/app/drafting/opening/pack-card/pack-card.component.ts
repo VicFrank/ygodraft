@@ -27,8 +27,10 @@ export class PackCardComponent implements OnInit {
   onCardClicked() {
     if (!this.card.flipped) return this.flipCard();
     if (this.selectable) {
-      this.card.selected = true;
-      this.onCardSelected.emit(this.index);
+      this.card.selected = !this.card.selected;
+      // this is so we deselect all the cards
+      if (!this.card.selected) this.onCardSelected.emit(-1);
+      else this.onCardSelected.emit(this.index);
     } else {
       this.displayModal = true;
     }
