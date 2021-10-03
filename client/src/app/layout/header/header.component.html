@@ -16,7 +16,7 @@
       <li class="topbar-link">
         <a routerLink="/drafting">Drafting</a>
       </li>
-      <li class="topbar-link">
+      <li class="topbar-link" *ngIf="isLoggedIn">
         <a routerLink="/collections">Collections</a>
       </li>
       <li class="topbar-link">

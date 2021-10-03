@@ -4,6 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Collection } from 'src/app/models/collections/Collection.model';
 import { CollectionCard } from 'src/app/models/collections/CollectionCard.model';
 import { CollectionFilters } from 'src/app/models/collections/CollectionFilters.model';
+import { AuthService } from 'src/app/_shared/auth.service';
 import { CollectionsService } from 'src/app/_shared/collections.service';
 import { CardFilterService } from './card-filter.service';
 
@@ -36,6 +37,7 @@ export class CollectionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private messageService: MessageService,
+    private authService: AuthService,
     private confirmationService: ConfirmationService
   ) {}
 
@@ -55,15 +57,27 @@ export class CollectionComponent implements OnInit {
         }
       } else if (value[0].path === 'collection') {
         const collectionID = value[1].path;
-        this.collectionsService
-          .getCollectionByID(collectionID)
-          .subscribe((collection) => {
+        this.collectionsService.getCollectionByID(collectionID).subscribe(
+          (collection) => {
             this.collection = collection;
             this.filteredCards = this.collection.collection_cards;
             this.loading = false;
-          });
+          },
+          (error) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Collection not found',
+            });
+            this.router.navigate([`collections`]);
+          }
+        );
       }
     });
+  }
+
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn;
   }
 
   filterCollection() {

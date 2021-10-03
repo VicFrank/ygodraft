@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CollectionComponent } from './collection/collection.component';
 import { CollectionsComponent } from './collections/collections.component';
+import { AuthGuardService } from '../_shared/auth-guard.service';
 
 const routes: Routes = [
   {
     path: '',
     component: CollectionsComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'new',
@@ -21,5 +23,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [AuthGuardService],
 })
 export class CollectionsRoutingModule {}

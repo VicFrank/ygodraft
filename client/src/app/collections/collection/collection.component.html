@@ -39,8 +39,9 @@
     icon="pi pi-save"
     class="ms-auto"
     (click)="createCollection()"
-    *ngIf="isNew"
+    *ngIf="isNew && isLoggedIn"
   ></button>
+  <div class="ms-auto" *ngIf="isNew">Log in to save your collections!</div>
 
   <button
     pButton
