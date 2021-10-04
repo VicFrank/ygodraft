@@ -5,7 +5,7 @@ const apicache = require("apicache");
 
 let cache = apicache.middleware;
 
-router.get("/", cache("1 day"), async (req, res) => {
+router.get("/", async (req, res) => {
   const { type } = req.query;
   try {
     if (type) {

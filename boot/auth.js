@@ -10,7 +10,9 @@ module.exports = () => {
       {
         clientID: keys.google.CLIENT_ID,
         clientSecret: keys.google.CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/api/auth/google/callback",
+        callbackURL: process.env.IS_PRODUCTION
+          ? "https://ygodraft.net/api/auth/google/callback"
+          : "http://localhost:3000/api/auth/google/callback",
       },
       async (accessToken, refreshToken, profile, cb) => {
         // In this example, the user's Google profile is supplied as the user
