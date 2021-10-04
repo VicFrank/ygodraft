@@ -1,5 +1,5 @@
 const { query } = require("../db/index");
-const cardSetsDB = require("../db/cardSets");
+const cardSetsDB = require("../db/cardsets");
 const fs = require("fs");
 
 const cardsJson = fs.readFileSync("./cards.json");

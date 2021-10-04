@@ -1,6 +1,5 @@
 const express = require("express");
-const cards = require("../db/cards");
-const cardSets = require("../db/cardSets");
+const cardSets = require("../db/cardsets");
 const packOpener = require("../packs/packOpener");
 const router = express.Router();
 
