@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/_shared/auth.service';
 
 @Component({
   selector: 'app-auth-redirect',
@@ -8,10 +7,10 @@ import { AuthService } from 'src/app/_shared/auth.service';
   styleUrls: ['./auth-redirect.component.css'],
 })
 export class AuthRedirectComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.checkLogin();
+    // Could handle setting logged in cookies here
     this.router.navigate(['/']);
   }
 }

@@ -38,7 +38,7 @@ router.get(
   }),
   (req, res) => {
     if (process.env.IS_PRODUCTION) {
-      return res.redirect(`/auth/redirect`);
+      return res.redirect(`/login/redirect`);
     } else {
       return res.redirect(`http://localhost:4200/login/redirect`);
     }
