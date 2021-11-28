@@ -372,9 +372,14 @@ module.exports = {
     distribution: dist3,
   },
   "The Secret Forces": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist3,
+    packType: "booster_other",
+    cardsPerPack: 5,
+    distribution: {
+      guaranteed: [
+        { rarity: Rarities.SUPER_RARE, amount: 4 },
+        { rarity: Rarities.SECRET_RARE, amount: 1 },
+      ],
+    },
   },
   "High-Speed Riders": {
     packType: "booster",
@@ -424,9 +429,14 @@ module.exports = {
     distribution: dist4,
   },
   "Pendulum Evolution": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "booster_other",
+    cardsPerPack: 5,
+    distribution: {
+      guaranteed: [
+        { rarity: Rarities.ULTRA_RARE, amount: 2 },
+        { rarity: Rarities.SUPER_RARE, amount: 3 },
+      ],
+    },
   },
   "Code of the Duelist": {
     packType: "booster",
@@ -439,9 +449,14 @@ module.exports = {
     distribution: dist4,
   },
   "Spirit Warriors": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "booster_other",
+    cardsPerPack: 5,
+    distribution: {
+      guaranteed: [
+        { rarity: Rarities.SUPER_RARE, amount: 4 },
+        { rarity: Rarities.SECRET_RARE, amount: 1 },
+      ],
+    },
   },
   "Extreme Force": {
     packType: "booster",
@@ -462,9 +477,14 @@ module.exports = {
     distribution: dist4,
   },
   "Shadows in Valhalla": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "booster_other",
+    cardsPerPack: 5,
+    distribution: {
+      guaranteed: [
+        { rarity: Rarities.SUPER_RARE, amount: 4 },
+        { rarity: Rarities.SECRET_RARE, amount: 1 },
+      ],
+    },
   },
   "Soul Fusion": {
     packType: "booster",
@@ -480,9 +500,14 @@ module.exports = {
     distribution: dist4,
   },
   "The Infinity Chasers": {
-    packType: "booster",
-    cardsPerPack: 9,
-    distribution: dist4,
+    packType: "booster_other",
+    cardsPerPack: 5,
+    distribution: {
+      guaranteed: [
+        { rarity: Rarities.SUPER_RARE, amount: 4 },
+        { rarity: Rarities.SECRET_RARE, amount: 1 },
+      ],
+    },
   },
   "Duel Power": {
     packType: "side_set",

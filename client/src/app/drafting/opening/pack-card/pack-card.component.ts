@@ -20,8 +20,8 @@ export class PackCardComponent implements OnInit {
   ngOnInit(): void {}
 
   flipCard() {
-    this.card.flipped = true;
-    this.onCardFlipped.emit();
+    this.card.flipped = !this.card.flipped;
+    this.onCardFlipped.emit(this.index);
   }
 
   onCardClicked() {
