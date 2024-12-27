@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,23 +13,16 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AuthRedirectComponent } from './auth/auth-redirect/auth-redirect.component';
 import { HomeComponent } from './home/home.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    LoginComponent,
-    RegisterComponent,
-    AuthRedirectComponent,
-    HomeComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    SharedModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        LoginComponent,
+        RegisterComponent,
+        AuthRedirectComponent,
+        HomeComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        SharedModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}
