@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import {
   AbstractControl,
   AsyncValidatorFn,
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidationErrors,
   ValidatorFn,
   Validators,
@@ -44,17 +44,17 @@ const uniqueUsernameValidator = (
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  newUserForm: FormGroup;
+  newUserForm: UntypedFormGroup;
 
   constructor(private router: Router, private authService: AuthService) {
-    this.newUserForm = new FormGroup(
+    this.newUserForm = new UntypedFormGroup(
       {
-        username: new FormControl('', [
+        username: new UntypedFormControl('', [
           Validators.required,
           Validators.minLength(4),
         ]),
-        password: new FormControl('', Validators.required),
-        confirmPassword: new FormControl(
+        password: new UntypedFormControl('', Validators.required),
+        confirmPassword: new UntypedFormControl(
           '',
           [Validators.required],
           uniqueUsernameValidator(this.authService)
