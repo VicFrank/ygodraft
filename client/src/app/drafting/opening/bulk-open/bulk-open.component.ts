@@ -5,9 +5,10 @@ import { PackCard } from 'src/app/models/drafting/PackCard.model';
 import { DraftingService } from '../../drafting.service';
 
 @Component({
-  selector: 'app-bulk-open',
-  templateUrl: './bulk-open.component.html',
-  styleUrls: ['./bulk-open.component.css'],
+    selector: 'app-bulk-open',
+    templateUrl: './bulk-open.component.html',
+    styleUrls: ['./bulk-open.component.css'],
+    standalone: false
 })
 export class BulkOpenComponent implements OnInit {
   packs: PackCard[][] = [];

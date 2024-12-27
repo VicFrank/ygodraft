@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PackCard } from 'src/app/models/drafting/PackCard.model';
 
 @Component({
-  selector: 'app-pack-card',
-  templateUrl: './pack-card.component.html',
-  styleUrls: ['./pack-card.component.css'],
+    selector: 'app-pack-card',
+    templateUrl: './pack-card.component.html',
+    styleUrls: ['./pack-card.component.css'],
+    standalone: false
 })
 export class PackCardComponent implements OnInit {
   @Input() card!: PackCard;

@@ -6,9 +6,10 @@ import { CardsetService } from 'src/app/_shared/cardset.service';
 import { DraftingService } from '../drafting.service';
 
 @Component({
-  selector: 'app-setlist',
-  templateUrl: './setlist.component.html',
-  styleUrls: ['./setlist.component.css'],
+    selector: 'app-setlist',
+    templateUrl: './setlist.component.html',
+    styleUrls: ['./setlist.component.css'],
+    standalone: false
 })
 export class SetlistComponent implements OnInit {
   cardsets: Cardset[] = [];

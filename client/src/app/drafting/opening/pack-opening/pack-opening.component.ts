@@ -5,9 +5,10 @@ import { PackCard } from 'src/app/models/drafting/PackCard.model';
 import { DraftingService } from '../../drafting.service';
 
 @Component({
-  selector: 'app-pack-opening',
-  templateUrl: './pack-opening.component.html',
-  styleUrls: ['./pack-opening.component.css'],
+    selector: 'app-pack-opening',
+    templateUrl: './pack-opening.component.html',
+    styleUrls: ['./pack-opening.component.css'],
+    standalone: false
 })
 export class PackOpeningComponent implements OnInit {
   cardset: string = '';

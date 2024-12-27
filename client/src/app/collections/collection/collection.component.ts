@@ -9,9 +9,10 @@ import { CollectionsService } from 'src/app/_shared/collections.service';
 import { CardFilterService } from './card-filter.service';
 
 @Component({
-  selector: 'app-collection',
-  templateUrl: './collection.component.html',
-  styleUrls: ['./collection.component.css'],
+    selector: 'app-collection',
+    templateUrl: './collection.component.html',
+    styleUrls: ['./collection.component.css'],
+    standalone: false
 })
 export class CollectionComponent implements OnInit {
   collection: Collection = {

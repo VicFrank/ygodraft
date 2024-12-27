@@ -8,13 +8,13 @@
       />
     </a> -->
     <div class="topbar-link">
-      <a routerLink="/"><strong>YGO Draft</strong></a>
+      <a routerLink="/" style="font-size: 1.5rem"><strong>YGO Draft</strong></a>
     </div>
     <div class="spacer"></div>
 
     <ul class="topbar-menu">
       <li class="topbar-link">
-        <a routerLink="/drafting">Drafting</a>
+        <a routerLink="/classic">Classic Sets</a>
       </li>
       <li class="topbar-link" *ngIf="isLoggedIn">
         <a routerLink="/collections">Collections</a>
@@ -23,20 +23,22 @@
         <a routerLink="/deckbuilder">Deck Builder</a>
       </li>
     </ul>
-    <button
-      *ngIf="!isLoggedIn"
-      routerLink="/login"
-      pButton
-      type="button"
-      label="Sign In"
-    ></button>
-    <button
-      *ngIf="isLoggedIn"
-      pButton
-      (click)="logout()"
-      class="p-button-text"
-      type="button"
-      label="Log Out"
-    ></button>
+    <div class="ms-2">
+      <button
+        *ngIf="!isLoggedIn"
+        routerLink="/login"
+        pButton
+        type="button"
+        label="Sign In"
+      ></button>
+      <button
+        *ngIf="isLoggedIn"
+        pButton
+        (click)="logout()"
+        class="p-button-text"
+        type="button"
+        label="Log Out"
+      ></button>
+    </div>
   </div>
 </header>

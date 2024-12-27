@@ -6,9 +6,10 @@ import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-selectable-collection',
-  templateUrl: './selectable-collection.component.html',
-  styleUrls: ['./selectable-collection.component.css'],
+    selector: 'app-selectable-collection',
+    templateUrl: './selectable-collection.component.html',
+    styleUrls: ['./selectable-collection.component.css'],
+    standalone: false
 })
 export class SelectableCollectionComponent {
   @Input() collection!: UserCollection;

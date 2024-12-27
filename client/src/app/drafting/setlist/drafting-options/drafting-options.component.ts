@@ -3,9 +3,10 @@ import { SelectItem } from 'primeng/api';
 import { DraftOptions } from 'src/app/models/drafting/DraftOptions.model';
 
 @Component({
-  selector: 'app-drafting-options',
-  templateUrl: './drafting-options.component.html',
-  styleUrls: ['./drafting-options.component.css'],
+    selector: 'app-drafting-options',
+    templateUrl: './drafting-options.component.html',
+    styleUrls: ['./drafting-options.component.css'],
+    standalone: false
 })
 export class DraftingOptionsComponent implements OnInit {
   @Input() canOpen!: boolean;

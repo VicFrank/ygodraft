@@ -22,7 +22,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'drafting',
+    path: 'classic',
     loadChildren: () =>
       import('./drafting/drafting.module').then((m) => m.DraftingModule),
   },

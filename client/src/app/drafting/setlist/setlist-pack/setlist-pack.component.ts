@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Cardset } from 'src/app/models/Cardset.model';
 
 @Component({
-  selector: 'app-setlist-pack',
-  templateUrl: './setlist-pack.component.html',
-  styleUrls: ['./setlist-pack.component.css'],
+    selector: 'app-setlist-pack',
+    templateUrl: './setlist-pack.component.html',
+    styleUrls: ['./setlist-pack.component.css'],
+    standalone: false
 })
 export class SetlistPackComponent implements OnInit {
   @Input()

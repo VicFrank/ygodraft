@@ -5,9 +5,10 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CollectionFilters } from 'src/app/models/collections/CollectionFilters.model';
 import { CardsService } from 'src/app/_shared/cards.service';
 @Component({
-  selector: 'app-collection-filters',
-  templateUrl: './collection-filters.component.html',
-  styleUrls: ['./collection-filters.component.css'],
+    selector: 'app-collection-filters',
+    templateUrl: './collection-filters.component.html',
+    styleUrls: ['./collection-filters.component.css'],
+    standalone: false
 })
 export class CollectionFiltersComponent {
   @Input() filters!: CollectionFilters;

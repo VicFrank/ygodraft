@@ -1,4 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+
 body {
   background-color: var(--surface-b);
   font-family: var(--font-family);
@@ -24,6 +25,8 @@ a:hover {
   --super-rare-color: #f0f;
   --ultra-rare-color: #73ff3c;
   --secret-rare-color: #e5ff00;
+
+  --font-family: "Roboto", sans-serif;
 }
 
 .rare-color {
