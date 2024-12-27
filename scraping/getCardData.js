@@ -1,13 +1,32 @@
 const { query } = require("../db/index");
 const cardSetsDB = require("../db/cardsets");
-const fs = require("fs");
+const fetch = require("node-fetch");
 
-const cardsJson = fs.readFileSync("./cards.json");
-const cardsetsJson = fs.readFileSync("./cardsets.json");
 const boosterPacks = require("../packs/booster_packs");
 
-const cards = JSON.parse(cardsJson).data;
-const cardsets = JSON.parse(cardsetsJson);
+const getCardSets = async () => {
+  const response = await fetch("https://db.ygoprodeck.com/api/v7/cardsets.php");
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data;
+};
+
+const getCards = async () => {
+  const response = await fetch(
+    "https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes"
+  );
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.data;
+};
 
 const createCardSets = async (cardSets) => {
   for (const cardSet of cardSets) {
@@ -29,7 +48,10 @@ const createLinkmarkers = async () => {
 
   for (const marker of linkmarkers) {
     try {
-      await query("INSERT INTO linkmarkers (marker) VALUES ($1) ON CONFLICT DO NOTHING", [marker]);
+      await query(
+        "INSERT INTO linkmarkers (marker) VALUES ($1) ON CONFLICT DO NOTHING",
+        [marker]
+      );
     } catch (error) {
       throw error;
     }
@@ -37,12 +59,13 @@ const createLinkmarkers = async () => {
 };
 
 // Parse the json data into the DB
-const parseCards = async (cards) => {
+const parseCards = async (cards, cardsets) => {
   let counter = 0;
   for (const card of cards) {
     const { id, name, type, desc, race, attribute, archetype } = card;
     const { atk, def, level, scale, linkval } = card;
     const { card_sets, card_prices, card_images } = card;
+    const { md_rarity, has_effect } = card;
 
     counter += 1;
     if (counter % 100 === 0) {
@@ -50,15 +73,29 @@ const parseCards = async (cards) => {
     }
 
     try {
-      // create the card
       await query(
         `
       INSERT INTO cards (card_id, card_name, card_type, card_desc, atk, def, card_level, race,
-        attribute, scale, linkval, archetype)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+        attribute, scale, linkval, archetype, md_rarity, has_effect)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
       ON CONFLICT DO NOTHING
       `,
-        [id, name, type, desc, atk, def, level, race, attribute, scale, linkval, archetype]
+        [
+          id,
+          name,
+          type,
+          desc,
+          atk,
+          def,
+          level,
+          race,
+          attribute,
+          scale,
+          linkval,
+          archetype,
+          md_rarity,
+          has_effect,
+        ]
       );
 
       // Link Markers
@@ -79,7 +116,8 @@ const parseCards = async (cards) => {
       // Card sets
       if (card_sets) {
         for (const set of card_sets) {
-          let { set_name, set_code, set_rarity, set_rarity_code, set_price } = set;
+          let { set_name, set_code, set_rarity, set_rarity_code, set_price } =
+            set;
           set_price = parseFloat(set_price);
 
           // Insert the set, if doesn't already exist
@@ -120,15 +158,21 @@ const updateCardSets = async () => {
     const { packType } = setValues;
     let promises = [];
     promises.push(
-      query("UPDATE card_sets SET set_type = $2 WHERE set_name = $1", [setName, packType])
+      query("UPDATE card_sets SET set_type = $2 WHERE set_name = $1", [
+        setName,
+        packType,
+      ])
     );
     await Promise.all(promises);
   }
 };
 
 (async function () {
-  // await createCardSets(cardsets);
-  // await createLinkmarkers();
-  // await parseCards(cards);
+  const cardsets = await getCardSets();
+  const cards = await getCards();
+
+  await createCardSets(cardsets);
+  await createLinkmarkers();
+  await parseCards(cards, cardsets);
   await updateCardSets();
 })();
