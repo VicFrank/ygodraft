@@ -47,7 +47,6 @@ testem.log
 Thumbs.db
 
 # ignore any .webp files in /cards
-/src/assets/images/cards/*.webp
-/src/assets/images/cards/original
+/src/assets/images/cards
 /src/assets/images/cards_cropped
 /src/assets/images/cards_small
