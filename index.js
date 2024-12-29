@@ -28,7 +28,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(path.join(__dirname, "client/dist/client")));
+app.use(express.static(path.join(__dirname, "client/dist/client/browser")));
 
 app.use(morgan("short"));
 app.use(express.json());
@@ -42,7 +42,7 @@ app.use("/api/packs", packsRouter);
 app.use("/api/collections", collectionsRouter);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/dist/client/index.html"));
+  res.sendFile(path.join(__dirname + "/client/dist/client/browser/index.html"));
 });
 
 app.listen(port, () => {
