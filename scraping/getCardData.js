@@ -78,7 +78,7 @@ const parseCards = async (cards, cardsets) => {
         attribute, scale, linkval, archetype, md_rarity, has_effect)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
       ON CONFLICT (card_id) DO UPDATE
-      SET md_rarity = $13, has_effect = $14
+      SET card_name = $2, md_rarity = $13, has_effect = $14
       `,
         [
           id,
