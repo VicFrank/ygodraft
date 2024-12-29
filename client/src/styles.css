@@ -21,10 +21,10 @@ a:hover {
 }
 
 :root {
-  --rare-color: #0099ff;
-  --super-rare-color: #f0f;
-  --ultra-rare-color: #73ff3c;
-  --secret-rare-color: #e5ff00;
+  --rare-color: #0c54e4;
+  --super-rare-color: #e5ff00;
+  --ultra-rare-color: #cc28f1;
+  --secret-rare-color: #73ff3c;
 
   --font-family: "Roboto", sans-serif;
 }

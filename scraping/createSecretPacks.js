@@ -46,6 +46,11 @@ const validateCards = async () => {
   }
 };
 
+const getParsedImageName = (name) => {
+  // replace spaces with underscores, remove double quotes
+  return name.replace(/ /g, "_").replace(/"/g, "");
+};
+
 const downloadImages = async () => {
   const header = new Headers({
     "Content-Type": "application/json",
@@ -54,8 +59,8 @@ const downloadImages = async () => {
   for (const pack of packData) {
     const { image, name } = pack;
     const response = await fetch(image, { headers: header });
-    // replace spaces with underscores, remove double quotes
-    const parsedName = name.replace(/ /g, "_").replace(/"/g, "");
+
+    const parsedName = getParsedImageName(name);
 
     if (!response.ok) {
       console.log("Error downloading image:", image);
@@ -75,8 +80,22 @@ const downloadImages = async () => {
   }
 };
 
+const createPacks = async () => {
+  for (const pack of packData) {
+    const { name, cards } = pack;
+    const parsedName = getParsedImageName(name);
+    const cardData = await Promise.all(
+      cards.map((cardName) => Cards.getCardByName(cardName))
+    );
+
+    const cardIds = cardData.map((card) => card.card_id);
+    await SecretPacks.addSecretPack(name, parsedName, cardIds);
+    console.log(`Added ${name} to secret_packs`);
+  }
+};
+
 (async function () {
   // if (!(await validateCards())) return;
-
-  await downloadImages();
+  // await downloadImages();
+  // await createPacks();
 })();

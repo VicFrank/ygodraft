@@ -22,7 +22,9 @@ CREATE TABLE IF NOT EXISTS card_sets (
 );
 
 CREATE TABLE IF NOT EXISTS secret_packs (
-  set_name TEXT PRIMARY KEY
+  secret_pack_id SERIAL PRIMARY KEY,
+  image_name TEXT,
+  set_name TEXT UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS cards (
@@ -55,11 +57,11 @@ CREATE INDEX IF NOT EXISTS card_linkmarkers_marker ON card_linkmarkers (marker);
 
 CREATE TABLE IF NOT EXISTS secret_pack_cards (
   card_id TEXT REFERENCES cards (card_id) ON UPDATE CASCADE,
-  set_name TEXT REFERENCES secret_packs (set_name) ON UPDATE CASCADE
+  secret_pack_id INTEGER REFERENCES secret_packs (secret_pack_id) ON UPDATE CASCADE
 );
 
 CREATE INDEX IF NOT EXISTS secret_pack_cards_card_id ON secret_pack_cards (card_id);
-CREATE INDEX IF NOT EXISTS secret_pack_cards_set_name ON secret_pack_cards (set_name);
+CREATE INDEX IF NOT EXISTS secret_pack_cards_secret_pack_id ON secret_pack_cards (secret_pack_id);
 
 CREATE TABLE IF NOT EXISTS card_set_cards (
   card_id TEXT REFERENCES cards (card_id) ON UPDATE CASCADE,

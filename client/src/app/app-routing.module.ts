@@ -26,6 +26,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./drafting/drafting.module').then((m) => m.DraftingModule),
   },
+  {
+    path: 'secretpacks',
+    loadChildren: () =>
+      import('./master-duel/master-duel.module').then(
+        (m) => m.MasterDuelModule
+      ),
+  },
   { path: '**', component: PageNotFoundComponent },
 ];
 

@@ -1,4 +1,4 @@
-export interface Card {
+export type Card = {
   card_id: string;
   card_name: string;
   card_type: string;
@@ -11,4 +11,11 @@ export interface Card {
   scale: number;
   linkval: number;
   archetype: string;
-}
+  md_rarity: 'Common' | 'Rare' | 'Super Rare' | 'Ultra Rare';
+  has_effect: boolean;
+};
+
+export type SecretPackCard = Card & {
+  flipped?: boolean;
+  selected?: boolean;
+};

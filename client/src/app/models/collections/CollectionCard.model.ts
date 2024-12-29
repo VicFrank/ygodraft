@@ -1,4 +1,4 @@
-export interface CollectionCard {
+export type CollectionCard = {
   card_id: string;
   card_name: string;
   card_type: string;
@@ -13,4 +13,4 @@ export interface CollectionCard {
   archetype: string | null;
   copies: number;
   copies_in_use: number;
-}
+};

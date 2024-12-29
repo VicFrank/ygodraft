@@ -10,11 +10,11 @@
       (click)="onCardClicked()"
     >
       <div class="flip-card-front">
-        <img src="assets/images/cards/cardback.jpg" alt="Yugioh Card" />
+        <img src="assets/images/cards/cardback.webp" alt="Yugioh Card" />
       </div>
       <div class="flip-card-back">
         <img
-          src="assets/images/cards/{{ card.card_id }}.jpg"
+          src="assets/images/cards/{{ card.card_id }}.webp"
           [class.rare-aura]="card.set_rarity === 'Rare'"
           [class.super-rare-aura]="card.set_rarity === 'Super Rare'"
           [class.ultra-rare-aura]="card.set_rarity === 'Ultra Rare'"
@@ -46,7 +46,7 @@
   appendTo="body"
 >
   <img
-    src="assets/images/cards/{{ card.card_id }}.jpg"
+    src="assets/images/cards/{{ card.card_id }}.webp"
     [alt]="card.card_name"
     loading="lazy"
   />

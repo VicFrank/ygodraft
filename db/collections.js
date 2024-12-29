@@ -9,8 +9,7 @@ module.exports = {
       JOIN users
       USING (user_id)
       ORDER BY created_at DESC
-      LIMIT 100
-      `;
+      LIMIT 100`;
       const { rows } = await query(query1);
       return rows[0];
     } catch (error) {
@@ -19,11 +18,10 @@ module.exports = {
   },
   async getCollection(id) {
     try {
-      const query1 = `
-      SELECT * FROM collections
-      WHERE collection_id = $1
-      `;
-      const { rows } = await query(query1, [id]);
+      const { rows } = await query(
+        `SELECT * FROM collections WHERE collection_id = $1`,
+        [id]
+      );
       return rows[0];
     } catch (error) {
       throw error;
@@ -36,8 +34,7 @@ module.exports = {
       JOIN cards
       USING (card_id)
       WHERE collection_id = $1
-      ORDER BY card_type, card_name;
-      `;
+      ORDER BY card_type, card_name;`;
       const { rows } = await query(query1, [id]);
       return rows;
     } catch (error) {
@@ -50,8 +47,7 @@ module.exports = {
       SELECT collection_id, num_cards, collection_name, created_at, updated_at
       FROM collections
       WHERE user_id = $1
-      ORDER BY updated_at
-      `;
+      ORDER BY updated_at`;
       const { rows } = await query(query1, [userID]);
       return rows;
     } catch (error) {
@@ -60,7 +56,10 @@ module.exports = {
   },
   async collectionExists(id) {
     try {
-      const { rows } = await query("SELECT * FROM collections WHERE collection_id = $1", [id]);
+      const { rows } = await query(
+        "SELECT * FROM collections WHERE collection_id = $1",
+        [id]
+      );
       return rows.length > 0;
     } catch (error) {
       throw error;
@@ -70,13 +69,11 @@ module.exports = {
     try {
       // Upsert the card
       await query(
-        `
-        INSERT INTO collection_cards(collection_id, card_id, copies) 
+        `INSERT INTO collection_cards(collection_id, card_id, copies) 
         VALUES($1, $2, $3)
         ON CONFLICT ON CONSTRAINT collection_cards_pkey
         DO
-          UPDATE SET copies = EXCLUDED.copies + $3
-      `,
+          UPDATE SET copies = EXCLUDED.copies + $3`,
         [collectionID, cardID, copies]
       );
     } catch (error) {
@@ -86,9 +83,7 @@ module.exports = {
   async getNumCardsInCollection(collectionID) {
     try {
       const { rows } = await query(
-        `
-        SELECT SUM(copies) FROM collection_cards WHERE collection_id = $1
-        `,
+        `SELECT SUM(copies) FROM collection_cards WHERE collection_id = $1`,
         [collectionID]
       );
       return rows[0].copies;
@@ -99,11 +94,9 @@ module.exports = {
   async updateNumCardsInCollection(collectionID) {
     try {
       await query(
-        `
-        UPDATE collections
+        `UPDATE collections
         SET (num_cards) = (SELECT SUM(copies) FROM collection_cards WHERE collection_id = $1)
-        WHERE collection_id = $1
-        `,
+        WHERE collection_id = $1`,
         [collectionID]
       );
     } catch (error) {
@@ -114,15 +107,15 @@ module.exports = {
     if (!name) name = "Collection";
     try {
       const { rows } = await query(
-        `
-        INSERT INTO collections (user_id, name) VALUES ($1, $2) RETURNING *
-        `,
+        `INSERT INTO collections (user_id, name) VALUES ($1, $2) RETURNING *`,
         [userID, name]
       );
       const collectionID = rows[0].collection_id;
       let promises = [];
       for (const card of cards) {
-        promises.push(this.addCardToCollection(collectionID, card.card_id, card.copies));
+        promises.push(
+          this.addCardToCollection(collectionID, card.card_id, card.copies)
+        );
       }
       await Promise.all(promises);
       await this.updateNumCardsInCollection();
@@ -137,7 +130,9 @@ module.exports = {
       // Add the collection cards
       let promises = [];
       for (const card of cards) {
-        promises.push(this.addCardToCollection(collection_id, card.card_id, card.copies));
+        promises.push(
+          this.addCardToCollection(collection_id, card.card_id, card.copies)
+        );
       }
       await Promise.all(promises);
 
@@ -160,11 +155,15 @@ module.exports = {
   async updateCollection(collection_id, name, cards) {
     try {
       // Reset the collection cards
-      await query("DELETE FROM collection_cards WHERE collection_id = $1", [collection_id]);
+      await query("DELETE FROM collection_cards WHERE collection_id = $1", [
+        collection_id,
+      ]);
       // Add in all the cards
       let promises = [];
       for (const card of cards) {
-        promises.push(this.addCardToCollection(collection_id, card.card_id, card.copies));
+        promises.push(
+          this.addCardToCollection(collection_id, card.card_id, card.copies)
+        );
       }
       await Promise.all(promises);
 
@@ -232,9 +231,10 @@ module.exports = {
   // },
   async deleteCollection(collectionID) {
     try {
-      const { rows } = await query("DELETE FROM collections WHERE collection_id = $1 RETURNING *", [
-        collectionID,
-      ]);
+      const { rows } = await query(
+        "DELETE FROM collections WHERE collection_id = $1 RETURNING *",
+        [collectionID]
+      );
       return rows.length;
     } catch (error) {
       throw error;

@@ -9,6 +9,7 @@ const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
 const cardsetsRouter = require("./routes/cardsets");
+const secretPacksRouter = require("./routes/secret_packs");
 const packsRouter = require("./routes/packs");
 const collectionsRouter = require("./routes/collections");
 
@@ -36,6 +37,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/cards", cardsRouter);
 app.use("/api/cardsets", cardsetsRouter);
+app.use("/api/secret_packs", secretPacksRouter);
 app.use("/api/packs", packsRouter);
 app.use("/api/collections", collectionsRouter);
 

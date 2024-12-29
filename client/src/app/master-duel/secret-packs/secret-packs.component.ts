@@ -1,11 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SecretPacksService } from 'src/app/_shared/secret-packs.service';
+import { SecretPack } from 'src/app/models/secret_packs/SecretPack.model';
 
 @Component({
   selector: 'app-secret-packs',
-  imports: [],
   templateUrl: './secret-packs.component.html',
-  styleUrl: './secret-packs.component.css'
+  styleUrl: './secret-packs.component.css',
+  standalone: false,
 })
-export class SecretPacksComponent {
+export class SecretPacksComponent implements OnInit {
+  secretPacks: SecretPack[] = [];
 
+  constructor(private secretPacksService: SecretPacksService) {}
+
+  ngOnInit(): void {
+    this.secretPacksService.getSecretPacks().subscribe((secretPacks) => {
+      this.secretPacks = secretPacks;
+    });
+  }
 }

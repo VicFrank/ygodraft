@@ -1,4 +1,4 @@
-const { query } = require("./index");
+const { query, pool } = require("./index");
 
 module.exports = {
   async getAllSecretPacks() {
@@ -11,42 +11,60 @@ module.exports = {
       throw error;
     }
   },
-  async getSecretPack(setName) {
+  async getSecretPack(id) {
     try {
       const { rows } = await query(
-        `SELECT card_id, card_name, md_rarity
+        `SELECT * FROM secret_packs WHERE secret_pack_id = $1`,
+        [id]
+      );
+
+      const secretPack = rows[0];
+
+      const { rows: cards } = await query(
+        `SELECT card_id, card_name, md_rarity, card_type, card_desc, atk, def, card_level, race,
+        attribute, archetype
       FROM secret_pack_cards
       JOIN cards
       USING(card_id)
-      WHERE set_name = $1`,
-        [setName]
+      WHERE secret_pack_id = $1`,
+        [id]
       );
-      return rows;
+
+      secretPack.cards = cards;
+      return secretPack;
     } catch (error) {
       throw error;
     }
   },
-  async addSecretPack(setName, cards) {
+  async addSecretPack(setName, imageName, cardIds) {
+    const client = await pool.connect();
+
     try {
-      await query(
-        `
-        INSERT INTO secret_packs(set_name) VALUES ($1)`,
-        [setName]
+      await client.query("BEGIN");
+
+      const { rows } = await client.query(
+        `INSERT INTO secret_packs(set_name, image_name) 
+         VALUES ($1, $2) 
+         RETURNING secret_pack_id`,
+        [setName, imageName]
       );
 
-      for (const card of cards) {
-        const { card_id } = card;
-        await query(
-          `
-          INSERT INTO secret_pack_cards(card_id, set_name)
-          VALUES ($1, $2)
-          ON CONFLICT DO NOTHING
-        `,
-          [card_id, setName]
-        );
-      }
+      const { secret_pack_id } = rows[0];
+
+      await client.query(
+        `INSERT INTO secret_pack_cards(card_id, secret_pack_id)
+         SELECT unnest($1::int[]), $2
+         ON CONFLICT DO NOTHING`,
+        [cardIds, secret_pack_id]
+      );
+
+      await client.query("COMMIT");
+      return secret_pack_id;
     } catch (error) {
+      await client.query("ROLLBACK");
       throw error;
+    } finally {
+      client.release();
     }
   },
 };

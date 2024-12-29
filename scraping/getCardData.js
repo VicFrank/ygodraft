@@ -64,8 +64,8 @@ const parseCards = async (cards, cardsets) => {
   for (const card of cards) {
     const { id, name, type, desc, race, attribute, archetype } = card;
     const { atk, def, level, scale, linkval } = card;
-    const { card_sets, card_prices, card_images } = card;
-    const { md_rarity, has_effect } = card;
+    const { card_sets, card_images } = card;
+    const { md_rarity, has_effect } = card.misc_info[0];
 
     counter += 1;
     if (counter % 100 === 0) {
@@ -74,11 +74,11 @@ const parseCards = async (cards, cardsets) => {
 
     try {
       await query(
-        `
-      INSERT INTO cards (card_id, card_name, card_type, card_desc, atk, def, card_level, race,
+        `INSERT INTO cards (card_id, card_name, card_type, card_desc, atk, def, card_level, race,
         attribute, scale, linkval, archetype, md_rarity, has_effect)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
-      ON CONFLICT DO NOTHING
+      ON CONFLICT (card_id) DO UPDATE
+      SET md_rarity = $13, has_effect = $14
       `,
         [
           id,
@@ -175,4 +175,6 @@ const updateCardSets = async () => {
   await createLinkmarkers();
   await parseCards(cards, cardsets);
   await updateCardSets();
+
+  console.log("Finished adding cards");
 })();

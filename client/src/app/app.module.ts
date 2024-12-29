@@ -31,8 +31,8 @@ import Aura from '@primeng/themes/aura';
   ],
   bootstrap: [AppComponent],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
   ],
