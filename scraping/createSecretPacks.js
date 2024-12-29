@@ -97,5 +97,5 @@ const createPacks = async () => {
 (async function () {
   // if (!(await validateCards())) return;
   // await downloadImages();
-  // await createPacks();
+  await createPacks();
 })();
