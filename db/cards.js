@@ -100,7 +100,6 @@ module.exports = {
       ]);
       return rows[0];
     } catch (error) {
-      console.log("Couldn't find card with name:", name);
       throw error;
     }
   },
