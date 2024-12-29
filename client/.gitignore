@@ -46,6 +46,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/src/assets/images/cards
+/src/assets/images/cards/original
 /src/assets/images/cards_cropped
 /src/assets/images/cards_small
