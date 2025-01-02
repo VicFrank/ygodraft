@@ -3,3 +3,4 @@ config
 notes.txt
 ./scraping/secret_packs
 ./scraping/original
+card_images
