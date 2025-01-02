@@ -5,10 +5,10 @@ import { PackCard } from 'src/app/models/drafting/PackCard.model';
 import { DraftingService } from '../../drafting.service';
 
 @Component({
-    selector: 'app-pack-opening',
-    templateUrl: './pack-opening.component.html',
-    styleUrls: ['./pack-opening.component.css'],
-    standalone: false
+  selector: 'app-pack-opening',
+  templateUrl: './pack-opening.component.html',
+  styleUrls: ['./pack-opening.component.css'],
+  standalone: false,
 })
 export class PackOpeningComponent implements OnInit {
   cardset: string = '';
@@ -40,7 +40,7 @@ export class PackOpeningComponent implements OnInit {
 
     if (this.packsToOpen === 0) {
       // We don't have any packs to open, redirect back to drafting
-      this.router.navigate(['drafting']);
+      this.router.navigate(['classic']);
     }
 
     this.nextPack();

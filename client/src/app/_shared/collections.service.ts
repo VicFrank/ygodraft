@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Collection } from '../models/collections/Collection.model';
-import { CollectionCard } from '../models/collections/CollectionCard.model';
 import { UserCollection } from '../models/collections/UserCollection.model';
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
+import { CollectionCard } from '../models/Card.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,11 @@ export class CollectionsService {
     this.newCollection = undefined;
   }
 
-  createNewCollectionWeb(collection: CollectionCard[], numCards: number) {
+  createNewCollectionWeb(
+    collection: CollectionCard[],
+    numCards: number,
+    isMasterDuel: boolean
+  ) {
     this.newCollection = {
       created_at: new Date(),
       updated_at: new Date(),
@@ -28,6 +32,7 @@ export class CollectionsService {
       num_cards: numCards,
       collection_cards: collection,
       collection_name: '',
+      is_master_duel: isMasterDuel,
     };
   }
 

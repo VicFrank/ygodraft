@@ -5,10 +5,10 @@ import { PackCard } from 'src/app/models/drafting/PackCard.model';
 import { DraftingService } from '../../drafting.service';
 
 @Component({
-    selector: 'app-bulk-open',
-    templateUrl: './bulk-open.component.html',
-    styleUrls: ['./bulk-open.component.css'],
-    standalone: false
+  selector: 'app-bulk-open',
+  templateUrl: './bulk-open.component.html',
+  styleUrls: ['./bulk-open.component.css'],
+  standalone: false,
 })
 export class BulkOpenComponent implements OnInit {
   packs: PackCard[][] = [];
@@ -26,7 +26,7 @@ export class BulkOpenComponent implements OnInit {
     this.setsToOpen = this.draftingService.setsToOpen.length;
 
     if (this.setsToOpen === 0) {
-      this.router.navigate(['drafting']);
+      this.router.navigate(['classic']);
     }
     this.openAllSets();
   }

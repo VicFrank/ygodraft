@@ -6,10 +6,10 @@ import { CardsetService } from 'src/app/_shared/cardset.service';
 import { DraftingService } from '../drafting.service';
 
 @Component({
-    selector: 'app-setlist',
-    templateUrl: './setlist.component.html',
-    styleUrls: ['./setlist.component.css'],
-    standalone: false
+  selector: 'app-setlist',
+  templateUrl: './setlist.component.html',
+  styleUrls: ['./setlist.component.css'],
+  standalone: false,
 })
 export class SetlistComponent implements OnInit {
   cardsets: Cardset[] = [];
@@ -57,11 +57,11 @@ export class SetlistComponent implements OnInit {
           this.draftingService.packsToOpen.push(set);
         }
       }
-      this.router.navigate(['drafting/opening']);
+      this.router.navigate(['classic/opening']);
     } else if (this.draftOptions.openingMethod === 'Bulk') {
       this.draftingService.packsPerSet = this.draftOptions.numPacks;
       this.draftingService.setsToOpen = this.selectedSets;
-      this.router.navigate(['drafting/bulk-opening']);
+      this.router.navigate(['classic/bulk-opening']);
     }
   }
 }

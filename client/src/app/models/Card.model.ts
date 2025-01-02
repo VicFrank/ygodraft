@@ -1,3 +1,5 @@
+export type MasterDuelRarity = 'Common' | 'Rare' | 'Super Rare' | 'Ultra Rare';
+
 export type Card = {
   card_id: string;
   card_name: string;
@@ -11,11 +13,17 @@ export type Card = {
   scale: number;
   linkval: number;
   archetype: string;
-  md_rarity: 'Common' | 'Rare' | 'Super Rare' | 'Ultra Rare';
+  md_rarity: MasterDuelRarity;
   has_effect: boolean;
 };
 
 export type SecretPackCard = Card & {
   flipped?: boolean;
   selected?: boolean;
+};
+
+export type CollectionCard = Card & {
+  md_rarity: string;
+  copies: number;
+  copies_in_use: number;
 };

@@ -10,12 +10,14 @@ import { SecretPack } from 'src/app/models/secret_packs/SecretPack.model';
 })
 export class SecretPacksComponent implements OnInit {
   secretPacks: SecretPack[] = [];
+  isLoading: boolean = true;
 
   constructor(private secretPacksService: SecretPacksService) {}
 
   ngOnInit(): void {
     this.secretPacksService.getSecretPacks().subscribe((secretPacks) => {
       this.secretPacks = secretPacks;
+      this.isLoading = false;
     });
   }
 }

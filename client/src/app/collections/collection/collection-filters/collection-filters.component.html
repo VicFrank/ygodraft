@@ -19,6 +19,16 @@
     ></p-dropdown>
   </div>
   <div>
+    <h6>Rarity</h6>
+    <p-multiSelect
+      [options]="mdRarityOptions"
+      [(ngModel)]="filters.mdRarity"
+      (onChange)="filtersChanged()"
+      [showHeader]="false"
+      scrollHeight="300px"
+    ></p-multiSelect>
+  </div>
+  <div>
     <h6>Archetype</h6>
     <p-autoComplete
       [(ngModel)]="filters.archetype"
@@ -41,7 +51,7 @@
     ></p-multiSelect>
   </div>
   <div>
-    <h6>Card Type</h6>
+    <h6 style="white-space: nowrap">Card Type</h6>
     <p-dropdown
       [options]="cardTypeOptions"
       [(ngModel)]="filters.type"

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Card } from '../models/Card.model';
-import { CollectionCard } from '../models/collections/CollectionCard.model';
 import { DraftOptions } from '../models/drafting/DraftOptions.model';
 import { PackCard } from '../models/drafting/PackCard.model';
 import { CardsService } from '../_shared/cards.service';
@@ -69,7 +68,11 @@ export class DraftingService {
       copies_in_use: 0,
     }));
     const num_cards = cardsToAdd.length;
-    this.collectionsService.createNewCollectionWeb(collection_cards, num_cards);
+    this.collectionsService.createNewCollectionWeb(
+      collection_cards,
+      num_cards,
+      false
+    );
   }
 
   async openSinglePack(set: string) {

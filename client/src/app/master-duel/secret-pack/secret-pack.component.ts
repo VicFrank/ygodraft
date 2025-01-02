@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SecretPacksService } from 'src/app/_shared/secret-packs.service';
 import { SecretPackCard } from 'src/app/models/Card.model';
 import { SecretPack } from 'src/app/models/secret_packs/SecretPack.model';
+import { MasterDuelDraftingService } from '../master-duel-drafting.service';
 
 interface ChartData {
   data: {
@@ -34,25 +35,35 @@ export class SecretPackComponent implements OnInit {
   numPacks = 10;
   isPityPack = false;
   selectedGraphType = 'Cumulative';
-
   graphTypes = ['Individual', 'Cumulative'];
+  chartData: ChartData = {
+    data: {
+      labels: [],
+      datasets: [],
+    },
+    options: {},
+  };
 
-  chartData?: ChartData;
+  loading = false;
+
+  packsToOpen = 10;
 
   constructor(
     private secretPacksService: SecretPacksService,
+    private draftingService: MasterDuelDraftingService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id != null) {
       this.secretPacksService.getSecretPack(id).subscribe((secretPack) => {
         this.secretPack = secretPack;
-
         this.calculateOdds();
+        this.loading = false;
       });
     } else {
       this.router.navigate(['/secretpacks']);
@@ -142,7 +153,7 @@ export class SecretPackComponent implements OnInit {
     oddsToMiss[2] = 100 * Math.pow(1 - oddsToHit[2] / numRare, totalCards);
     oddsToMiss[3] = 100 * Math.pow(1 - oddsToHit[3] / numCommon, totalCards);
 
-    console.log(oddsToMiss);
+    // console.log(oddsToMiss);
 
     // Get the odds of getting a specific card of each rarity
     odds[0] = odds[0] / numUltraRare;
@@ -261,5 +272,16 @@ export class SecretPackComponent implements OnInit {
       totalProbability += this.calculateBinomialProbability(n, i, p);
     }
     return totalProbability;
+  }
+
+  async openPacks(): Promise<void> {
+    this.draftingService.resetDraft();
+
+    await this.draftingService.generatePacks(
+      this.secretPack.secret_pack_id,
+      this.packsToOpen
+    );
+
+    this.router.navigate(['/secretpacks/opening']);
   }
 }

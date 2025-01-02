@@ -1,6 +1,7 @@
 const { query } = require("../db/index");
 const cardSetsDB = require("../db/cardsets");
 const fetch = require("node-fetch");
+const cheerio = require("cheerio");
 
 const boosterPacks = require("../packs/booster_packs");
 
@@ -167,14 +168,65 @@ const updateCardSets = async () => {
   }
 };
 
-(async function () {
-  const cardsets = await getCardSets();
-  const cards = await getCards();
+// scrape https://ygoprodeck.com/pack/Master%20Pack/md/ to get a list of all cards in the master pack
+const updateMasterPackCards = async () => {
+  const response = await fetch("https://ygoprodeck.com/pack/Master%20Pack/md/");
 
-  await createCardSets(cardsets);
-  await createLinkmarkers();
-  await parseCards(cards, cardsets);
-  await updateCardSets();
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const html = await response.text();
+  const $ = cheerio.load(html);
+
+  // get every <figure> element on the page, and dig into the img that is not the .rarity-img
+  // then get the src attriburte, and get the id as the element between the last "/" and ".jpg"
+  const cardIds = $("figure")
+    .map((i, el) => {
+      return $(el)
+        .find("img")
+        .not(".rarity-img")
+        .attr("src")
+        .split("/")
+        .slice(-1)[0]
+        .split(".")[0];
+    })
+    .get();
+
+  try {
+    await query("BEGIN");
+
+    const result = await query(
+      `
+      UPDATE cards 
+      SET in_master_pack = TRUE 
+      WHERE card_id = ANY($1)
+      RETURNING card_id
+    `,
+      [cardIds]
+    );
+
+    await query("COMMIT");
+
+    console.log(`Successfully updated ${result.rowCount} cards in master pack`);
+    return result.rowCount;
+  } catch (error) {
+    await query("ROLLBACK");
+    console.error("Error updating cards in master pack:", error);
+    throw error;
+  }
+};
+
+(async function () {
+  // const cardsets = await getCardSets();
+  // const cards = await getCards();
+
+  // await createCardSets(cardsets);
+  // await createLinkmarkers();
+  // await parseCards(cards, cardsets);
+  // await updateCardSets();
+
+  await updateMasterPackCards();
 
   console.log("Finished adding cards");
 })();

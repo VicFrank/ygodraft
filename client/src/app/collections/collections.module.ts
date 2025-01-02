@@ -5,7 +5,6 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
-import { DialogModule } from 'primeng/dialog';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { InplaceModule } from 'primeng/inplace';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -33,7 +32,6 @@ import { CollectionFiltersComponent } from './collection/collection-filters/coll
     InputTextModule,
     MultiSelectModule,
     DropdownModule,
-    DialogModule,
     ConfirmPopupModule,
     ConfirmDialogModule,
     InplaceModule,

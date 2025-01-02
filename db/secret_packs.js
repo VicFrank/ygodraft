@@ -67,4 +67,14 @@ module.exports = {
       client.release();
     }
   },
+  async getAllMasterPackCards() {
+    try {
+      const { rows } = await query(
+        `SELECT * from cards where in_master_pack = true`
+      );
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  },
 };

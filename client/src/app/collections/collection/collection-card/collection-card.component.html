@@ -1,25 +1,33 @@
 <div class="card-container" (click)="displayModal = true">
+  <div *ngIf="isMasterDuelCard" class="rarity">
+    <img
+      *ngIf="card.md_rarity === 'Common'"
+      src="assets/images/icons/Common.webp"
+      alt="Common"
+    />
+    <img
+      *ngIf="card.md_rarity === 'Rare'"
+      src="assets/images/icons/Rare.webp"
+      alt="Rare"
+    />
+    <img
+      *ngIf="card.md_rarity === 'Super Rare'"
+      src="assets/images/icons/SR.webp"
+      alt="Super Rare"
+    />
+    <img
+      *ngIf="card.md_rarity === 'Ultra Rare'"
+      src="assets/images/icons/UR.webp"
+      alt="Ultra Rare"
+    />
+  </div>
   <img
-    class="img-fluid"
-    src="https://ygodraft.net/images/105_153/{{ card.card_id }}.jpg"
+    class="img-fluid card-img"
+    src="https://ygodraft.net/images/{{ card.card_id }}.webp"
     [alt]="card.card_name"
     loading="lazy"
   />
   <div class="centered">{{ card.copies }}</div>
 </div>
 
-<p-dialog
-  [(visible)]="displayModal"
-  [modal]="true"
-  [dismissableMask]="true"
-  [showHeader]="false"
-  [draggable]="false"
-  [closable]="true"
-  appendTo="body"
->
-  <img
-    src="https://ygodraft.net/images/{{ card.card_id }}.webp"
-    [alt]="card.card_name"
-    loading="lazy"
-  />
-</p-dialog>
+<app-card-modal [card]="card" [displayModal]="displayModal"></app-card-modal>

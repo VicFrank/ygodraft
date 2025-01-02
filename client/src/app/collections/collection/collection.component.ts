@@ -2,17 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Collection } from 'src/app/models/collections/Collection.model';
-import { CollectionCard } from 'src/app/models/collections/CollectionCard.model';
 import { CollectionFilters } from 'src/app/models/collections/CollectionFilters.model';
 import { AuthService } from 'src/app/_shared/auth.service';
 import { CollectionsService } from 'src/app/_shared/collections.service';
 import { CardFilterService } from './card-filter.service';
+import { CollectionCard } from 'src/app/models/Card.model';
+import { CollectionSortType } from 'src/app/models/collections/CollectionSortType.model';
 
 @Component({
-    selector: 'app-collection',
-    templateUrl: './collection.component.html',
-    styleUrls: ['./collection.component.css'],
-    standalone: false
+  selector: 'app-collection',
+  templateUrl: './collection.component.html',
+  styleUrls: ['./collection.component.css'],
+  standalone: false,
 })
 export class CollectionComponent implements OnInit {
   collection: Collection = {
@@ -22,12 +23,14 @@ export class CollectionComponent implements OnInit {
     num_cards: 0,
     collection_cards: [],
     collection_name: '',
+    is_master_duel: false,
   };
   filteredCards: CollectionCard[] = [];
   filters: CollectionFilters = {
     levels: [],
+    mdRarity: [],
   };
-  currentSort: string = 'Type';
+  currentSort: CollectionSortType = 'type';
 
   isNew: boolean = false;
   loading: boolean = true;
@@ -50,6 +53,7 @@ export class CollectionComponent implements OnInit {
         if (this.collectionsService.newCollection) {
           this.collection = this.collectionsService.newCollection;
           this.filteredCards = this.collection.collection_cards;
+          if (this.collection.is_master_duel) this.currentSort = 'md_rarity';
           this.sortCollection();
           // order cards by type and name by default
         } else {
@@ -62,6 +66,8 @@ export class CollectionComponent implements OnInit {
           (collection) => {
             this.collection = collection;
             this.filteredCards = this.collection.collection_cards;
+            if (this.collection.is_master_duel) this.currentSort = 'md_rarity';
+            this.sortCollection();
             this.loading = false;
           },
           (error) => {

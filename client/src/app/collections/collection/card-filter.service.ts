@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Card } from 'src/app/models/Card.model';
-import { CollectionCard } from 'src/app/models/collections/CollectionCard.model';
+import { Card, CollectionCard } from 'src/app/models/Card.model';
 import { CollectionFilters } from 'src/app/models/collections/CollectionFilters.model';
+import { CollectionSortType } from 'src/app/models/collections/CollectionSortType.model';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +44,9 @@ export class CardFilterService {
       if (filters.archetype) {
         if (card.archetype !== filters.archetype) return false;
       }
+      if (filters.mdRarity.length > 0) {
+        if (!filters.mdRarity.includes(card.md_rarity)) return false;
+      }
       return true;
     });
   }
@@ -54,7 +57,7 @@ export class CardFilterService {
     return card1.card_name.localeCompare(card2.card_name);
   }
 
-  sortCollection(cards: CollectionCard[], field: string) {
+  sortCollection(cards: CollectionCard[], field: CollectionSortType) {
     switch (field) {
       case 'type':
         cards.sort((card1, card2) => {
@@ -106,7 +109,7 @@ export class CardFilterService {
           else return 0;
         });
         break;
-      case 'monster type':
+      case 'monster_type':
         cards.sort((card1, card2) => {
           if (card1.race === card2.race)
             return this.defaultCompare(card1, card2);
@@ -118,6 +121,17 @@ export class CardFilterService {
           if (card1.copies === card2.copies)
             return this.defaultCompare(card1, card2);
           return card2.copies - card1.copies;
+        });
+        break;
+      case 'md_rarity':
+        const rarityOrder = ['Ultra Rare', 'Super Rare', 'Rare', 'Common'];
+        cards.sort((card1, card2) => {
+          if (card1.md_rarity === card2.md_rarity)
+            return this.defaultCompare(card1, card2);
+          return (
+            rarityOrder.indexOf(card1.md_rarity) -
+            rarityOrder.indexOf(card2.md_rarity)
+          );
         });
         break;
     }

@@ -13,6 +13,7 @@ import { PackCardComponent } from './opening/pack-card/pack-card.component';
 import { BulkOpenComponent } from './opening/bulk-open/bulk-open.component';
 import { BulkCardComponent } from './opening/bulk-open/bulk-card/bulk-card.component';
 import { SharedModule } from '../_shared/shared.module';
+import { CardModalComponent } from '../_shared/card-modal/card-modal.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,6 @@ import { SharedModule } from '../_shared/shared.module';
     DraftingRoutingModule,
     CheckboxModule,
     DropdownModule,
-    DialogModule,
   ],
 })
 export class DraftingModule {}

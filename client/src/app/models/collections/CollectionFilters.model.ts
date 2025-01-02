@@ -1,3 +1,5 @@
+import { MasterDuelRarity } from '../Card.model';
+
 export type CollectionFilters = {
   searchText?: string;
   levels: number[];
@@ -5,4 +7,5 @@ export type CollectionFilters = {
   attribute?: string;
   type?: string;
   archetype?: string;
+  mdRarity: MasterDuelRarity[];
 };

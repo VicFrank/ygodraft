@@ -5,10 +5,10 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CollectionFilters } from 'src/app/models/collections/CollectionFilters.model';
 import { CardsService } from 'src/app/_shared/cards.service';
 @Component({
-    selector: 'app-collection-filters',
-    templateUrl: './collection-filters.component.html',
-    styleUrls: ['./collection-filters.component.css'],
-    standalone: false
+  selector: 'app-collection-filters',
+  templateUrl: './collection-filters.component.html',
+  styleUrls: ['./collection-filters.component.css'],
+  standalone: false,
 })
 export class CollectionFiltersComponent {
   @Input() filters!: CollectionFilters;
@@ -24,6 +24,7 @@ export class CollectionFiltersComponent {
   cardTypeOptions: SelectItem[];
   raceTypeOptions: SelectItem[];
   attributeOptions: SelectItem[];
+  mdRarityOptions: SelectItem[];
 
   searchStringChanged: Subject<string> = new Subject<string>();
 
@@ -44,6 +45,7 @@ export class CollectionFiltersComponent {
     ];
     this.sortOptions = [
       { label: 'Card Type', value: 'type' },
+      { label: 'Rarity', value: 'md_rarity' },
       { label: 'Name', value: 'name' },
       { label: 'Attack', value: 'attack' },
       { label: 'Defense', value: 'defense' },
@@ -111,6 +113,12 @@ export class CollectionFiltersComponent {
       { label: 'Water', value: 'WATER', icon: 'water_small.png' },
       { label: 'Earth', value: 'EARTH', icon: 'earth_small.png' },
       { label: 'Divine', value: 'DIVINE', icon: 'divine_small.png' },
+    ];
+    this.mdRarityOptions = [
+      { label: 'Common', value: 'Common' },
+      { label: 'Rare', value: 'Rare' },
+      { label: 'Super Rare', value: 'Super Rare' },
+      { label: 'Ultra Rare', value: 'Ultra Rare' },
     ];
     this.cardsService
       .getAllArchetypes()

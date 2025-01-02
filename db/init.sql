@@ -41,7 +41,8 @@ CREATE TABLE IF NOT EXISTS cards (
   linkval INTEGER,
   archetype TEXT,
   md_rarity TEXT,
-  has_effect BOOLEAN
+  has_effect BOOLEAN,
+  in_master_pack BOOLEAN DEFAULT FALSE
 );
 
 CREATE INDEX IF NOT EXISTS cards_card_name ON cards (card_name);
@@ -99,6 +100,7 @@ CREATE TABLE IF NOT EXISTS collections (
   updated_at TIMESTAMP DEFAULT NOW(),
   num_cards INTEGER,
   collection_name TEXT,
+  is_master_duel BOOLEAN default FALSE,
   collection_data BYTEA
 );
 

@@ -27,6 +27,7 @@
   <app-collection-card
     class="m-1"
     *ngFor="let card of filteredCards"
+    [isMasterDuelCard]="collection.is_master_duel"
     [card]="card"
   ></app-collection-card>
 </div>
@@ -41,7 +42,7 @@
     (click)="createCollection()"
     *ngIf="isNew && isLoggedIn"
   ></button>
-  <div class="ms-auto" *ngIf="isNew">Log in to save your collections!</div>
+  <div class="ms-auto" *ngIf="isNew">Sign in to save your collections!</div>
 
   <button
     pButton

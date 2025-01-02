@@ -1,4 +1,4 @@
-import { CollectionCard } from './CollectionCard.model';
+import { CollectionCard } from '../Card.model';
 
 export type Collection = {
   collection_id: number;
@@ -7,4 +7,5 @@ export type Collection = {
   num_cards: number;
   collection_cards: CollectionCard[];
   collection_name: string;
+  is_master_duel: boolean;
 };
