@@ -1,63 +1,46 @@
-/* Modal */
-.modal-content {
-  display: flex;
-  justify-content: space-between;
+:host ::ng-deep .p-dialog {
+  max-width: 90vw;
 }
 
-.modal-left {
-  width: 550px;
-  margin-right: 1rem;
+@media (max-width: 768px) {
+  :host ::ng-deep .p-dialog {
+    width: 95vw !important;
+  }
+
+  .d-flex {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal-left {
+    margin-bottom: 1rem;
+    max-width: 300px;
+  }
+
+  .modal-right {
+    margin-left: 0;
+    max-width: 300px;
+  }
 }
 
 .modal-left img {
-  width: 100%;
+  max-width: 100%;
   height: auto;
 }
 
 .modal-right {
-  width: 600px;
+  margin-left: 1rem;
+  max-width: 400px;
 }
 
-.card-header {
+.card-header-row {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 0.25rem;
   margin-bottom: 1rem;
-
-  background: linear-gradient(to right, #02203f, #122239, #013e7e);
 }
 
-.card-header img {
-  height: 25px;
-  width: auto;
-}
-
-.card-description {
-  padding: 0.25rem;
-  margin-bottom: 1rem;
-  white-space: pre-line;
-}
-
-.navigation-buttons {
-  height: 100%;
-}
-
-.nav-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
-  color: white;
-  padding: 1rem;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.nav-button.left {
-  left: 0;
-}
-
-.nav-button.right {
-  right: 0;
+.card-header-row img {
+  width: 30px;
+  height: 30px;
 }

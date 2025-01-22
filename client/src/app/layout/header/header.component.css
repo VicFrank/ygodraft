@@ -20,6 +20,10 @@
   position: relative;
 }
 
+.show {
+  z-index: 9999;
+}
+
 .topbar-link > a {
   text-decoration: none;
   color: var(--text-color);
@@ -39,4 +43,39 @@
 .topbar-link > a:focus,
 .topbar-link > a:hover {
   border-bottom-color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem;
+  }
+
+  .topbar-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    padding: 0 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: var(--surface-b);
+  }
+
+  .topbar-menu.show {
+    display: flex;
+  }
+
+  .topbar-menu > li {
+    height: auto;
+    line-height: 1.5;
+    padding: 0;
+    background-color: var(--surface-d);
+
+    border-bottom: 1px solid var(--surface-b);
+  }
+
+  .menu-button {
+    display: block;
+  }
 }

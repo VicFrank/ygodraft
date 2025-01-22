@@ -1,31 +1,33 @@
 <header class="navbar navbar-expand-lg" role="banner">
   <div class="container-fluid">
-    <!-- <a routerLink="/">
-      <img
-        width="40"
-        alt="Site Logo"
-        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
-      />
-    </a> -->
     <div class="topbar-link">
       <a routerLink="/" style="font-size: 1.5rem"><strong>YGO Draft</strong></a>
     </div>
+
+    <button
+      pButton
+      icon="pi pi-bars"
+      class="p-button-text menu-button d-lg-none"
+      (click)="toggleMenu()"
+    ></button>
+
     <div class="spacer"></div>
 
-    <ul class="topbar-menu">
+    <ul class="topbar-menu" [class.show]="isMenuOpen">
       <li class="topbar-link">
-        <a routerLink="/secretpacks">Secret Packs</a>
+        <a routerLink="/secretpacks" (click)="closeMenu()">Secret Packs</a>
       </li>
       <li class="topbar-link">
-        <a routerLink="/classic">Classic Sets</a>
+        <a routerLink="/classic" (click)="closeMenu()">Classic Sets</a>
       </li>
       <li class="topbar-link" *ngIf="isLoggedIn">
-        <a routerLink="/collections">Collections</a>
+        <a routerLink="/collections" (click)="closeMenu()">Collections</a>
       </li>
       <li class="topbar-link">
-        <a routerLink="/deckbuilder">Deck Builder</a>
+        <a routerLink="/deckbuilder" (click)="closeMenu()">Deck Builder</a>
       </li>
     </ul>
+
     <div class="ms-2">
       <button
         *ngIf="!isLoggedIn"
