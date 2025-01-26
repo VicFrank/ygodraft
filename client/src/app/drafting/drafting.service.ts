@@ -67,12 +67,7 @@ export class DraftingService {
       copies: cardMap[card.card_name].copies,
       copies_in_use: 0,
     }));
-    const num_cards = cardsToAdd.length;
-    this.collectionsService.createNewCollectionWeb(
-      collection_cards,
-      num_cards,
-      false
-    );
+    this.collectionsService.createNewCollection(collection_cards, false);
   }
 
   async openSinglePack(set: string) {

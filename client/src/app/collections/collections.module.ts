@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../_shared/shared.module';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
@@ -29,7 +28,6 @@ import { CollectionFiltersComponent } from './collection/collection-filters/coll
     SharedModule,
     CollectionsRoutingModule,
     AutoCompleteModule,
-    InputTextModule,
     MultiSelectModule,
     DropdownModule,
     ConfirmPopupModule,

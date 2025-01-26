@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MasterDuelDraftingService } from '../master-duel-drafting.service';
 import { SecretPackCard } from 'src/app/models/Card.model';
+import { MenuItem } from 'primeng/api';
+import { CollectionsService } from 'src/app/_shared/collections.service';
 
 @Component({
   selector: 'app-secret-pack-opening',
@@ -18,9 +20,26 @@ export class SecretPackOpeningComponent implements OnInit {
 
   currentPack: SecretPackCard[] = [];
 
+  selectedPackQuantity = 1;
+
+  packOptions: MenuItem[] = [
+    { label: '1 Pack', command: () => (this.selectedPackQuantity = 1) },
+    { label: '10 Packs', command: () => (this.selectedPackQuantity = 10) },
+  ];
+
+  collectionOptions: MenuItem[] = [
+    {
+      label: 'New Collection',
+      command: () => (this.selectedCollectionId = undefined),
+    },
+  ];
+
+  selectedCollectionId?: number;
+
   constructor(
     private router: Router,
-    private draftingService: MasterDuelDraftingService
+    private draftingService: MasterDuelDraftingService,
+    private collectionsService: CollectionsService
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +50,21 @@ export class SecretPackOpeningComponent implements OnInit {
     }
 
     this.nextPack();
+
+    this.collectionsService.getUserCollections().subscribe({
+      next: (collections) => {
+        if (collections.length === 0) return;
+
+        this.collectionOptions = collections.map((collection) => ({
+          label: collection.collection_name,
+          command: () => (this.selectedCollectionId = collection.collection_id),
+        }));
+      },
+      error: (error) => {
+        console.error('Failed to load collections:', error);
+        this.errorMessage = 'Failed to load collections';
+      },
+    });
   }
 
   nextPack() {
@@ -62,9 +96,24 @@ export class SecretPackOpeningComponent implements OnInit {
     this.allFlipped = true;
   }
 
-  async skip() {
+  async addMorePacks() {
+    await this.draftingService.generatePacks(this.selectedPackQuantity);
+    this.packsToOpen = this.packsToOpen + this.selectedPackQuantity;
+    this.nextPack();
+  }
+
+  skip() {
+    this.packsOpened = this.packsToOpen;
     this.draftingService.openAllPacks();
-    this.draftingService.createCollection();
+    this.flipAll();
+  }
+
+  finish() {
+    if (this.selectedCollectionId) {
+      this.draftingService.addToCollection(this.selectedCollectionId);
+    } else {
+      this.draftingService.createCollection();
+    }
     this.router.navigate(['collections/new']);
   }
 }

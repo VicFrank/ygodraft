@@ -1,7 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SecretPack } from '../models/secret_packs/SecretPack.model';
-import { Card, SecretPackCard } from '../models/Card.model';
+import { SecretPackCard } from '../models/Card.model';
+import { Observable, of, Subject } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -11,19 +18,22 @@ export class SecretPacksService {
 
   constructor(private http: HttpClient) {}
 
-  getSecretPacks() {
-    return this.http.get<SecretPack[]>(this.secretPacksUrl);
+  getSecretPacks(searchText?: string): Observable<SecretPack[]> {
+    const url = searchText
+      ? `${this.secretPacksUrl}?search=${encodeURIComponent(searchText)}`
+      : this.secretPacksUrl;
+    return this.http.get<SecretPack[]>(url);
   }
 
   getSecretPack(id: string | number) {
     return this.http.get<SecretPack>(`${this.secretPacksUrl}/${id}`);
   }
 
-  generatePacks(secretPackId: string | number | undefined, numPacks: number) {
-    return this.http
-      .get<SecretPackCard[][]>(
-        `${this.secretPacksUrl}/actions/open?secretPackId=${secretPackId}&numPacks=${numPacks}`
-      )
-      .toPromise();
+  generatePacks(numPacks: number, secretPackId?: string | number) {
+    let url = `${this.secretPacksUrl}/actions/open?numPacks=${numPacks}`;
+    if (secretPackId != null) {
+      url += `&secretPackId=${secretPackId}`;
+    }
+    return this.http.get<SecretPackCard[][]>(url).toPromise();
   }
 }

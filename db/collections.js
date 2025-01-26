@@ -104,10 +104,10 @@ module.exports = {
     }
   },
   async createCollection(userID, name, cards) {
-    if (!name) name = "Collection";
+    if (!name) name = "New Collection";
     try {
       const { rows } = await query(
-        `INSERT INTO collections (user_id, name) VALUES ($1, $2) RETURNING *`,
+        `INSERT INTO collections (user_id, collection_name) VALUES ($1, $2) RETURNING *`,
         [userID, name]
       );
       const collectionID = rows[0].collection_id;

@@ -278,8 +278,8 @@ export class SecretPackComponent implements OnInit {
     this.draftingService.resetDraft();
 
     await this.draftingService.generatePacks(
-      this.secretPack.secret_pack_id,
-      this.packsToOpen
+      this.packsToOpen,
+      this.secretPack.secret_pack_id
     );
 
     this.router.navigate(['/secretpacks/opening']);

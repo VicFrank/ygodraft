@@ -8,7 +8,8 @@ let cache = apicache.middleware;
 
 router.get("/", async (req, res) => {
   try {
-    const sets = await SecretPacks.getAllSecretPacks();
+    const searchText = req.query.search;
+    const sets = await SecretPacks.getSecretPacks(searchText);
     return res.json(sets);
   } catch (error) {
     res.status(500).send({ message: "Server Error" });

@@ -20,27 +20,42 @@ export class CollectionsService {
     this.newCollection = undefined;
   }
 
-  createNewCollectionWeb(
-    collection: CollectionCard[],
-    numCards: number,
-    isMasterDuel: boolean
-  ) {
+  createNewCollection(cards: CollectionCard[], isMasterDuel: boolean) {
+    const numCards = cards.reduce((acc, card) => acc + card.copies, 0);
+
     this.newCollection = {
       created_at: new Date(),
       updated_at: new Date(),
       collection_id: -1,
       num_cards: numCards,
-      collection_cards: collection,
+      collection_cards: cards,
       collection_name: '',
       is_master_duel: isMasterDuel,
     };
+  }
+
+  addCardsToCollection(
+    cards: CollectionCard[],
+    isMasterDuel: boolean,
+    collectionId: number
+  ) {
+    if (this.newCollection) {
+      this.newCollection.collection_cards.push(...cards);
+      this.newCollection.num_cards += cards.reduce(
+        (acc, card) => acc + card.copies,
+        0
+      );
+    } else {
+      this.createNewCollection(cards, isMasterDuel);
+    }
   }
 
   getRecentCollections() {
     return this.http.get<UserCollection[]>(this.baseUrl);
   }
 
-  getUserCollections(userID: string | number) {
+  getUserCollections() {
+    const userID = this.authService.user?.user_id;
     return this.http.get<UserCollection[]>(`api/users/${userID}/collections`);
   }
 

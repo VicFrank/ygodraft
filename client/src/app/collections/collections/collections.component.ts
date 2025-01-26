@@ -4,10 +4,10 @@ import { AuthService } from 'src/app/_shared/auth.service';
 import { CollectionsService } from 'src/app/_shared/collections.service';
 
 @Component({
-    selector: 'app-collections',
-    templateUrl: './collections.component.html',
-    styleUrls: ['./collections.component.css'],
-    standalone: false
+  selector: 'app-collections',
+  templateUrl: './collections.component.html',
+  styleUrls: ['./collections.component.css'],
+  standalone: false,
 })
 export class CollectionsComponent implements OnInit {
   collections: UserCollection[] = [];
@@ -21,12 +21,10 @@ export class CollectionsComponent implements OnInit {
   ngOnInit(): void {
     const userID = this.authService.user?.user_id;
     if (userID) {
-      this.collectionsService
-        .getUserCollections(userID)
-        .subscribe((collections) => {
-          this.collections = collections;
-          this.loading = false;
-        });
+      this.collectionsService.getUserCollections().subscribe((collections) => {
+        this.collections = collections;
+        this.loading = false;
+      });
     } else {
       // not logged in, should have some auth guard
     }

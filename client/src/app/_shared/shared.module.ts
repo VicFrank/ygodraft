@@ -6,8 +6,10 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { SkeletonModule } from 'primeng/skeleton';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RouterModule } from '@angular/router';
@@ -22,7 +24,9 @@ import { FormatDescriptionPipe } from './pipes/description-pipe';
     ToastModule,
     ProgressSpinnerModule,
     InputNumberModule,
+    InputTextModule,
     DialogModule,
+    SplitButtonModule,
   ],
   declarations: [
     PageNotFoundComponent,
@@ -38,7 +42,9 @@ import { FormatDescriptionPipe } from './pipes/description-pipe';
     ToastModule,
     ProgressSpinnerModule,
     InputNumberModule,
+    InputTextModule,
     DialogModule,
+    SplitButtonModule,
     SkeletonModule,
     CardModalComponent,
   ],

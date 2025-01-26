@@ -1,12 +1,25 @@
 const { query, pool } = require("./index");
 
 module.exports = {
-  async getAllSecretPacks() {
+  async getSecretPacks(searchText) {
     try {
-      const { rows } = await query(
-        `SELECT * FROM secret_packs ORDER BY set_name`
-      );
-      return rows;
+      if (searchText) {
+        const { rows } = await query(
+          `SELECT secret_pack_id, set_name, image_name FROM secret_packs
+          JOIN secret_pack_cards USING (secret_pack_id)
+          JOIN cards USING (card_id)
+          WHERE set_name ILIKE $1 OR card_name ILIKE $1 OR card_desc ILIKE $1
+          GROUP BY secret_pack_id, set_name, image_name
+          ORDER BY set_name`,
+          [`%${searchText}%`]
+        );
+        return rows;
+      } else {
+        const { rows } = await query(
+          `SELECT * FROM secret_packs ORDER BY set_name`
+        );
+        return rows;
+      }
     } catch (error) {
       throw error;
     }

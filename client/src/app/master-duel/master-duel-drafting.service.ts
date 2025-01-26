@@ -23,12 +23,12 @@ export class MasterDuelDraftingService {
     this.packsToOpen = [];
   }
 
-  async generatePacks(secretPackId: number | undefined, numPacks: number) {
+  async generatePacks(numPacks: number, secretPackId?: number) {
     this.loadingPacks$.next(true);
 
     const packs = await this.SecretPackService.generatePacks(
-      secretPackId,
-      numPacks
+      numPacks,
+      secretPackId
     );
 
     for (const pack of packs) {
@@ -58,7 +58,7 @@ export class MasterDuelDraftingService {
     }
   }
 
-  createCollection() {
+  private getCollectionCards() {
     const cardsToAdd = this.openedCards;
     const cardMap: any = {};
 
@@ -78,15 +78,23 @@ export class MasterDuelDraftingService {
     }));
 
     // remove duplicates
-    const uniqueCards = collectionCards.filter(
+    return collectionCards.filter(
       (card, index, self) =>
         index === self.findIndex((t) => t.card_name === card.card_name)
     );
+  }
 
-    this.collectionsService.createNewCollectionWeb(
-      uniqueCards,
-      cardsToAdd.length,
-      true
+  createCollection() {
+    const collectionCards = this.getCollectionCards();
+
+    this.collectionsService.createNewCollection(collectionCards, true);
+  }
+
+  addToCollection(collectionId: number) {
+    this.collectionsService.addCardsToCollection(
+      this.getCollectionCards(),
+      true,
+      collectionId
     );
   }
 
