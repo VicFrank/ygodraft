@@ -1,4 +1,7 @@
-<h1>My Collections</h1>
+<h1>
+  My Collections
+  <span *ngIf="collections.length > 0">({{ collections.length }} / 10)</span>
+</h1>
 
 <div *ngIf="loading" class="text-center">
   <p-progressSpinner></p-progressSpinner>
@@ -12,7 +15,7 @@
 >
 </app-selectable-collection>
 
-<div *ngIf="!loading && collections?.length === 0" class="text-center">
+<div *ngIf="!loading && collections.length === 0" class="text-center">
   You don't have any collections yet! Start a
   <a routerLink="/classic">draft</a> and create one.
 </div>

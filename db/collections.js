@@ -1,5 +1,7 @@
 const { query } = require("./index");
 
+const MAX_COLLECTIONS = 10;
+
 module.exports = {
   async getRecentCollections() {
     try {
@@ -103,12 +105,18 @@ module.exports = {
       throw error;
     }
   },
-  async createCollection(userID, name, cards) {
-    if (!name) name = "New Collection";
+  async createCollection(userID, name, cards, isMasterDuel) {
     try {
+      if (!name) {
+        const existingCollections = await this.getCollectionsForUser(userID);
+        name = `My Collection (${existingCollections.length + 1})`;
+        if (existingCollections.length >= MAX_COLLECTIONS) {
+          throw new Error("Maximum number of collections reached");
+        }
+      }
       const { rows } = await query(
-        `INSERT INTO collections (user_id, collection_name) VALUES ($1, $2) RETURNING *`,
-        [userID, name]
+        `INSERT INTO collections (user_id, collection_name, is_master_duel) VALUES ($1, $2, $3) RETURNING *`,
+        [userID, name, isMasterDuel]
       );
       const collectionID = rows[0].collection_id;
       let promises = [];

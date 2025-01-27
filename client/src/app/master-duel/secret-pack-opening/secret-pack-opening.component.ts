@@ -4,6 +4,7 @@ import { MasterDuelDraftingService } from '../master-duel-drafting.service';
 import { SecretPackCard } from 'src/app/models/Card.model';
 import { MenuItem } from 'primeng/api';
 import { CollectionsService } from 'src/app/_shared/collections.service';
+import { UserCollection } from 'src/app/models/collections/UserCollection.model';
 
 @Component({
   selector: 'app-secret-pack-opening',
@@ -13,6 +14,7 @@ import { CollectionsService } from 'src/app/_shared/collections.service';
   styleUrl: './secret-pack-opening.component.css',
 })
 export class SecretPackOpeningComponent implements OnInit {
+  loadingCollection: boolean = false;
   packsOpened: number = 0;
   packsToOpen: number = 0;
   allFlipped: boolean = false;
@@ -27,12 +29,9 @@ export class SecretPackOpeningComponent implements OnInit {
     { label: '10 Packs', command: () => (this.selectedPackQuantity = 10) },
   ];
 
-  collectionOptions: MenuItem[] = [
-    {
-      label: 'New Collection',
-      command: () => (this.selectedCollectionId = undefined),
-    },
-  ];
+  showCollectionDialog = false;
+  collections: UserCollection[] = [];
+  newCollectionName = '';
 
   selectedCollectionId?: number;
 
@@ -53,12 +52,7 @@ export class SecretPackOpeningComponent implements OnInit {
 
     this.collectionsService.getUserCollections().subscribe({
       next: (collections) => {
-        if (collections.length === 0) return;
-
-        this.collectionOptions = collections.map((collection) => ({
-          label: collection.collection_name,
-          command: () => (this.selectedCollectionId = collection.collection_id),
-        }));
+        this.collections = collections;
       },
       error: (error) => {
         console.error('Failed to load collections:', error);
@@ -108,12 +102,25 @@ export class SecretPackOpeningComponent implements OnInit {
     this.flipAll();
   }
 
-  finish() {
-    if (this.selectedCollectionId) {
-      this.draftingService.addToCollection(this.selectedCollectionId);
-    } else {
-      this.draftingService.createCollection();
+  async finish() {
+    this.showCollectionDialog = true;
+  }
+
+  async confirmCollection(collectionId?: number, newName?: string) {
+    this.loadingCollection = true;
+    try {
+      if (collectionId) {
+        await this.draftingService.addToCollection(collectionId);
+        this.router.navigate(['collections/collection', collectionId]);
+      } else if (newName) {
+        this.draftingService.createCollection(newName);
+        this.router.navigate(['collections/new']);
+      }
+    } catch (error) {
+      this.errorMessage = 'Failed to add cards to collection';
+    } finally {
+      this.loadingCollection = false;
+      this.showCollectionDialog = false;
     }
-    this.router.navigate(['collections/new']);
   }
 }

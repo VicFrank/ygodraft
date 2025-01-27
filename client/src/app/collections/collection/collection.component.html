@@ -35,19 +35,21 @@
   <button
     pButton
     pRipple
-    label="Create Collection"
+    label="Save Collection"
     type="button"
     icon="pi pi-save"
     class="ms-auto"
     (click)="createCollection()"
     *ngIf="isNew && isLoggedIn"
   ></button>
-  <div class="ms-auto" *ngIf="isNew">Sign in to save your collections!</div>
+  <div class="ms-auto" *ngIf="isNew && !isLoggedIn">
+    Sign in to save your collections!
+  </div>
 
   <button
     pButton
     pRipple
-    label="Delete"
+    label="Delete Collection"
     type="button"
     icon="pi pi-times"
     class="p-button-danger ms-auto"

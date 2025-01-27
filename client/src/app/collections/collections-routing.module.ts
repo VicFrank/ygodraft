@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CollectionComponent } from './collection/collection.component';
 import { CollectionsComponent } from './collections/collections.component';
 import { AuthGuardService } from '../_shared/auth-guard.service';
+import { CollectionGuard } from './guards/collection.guard';
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
   {
     path: 'new',
     component: CollectionComponent,
+    canDeactivate: [CollectionGuard],
   },
   {
     path: 'collection/:id',

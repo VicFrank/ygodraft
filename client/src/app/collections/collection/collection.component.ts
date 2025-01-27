@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Collection } from 'src/app/models/collections/Collection.model';
 import { CollectionFilters } from 'src/app/models/collections/CollectionFilters.model';
@@ -8,6 +8,7 @@ import { CollectionsService } from 'src/app/_shared/collections.service';
 import { CardFilterService } from './card-filter.service';
 import { CollectionCard } from 'src/app/models/Card.model';
 import { CollectionSortType } from 'src/app/models/collections/CollectionSortType.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-collection',
@@ -31,6 +32,7 @@ export class CollectionComponent implements OnInit {
     mdRarity: [],
   };
   currentSort: CollectionSortType = 'type';
+  hasCreatedCollection = false;
 
   isNew: boolean = false;
   loading: boolean = true;
@@ -102,6 +104,7 @@ export class CollectionComponent implements OnInit {
   createCollection() {
     this.collectionsService.createCollection(this.collection).subscribe(
       (collection: any) => {
+        this.hasCreatedCollection = true;
         const { collectionID } = collection;
         this.messageService.add({
           severity: 'success',

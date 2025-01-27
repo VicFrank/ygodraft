@@ -20,7 +20,11 @@ export class CollectionsService {
     this.newCollection = undefined;
   }
 
-  createNewCollection(cards: CollectionCard[], isMasterDuel: boolean) {
+  createNewCollection(
+    cards: CollectionCard[],
+    isMasterDuel: boolean,
+    name?: string
+  ) {
     const numCards = cards.reduce((acc, card) => acc + card.copies, 0);
 
     this.newCollection = {
@@ -29,25 +33,30 @@ export class CollectionsService {
       collection_id: -1,
       num_cards: numCards,
       collection_cards: cards,
-      collection_name: '',
       is_master_duel: isMasterDuel,
+      collection_name: name || '',
     };
   }
 
-  addCardsToCollection(
-    cards: CollectionCard[],
-    isMasterDuel: boolean,
-    collectionId: number
-  ) {
-    if (this.newCollection) {
-      this.newCollection.collection_cards.push(...cards);
-      this.newCollection.num_cards += cards.reduce(
-        (acc, card) => acc + card.copies,
-        0
+  async addCardsToCollection(cards: CollectionCard[], collectionId: number) {
+    const collection = await this.getCollectionByID(collectionId).toPromise();
+
+    const newCards = cards.map((card) => {
+      const existingCard = collection.collection_cards.find(
+        (c) => c.card_id === card.card_id
       );
-    } else {
-      this.createNewCollection(cards, isMasterDuel);
-    }
+      if (existingCard) {
+        existingCard.copies += card.copies;
+        return existingCard;
+      } else {
+        return card;
+      }
+    });
+
+    collection.collection_cards = collection.collection_cards.concat(newCards);
+    (await this.updateCollection(collection)).toPromise();
+
+    return collection;
   }
 
   getRecentCollections() {
@@ -72,6 +81,7 @@ export class CollectionsService {
       })),
       name: collection.collection_name,
       userID,
+      isMasterDuel: collection.is_master_duel,
     };
     return this.http.post(`${this.baseUrl}`, body);
   }

@@ -84,16 +84,15 @@ export class MasterDuelDraftingService {
     );
   }
 
-  createCollection() {
+  createCollection(name?: string) {
     const collectionCards = this.getCollectionCards();
 
-    this.collectionsService.createNewCollection(collectionCards, true);
+    this.collectionsService.createNewCollection(collectionCards, true, name);
   }
 
-  addToCollection(collectionId: number) {
-    this.collectionsService.addCardsToCollection(
+  async addToCollection(collectionId: number) {
+    await this.collectionsService.addCardsToCollection(
       this.getCollectionCards(),
-      true,
       collectionId
     );
   }
