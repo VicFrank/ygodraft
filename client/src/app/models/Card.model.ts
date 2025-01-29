@@ -20,6 +20,7 @@ export type Card = {
 export type SecretPackCard = Card & {
   flipped?: boolean;
   selected?: boolean;
+  secret_packs?: string[];
 };
 
 export type CollectionCard = Card & {

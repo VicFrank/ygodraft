@@ -5,6 +5,7 @@ import { UserCollection } from '../models/collections/UserCollection.model';
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
 import { CollectionCard } from '../models/Card.model';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -63,7 +64,10 @@ export class CollectionsService {
     return this.http.get<UserCollection[]>(this.baseUrl);
   }
 
-  getUserCollections() {
+  getUserCollections(): Observable<UserCollection[]> {
+    if (!this.authService.isLoggedIn) {
+      return of([]);
+    }
     const userID = this.authService.user?.user_id;
     return this.http.get<UserCollection[]>(`api/users/${userID}/collections`);
   }

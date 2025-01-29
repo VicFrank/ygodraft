@@ -35,6 +35,28 @@ export class SecretPackOpeningComponent implements OnInit {
 
   selectedCollectionId?: number;
 
+  private previousCount = 0;
+  isCountChanged = false;
+
+  get unlockedSecretPacks(): string[] {
+    return this.draftingService.unlockedSecretPacks;
+  }
+
+  get numUnlockedSecretPacks(): number {
+    const unflippedKeyCards = this.currentPack.filter(
+      (card) => card.secret_packs && !card.flipped
+    );
+    const count =
+      this.draftingService.unlockedSecretPacks.length -
+      unflippedKeyCards.length;
+    if (count !== this.previousCount) {
+      this.previousCount = count;
+      this.isCountChanged = true;
+      setTimeout(() => (this.isCountChanged = false), 300);
+    }
+    return count;
+  }
+
   constructor(
     private router: Router,
     private draftingService: MasterDuelDraftingService,

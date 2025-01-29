@@ -10,6 +10,7 @@ import { CollectionsService } from '../_shared/collections.service';
 export class MasterDuelDraftingService {
   public openedCards: SecretPackCard[] = [];
   public packsToOpen: SecretPackCard[][] = [];
+  public unlockedSecretPacks: string[] = [];
 
   private loadingPacks$ = new BehaviorSubject<boolean>(false);
 
@@ -42,10 +43,26 @@ export class MasterDuelDraftingService {
     return packs;
   }
 
-  openSinglePack(): Card[] {
+  private addUnlockedSecretPacks(secretPacks: string[]) {
+    for (const pack of secretPacks) {
+      if (!this.unlockedSecretPacks.includes(pack)) {
+        this.unlockedSecretPacks.push(pack);
+      }
+    }
+  }
+
+  openSinglePack(): SecretPackCard[] {
     const pack = this.packsToOpen.pop();
     if (pack) {
       this.openedCards.push(...pack);
+
+      const secretPacks = pack.reduce((acc: string[], card) => {
+        if (card.secret_packs) {
+          acc = acc.concat(card.secret_packs);
+        }
+        return acc;
+      }, [] as string[]);
+      this.addUnlockedSecretPacks(secretPacks);
     } else {
       throw new Error('No packs to open');
     }

@@ -10,6 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { SkeletonModule } from 'primeng/skeleton';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RouterModule } from '@angular/router';
@@ -27,6 +28,7 @@ import { FormatDescriptionPipe } from './pipes/description-pipe';
     InputTextModule,
     DialogModule,
     SplitButtonModule,
+    TooltipModule,
   ],
   declarations: [
     PageNotFoundComponent,
@@ -47,6 +49,7 @@ import { FormatDescriptionPipe } from './pipes/description-pipe';
     SplitButtonModule,
     SkeletonModule,
     CardModalComponent,
+    TooltipModule,
   ],
 })
 export class SharedModule {}

@@ -34,12 +34,21 @@ module.exports = {
       const secretPack = rows[0];
 
       const { rows: cards } = await query(
-        `SELECT card_id, card_name, md_rarity, card_type, card_desc, atk, def, card_level, race,
-        attribute, archetype
-      FROM secret_pack_cards
-      JOIN cards
-      USING(card_id)
-      WHERE secret_pack_id = $1`,
+        `SELECT 
+          c.card_id, c.card_name, c.md_rarity, c.card_type, c.card_desc, 
+          c.atk, c.def, c.card_level, c.race, c.attribute, c.archetype,
+          ARRAY_AGG(sp2.set_name) FILTER (
+            WHERE sp2.set_name IS NOT NULL 
+            AND sp2.secret_pack_id != $1
+            AND c.md_rarity IN ('Ultra Rare', 'Super Rare')
+          ) as secret_packs
+        FROM secret_pack_cards spc
+        JOIN cards c USING(card_id)
+        LEFT JOIN secret_pack_cards spc2 ON c.card_id = spc2.card_id
+        LEFT JOIN secret_packs sp2 ON spc2.secret_pack_id = sp2.secret_pack_id
+        WHERE spc.secret_pack_id = $1
+        GROUP BY c.card_id
+        ORDER BY c.md_rarity DESC, c.card_name`,
         [id]
       );
 
@@ -83,7 +92,17 @@ module.exports = {
   async getAllMasterPackCards() {
     try {
       const { rows } = await query(
-        `SELECT * from cards where in_master_pack = true`
+        `SELECT 
+        c.*,
+        ARRAY_AGG(sp.set_name) FILTER (
+          WHERE sp.set_name IS NOT NULL 
+          AND c.md_rarity IN ('Ultra Rare', 'Super Rare')
+        ) as secret_packs
+      FROM cards c
+      LEFT JOIN secret_pack_cards spc ON c.card_id = spc.card_id
+      LEFT JOIN secret_packs sp ON spc.secret_pack_id = sp.secret_pack_id
+      WHERE c.in_master_pack = true
+      GROUP BY c.card_id`
       );
       return rows;
     } catch (error) {
